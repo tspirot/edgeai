@@ -4,7 +4,7 @@ import { Grid, Html, Line, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 const HUB = new THREE.Vector3(0, 0, 0)
-const CLOUD_POS = new THREE.Vector3(1.6, 1.95, -1.7)
+const CLOUD_POS = new THREE.Vector3(0.4, 1.75, -1.6)
 
 /* --- један чвор = један пројекат ---------------------------------------- */
 /* --- један чвор = један пројекат ---------------------------------------- */
@@ -196,7 +196,7 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
         infiniteGrid
       />
 
-      <group ref={spin} position={[mobile ? 0 : 1.15, mobile ? 0.15 : 0.15, 0]}>
+      <group ref={spin} position={[0, 0.15, 0]}>
         {/* централни „модел“ */}
         <mesh>
           <octahedronGeometry args={[0.62, 0]} />
