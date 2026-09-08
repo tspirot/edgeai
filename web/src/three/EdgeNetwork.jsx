@@ -43,9 +43,14 @@ function Node({ p, onSelect, showLabel = true, isLight = false }) {
       </lineSegments>
 
       {showLabel && (
-        <Html position={[0, 0.85, 0]} center distanceFactor={9} zIndexRange={[20, 0]}>
+        <Html
+          position={[0, 0.72, 0]}
+          center
+          distanceFactor={mobile ? 8.5 : 6.5}
+          zIndexRange={[10, 0]}
+        >
           <div
-            className={`node-label${hover ? ' is-hover' : ''}`}
+            className={`node-label${hover ? ' is-hover' : ''}${mobile ? ' node-label--sm' : ''}`}
             onPointerOver={() => setHover(true)}
             onPointerOut={() => setHover(false)}
           >
@@ -220,7 +225,7 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
               opacity={isLight ? 0.3 : 0.4}
             />
             <Pulse from={p.pozicija} phase={Math.random()} speed={0.28} reduced={reduced} isLight={isLight} />
-            <Node p={p} onSelect={onSelect} showLabel={!mobile} isLight={isLight} />
+            <Node p={p} onSelect={onSelect} showLabel isLight={isLight} mobile={mobile} />
           </group>
         ))}
 

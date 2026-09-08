@@ -533,27 +533,30 @@ blockquote cite { display: block; font-style: normal; font-size: 13px; margin-to
 }
 .node-label__name {
   font-family: var(--font-head);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--ink);
   background: none;
   border: none;
-  padding: 5px 11px;
+  padding: 4px 10px;
   cursor: pointer;
 }
 .node-label__name b { color: var(--brass); font-family: var(--font-mono); margin-right: 3px; }
 .node-label__repo {
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 500;
   color: var(--muted);
   display: flex;
   align-items: center;
-  padding: 0 11px;
+  padding: 0 9px;
   border-left: 1px solid var(--line-strong);
   background: color-mix(in srgb, var(--accent-soft) 60%, transparent);
   transition: color 0.15s ease, background 0.15s ease;
 }
+/* мобилни: ситније ознаке да не покривају чворове */
+.node-label--sm .node-label__name { font-size: 10px; padding: 3px 8px; }
+.node-label--sm .node-label__repo { font-size: 9px; padding: 0 7px; }
 .node-label__repo:hover {
   color: var(--accent);
   background: var(--accent-soft);
