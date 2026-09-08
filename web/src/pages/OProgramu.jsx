@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Content from '../components/Content'
+import ProgramTimeline from '../components/ProgramTimeline'
 import { program } from '../data/program'
 
 export default function OProgramu() {
@@ -26,16 +27,10 @@ export default function OProgramu() {
           <div className="section__head">
             <p className="kicker">Активности</p>
             <h2>Како програм тече</h2>
+            <p>Четири фазе развоја — од хардверске опреме до отвореног Demo Day-а.</p>
           </div>
-          <div className="grid grid--2">
-            {program.aktivnosti.map((a) => (
-              <div key={a.broj} className="card">
-                <span className="card__idx">Активност {a.broj}</span>
-                <span className="card__title">{a.naziv}</span>
-                <p className="card__text">{a.tekst}</p>
-              </div>
-            ))}
-          </div>
+          
+          <ProgramTimeline aktivnosti={program.aktivnosti} />
         </div>
       </section>
 

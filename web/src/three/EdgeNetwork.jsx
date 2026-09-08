@@ -4,10 +4,11 @@ import { Grid, Html, Line, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 const HUB = new THREE.Vector3(0, 0, 0)
-const CLOUD_POS = new THREE.Vector3(1.6, 2.35, -1.7)
+const CLOUD_POS = new THREE.Vector3(1.6, 1.95, -1.7)
 
 /* --- један чвор = један пројекат ---------------------------------------- */
-function Node({ p, onSelect, showLabel = true }) {
+/* --- један чвор = један пројекат ---------------------------------------- */
+function Node({ p, onSelect, showLabel = true, isLight = false }) {
   const ref = useRef()
   const [hover, setHover] = useState(false)
 
@@ -28,17 +29,17 @@ function Node({ p, onSelect, showLabel = true }) {
       >
         <icosahedronGeometry args={[0.42, 0]} />
         <meshStandardMaterial
-          color="#0f2a22"
+          color={isLight ? '#FFFFFF' : '#0f2a22'}
           emissive={p.boja}
-          emissiveIntensity={hover ? 1.1 : 0.5}
-          roughness={0.35}
+          emissiveIntensity={hover ? 1.2 : (isLight ? 0.75 : 0.5)}
+          roughness={0.3}
           metalness={0.2}
           flatShading
         />
       </mesh>
       <lineSegments scale={1.001}>
         <edgesGeometry args={[new THREE.IcosahedronGeometry(0.42, 0)]} />
-        <lineBasicMaterial color={p.boja} transparent opacity={hover ? 0.9 : 0.5} />
+        <lineBasicMaterial color={p.boja} transparent opacity={hover ? 0.95 : (isLight ? 0.75 : 0.5)} />
       </lineSegments>
 
       {showLabel && (
@@ -58,7 +59,7 @@ function Node({ p, onSelect, showLabel = true }) {
 }
 
 /* --- импулс података који путује чвор ⇄ модел -------------------------- */
-function Pulse({ from, phase, speed, reduced }) {
+function Pulse({ from, phase, speed, reduced, isLight = false }) {
   const ref = useRef()
   const a = useMemo(() => new THREE.Vector3(...from), [from])
   useFrame((state) => {
@@ -70,13 +71,13 @@ function Pulse({ from, phase, speed, reduced }) {
   return (
     <mesh ref={ref}>
       <sphereGeometry args={[0.055, 8, 8]} />
-      <meshBasicMaterial color="#D8AE45" />
+      <meshBasicMaterial color={isLight ? '#8C6500' : '#D8AE45'} />
     </mesh>
   )
 }
 
 /* --- „облак“ горе, замрачен и неповезан -------------------------------- */
-function DisconnectedCloud() {
+function DisconnectedCloud({ isLight = false }) {
   const puffs = [
     [0, 0, 0, 0.62],
     [0.62, -0.08, 0, 0.48],
@@ -88,19 +89,19 @@ function DisconnectedCloud() {
       {puffs.map(([x, y, z, r], i) => (
         <mesh key={i} position={[x, y, z]}>
           <dodecahedronGeometry args={[r, 0]} />
-          <meshBasicMaterial color="#3A4B41" wireframe transparent opacity={0.5} />
+          <meshBasicMaterial color={isLight ? '#729080' : '#3A4B41'} wireframe transparent opacity={isLight ? 0.4 : 0.5} />
         </mesh>
       ))}
       {/* прекинута веза ка облаку */}
       <Line
         points={[[0, -0.7, 0], [0, -1.7, 0]]}
-        color="#3A4B41"
+        color={isLight ? '#729080' : '#3A4B41'}
         lineWidth={1}
         dashed
         dashSize={0.14}
         gapSize={0.16}
         transparent
-        opacity={0.55}
+        opacity={isLight ? 0.45 : 0.55}
       />
       <Html position={[0, 1.0, 0]} center distanceFactor={12}>
         <span className="cloud-label">облак · искључен</span>
@@ -110,7 +111,7 @@ function DisconnectedCloud() {
 }
 
 /* --- ситна прашина ----------------------------------------------------- */
-function Dust({ count, reduced }) {
+function Dust({ count, reduced, isLight = false }) {
   const ref = useRef()
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3)
@@ -129,13 +130,16 @@ function Dust({ count, reduced }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.028} color="#5FBA98" transparent opacity={0.5} depthWrite={false} />
+      <pointsMaterial size={0.028} color={isLight ? '#0C6146' : '#5FBA98'} transparent opacity={isLight ? 0.25 : 0.5} depthWrite={false} />
     </points>
   )
 }
 
-export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobile = false }) {
+export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobile = false, theme = 'dark' }) {
   const spin = useRef()
+  const isLight = theme === 'light'
+  const bgCol = isLight ? '#F5F8F6' : '#090E0C'
+  const fogCol = isLight ? '#F5F8F6' : '#090E0C'
 
   useFrame((state, dt) => {
     if (!spin.current) return
@@ -148,12 +152,12 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
 
   return (
     <>
-      <color attach="background" args={['#0C1310']} />
-      <fog attach="fog" args={['#0C1310', 10, 26]} />
+      <color attach="background" args={[bgCol]} key={bgCol} />
+      <fog attach="fog" args={[fogCol, mobile ? 14 : 10, mobile ? 30 : 26]} key={fogCol} />
 
-      <ambientLight intensity={0.4} />
-      <pointLight position={[5, 6, 5]} intensity={1.5} decay={0} color="#bff0df" />
-      <pointLight position={[-6, -2, -4]} intensity={0.7} decay={0} color="#D8AE45" />
+      <ambientLight intensity={isLight ? 0.85 : 0.4} />
+      <pointLight position={[5, 6, 5]} intensity={isLight ? 1.4 : 1.5} decay={0} color={isLight ? '#4ED8A3' : '#bff0df'} />
+      <pointLight position={[-6, -2, -4]} intensity={isLight ? 0.7 : 0.7} decay={0} color={isLight ? '#C99E32' : '#D8AE45'} />
 
       <OrbitControls
         makeDefault
@@ -169,39 +173,46 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
         position={[0, -2.3, 0]}
         args={[40, 40]}
         cellSize={0.9}
-        cellThickness={0.6}
-        cellColor="#1c2b24"
+        cellThickness={isLight ? 0.5 : 0.6}
+        cellColor={isLight ? '#D6E3DC' : '#1c2b24'}
         sectionSize={4.5}
-        sectionThickness={1}
-        sectionColor="#14624A"
-        fadeDistance={26}
+        sectionThickness={isLight ? 0.8 : 1}
+        sectionColor={isLight ? '#8FBDAA' : '#14624A'}
+        fadeDistance={24}
         fadeStrength={2}
         infiniteGrid
       />
 
-      <group ref={spin} position={[1.15, 0.15, 0]}>
+      <group ref={spin} position={[mobile ? 0 : 1.15, mobile ? 0.15 : 0.15, 0]}>
         {/* централни „модел“ */}
         <mesh>
           <octahedronGeometry args={[0.62, 0]} />
-          <meshStandardMaterial color="#0e1f19" emissive="#5FBA98" emissiveIntensity={0.7} flatShading metalness={0.3} roughness={0.3} />
+          <meshStandardMaterial
+            color={isLight ? '#0C6146' : '#0e1f19'}
+            emissive={isLight ? '#128662' : '#5FBA98'}
+            emissiveIntensity={isLight ? 0.45 : 0.7}
+            flatShading
+            metalness={0.3}
+            roughness={0.3}
+          />
         </mesh>
 
         {projekti.map((p) => (
           <group key={p.slug}>
             <Line
               points={[p.pozicija, [0, 0, 0]]}
-              color="#2f6a55"
+              color={isLight ? '#0C6146' : '#2f6a55'}
               lineWidth={1}
               transparent
-              opacity={0.4}
+              opacity={isLight ? 0.3 : 0.4}
             />
-            <Pulse from={p.pozicija} phase={Math.random()} speed={0.28} reduced={reduced} />
-            <Node p={p} onSelect={onSelect} showLabel={!mobile} />
+            <Pulse from={p.pozicija} phase={Math.random()} speed={0.28} reduced={reduced} isLight={isLight} />
+            <Node p={p} onSelect={onSelect} showLabel={!mobile} isLight={isLight} />
           </group>
         ))}
 
-        <DisconnectedCloud />
-        <Dust count={mobile ? 220 : 650} reduced={reduced} />
+        <DisconnectedCloud isLight={isLight} />
+        <Dust count={mobile ? 180 : 650} reduced={reduced} isLight={isLight} />
       </group>
     </>
   )

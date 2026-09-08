@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 // Тамна тема је подразумевана. Избор корисника се памти у localStorage.
 const KEY = 'edgeai-theme'
 
@@ -16,5 +18,19 @@ export function toggleTheme() {
   const next = getTheme() === 'light' ? 'dark' : 'light'
   document.documentElement.setAttribute('data-theme', next)
   try { localStorage.setItem(KEY, next) } catch { /* игнориши */ }
+  window.dispatchEvent(new CustomEvent('theme-change', { detail: next }))
   return next
 }
+
+export function useTheme() {
+  const [theme, setTheme] = useState(getTheme)
+
+  useEffect(() => {
+    const handler = (e) => setTheme(e.detail)
+    window.addEventListener('theme-change', handler)
+    return () => window.removeEventListener('theme-change', handler)
+  }, [])
+
+  return theme
+}
+

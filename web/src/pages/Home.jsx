@@ -4,13 +4,16 @@ import ProjectCard from '../components/ProjectCard'
 import ErrorBoundary from '../components/ErrorBoundary'
 import HeroScene from '../three/HeroScene'
 import HeroFallback from '../three/HeroFallback'
+import EdgeVsCloud from '../components/EdgeVsCloud'
 import { projekti } from '../data/projekti'
 import { useReducedMotion, useIsMobile } from '../lib/hooks'
+import { useTheme } from '../lib/theme'
 
 export default function Home() {
   const navigate = useNavigate()
   const reduced = useReducedMotion()
   const mobile = useIsMobile()
+  const theme = useTheme()
 
   return (
     <>
@@ -20,19 +23,24 @@ export default function Home() {
       />
 
       <section className="hero">
-        {reduced ? (
-          <HeroFallback projekti={projekti} />
-        ) : (
-          <ErrorBoundary fallback={<HeroFallback projekti={projekti} />}>
-            <HeroScene
-              projekti={projekti}
-              onSelect={(slug) => navigate(`/projekti/${slug}`)}
-              reduced={reduced}
-              mobile={mobile}
-            />
-          </ErrorBoundary>
-        )}
-        <div className="hero__scrim" />
+        <div className="hero__stage">
+          {reduced ? (
+            <HeroFallback projekti={projekti} />
+          ) : (
+            <ErrorBoundary fallback={<HeroFallback projekti={projekti} />}>
+              <HeroScene
+                projekti={projekti}
+                onSelect={(slug) => navigate(`/projekti/${slug}`)}
+                reduced={reduced}
+                mobile={mobile}
+                theme={theme}
+              />
+            </ErrorBoundary>
+          )}
+          <div className="hero__scrim" />
+          <div className="hero__hint">{mobile ? 'додирни чвор за пројекат' : 'кликни на чвор'}</div>
+        </div>
+
         <div className="hero__inner">
           <span className="hero__badge"><i />локална инференца · без облака</span>
           <h1>Вештачка интелигенција која ради <em>на самом уређају</em></h1>
@@ -46,7 +54,6 @@ export default function Home() {
             <Link to="/o-programu" className="btn btn--ghost">О програму</Link>
           </div>
         </div>
-        <div className="hero__hint">кликни на чвор</div>
       </section>
 
       <section className="section">
@@ -59,7 +66,10 @@ export default function Home() {
               слике и говора — ради на плочи величине длана, без мреже.
             </p>
           </div>
-          <div className="grid grid--2">
+          
+          <EdgeVsCloud />
+
+          <div className="grid grid--4 mt-40">
             <div className="card">
               <span className="card__title">Приватност</span>
               <p className="card__text">Слика и звук се обрађују локално и нигде се не шаљу нити снимају.</p>

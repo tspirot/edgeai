@@ -2,13 +2,13 @@ import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import EdgeNetwork from './EdgeNetwork'
 
-export default function HeroScene({ projekti, onSelect, reduced, mobile }) {
+export default function HeroScene({ projekti, onSelect, reduced, mobile, theme = 'dark' }) {
   return (
     <Canvas
       className="hero__canvas"
       dpr={[1, 1.75]}
       gl={{ antialias: true, powerPreference: 'high-performance' }}
-      camera={{ position: [0, 1.7, mobile ? 11 : 9.2], fov: 42 }}
+      camera={{ position: [0, mobile ? 0.9 : 1.7, mobile ? 11.2 : 9.2], fov: mobile ? 46 : 42 }}
       frameloop={reduced ? 'demand' : 'always'}
     >
       <Suspense fallback={null}>
@@ -17,6 +17,7 @@ export default function HeroScene({ projekti, onSelect, reduced, mobile }) {
           onSelect={onSelect}
           reduced={reduced}
           mobile={mobile}
+          theme={theme}
         />
       </Suspense>
     </Canvas>
