@@ -4,7 +4,7 @@ import { Grid, Html, Line, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 const HUB = new THREE.Vector3(0, 0, 0)
-const CLOUD_POS = new THREE.Vector3(0.4, 1.75, -1.6)
+const CLOUD_POS = new THREE.Vector3(0.6, 2.35, -5.5)
 
 /* --- један чвор = један пројекат ---------------------------------------- */
 function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }) {
@@ -47,6 +47,7 @@ function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }
           center
           distanceFactor={mobile ? 8.5 : 6.5}
           zIndexRange={[10, 0]}
+          wrapperClass="node-label-wrap"
         >
           <div
             className={`node-label${hover ? ' is-hover' : ''}${mobile ? ' node-label--sm' : ''}`}
@@ -102,11 +103,11 @@ function DisconnectedCloud({ isLight = false }) {
     [0.2, 0.3, -0.15, 0.4],
   ]
   return (
-    <group position={CLOUD_POS}>
+    <group position={CLOUD_POS} scale={0.85}>
       {puffs.map(([x, y, z, r], i) => (
         <mesh key={i} position={[x, y, z]}>
           <dodecahedronGeometry args={[r, 0]} />
-          <meshBasicMaterial color={isLight ? '#729080' : '#3A4B41'} wireframe transparent opacity={isLight ? 0.4 : 0.5} />
+          <meshBasicMaterial color={isLight ? '#8AA394' : '#33413A'} wireframe transparent opacity={isLight ? 0.28 : 0.32} />
         </mesh>
       ))}
       {/* прекинута веза ка облаку */}
