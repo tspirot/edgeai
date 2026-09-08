@@ -1,0 +1,23 @@
+# Копирај у config.yaml.  qc fit ... -c config.yaml
+
+features:
+  backend: handcrafted   # handcrafted (Pi, без тежих библиотека) | torch | dummy
+  image_size: 256
+  grid: 8                 # G×G блокова по слици
+
+bank:
+  coreset_fraction: 1.0   # <1 = задржи само репрезентативан подскуп (брже)
+  k: 1                     # k-НН (просек k најближих)
+
+threshold:
+  method: sigma           # sigma | percentile
+  sigma_k: 4.0
+  percentile: 99.0
+
+camera:
+  source: "0"
+  width: 640
+  height: 480
+
+model_file: model.npz
+log_level: INFO
