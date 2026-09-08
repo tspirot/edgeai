@@ -1,99 +1,90 @@
-# Deploy на edgeai.tsp.edu.rs (Virtualmin)
+# Deploy на edgeai.tsp.edu.rs
 
-Два начина. Изабери један.
+Исти приступ као код `tsp` портала: **GitHub webhook → Node сервис (PM2) → `deploy.sh`**.
+Без SSH, без GitHub Actions. Аутентикација је **преко secret-а** (HMAC `x-hub-signature-256`).
 
----
-
-## A) GitHub Actions (препоручено)
-
-Билд се ради на GitHub-у, готов `dist/` се преко `rsync`/SSH пребаци на сервер.
-Сервер не мора да има Node.js.
-
-### 1. Направи деплој SSH кључ (на свом рачунару)
-
-```bash
-ssh-keygen -t ed25519 -f edgeai_deploy -N "" -C "github-actions-edgeai"
+```
+GitHub push ──► https://edgeai.tsp.edu.rs/webhook
+                       │ Apache reverse proxy (Virtualmin)
+                       ▼
+             127.0.0.1:9008  webhook-server.js  (PM2: edgeai-webhook)
+                       │ провери потпис, гранa = main, дира ли web/
+                       ▼
+                   deploy.sh
+        git reset --hard → npm ci → npm run build
+        backup public_html → rsync web/dist → public_html
+        (ако build падне → rollback)
 ```
 
-### 2. Јавни кључ на сервер
+## Поставка на серверу (једном)
 
-У Virtualmin-у за корисника домена: **SSH Keys → додај садржај `edgeai_deploy.pub`**,
-или ручно у `~/.ssh/authorized_keys`.
+### 1. Клонирај репо
 
-### 3. GitHub тајне
-
-Repo **Settings → Secrets and variables → Actions → New repository secret**:
-
-| тајна | пример |
-|---|---|
-| `SSH_HOST` | `tsp.edu.rs` |
-| `SSH_USER` | Virtualmin корисник домена (нпр. `edgeai`) |
-| `SSH_PORT` | `22` |
-| `SSH_KEY` | цео садржај приватног `edgeai_deploy` |
-| `DEPLOY_PATH` | `/home/edgeai/domains/edgeai.tsp.edu.rs/public_html` |
-
-### 4. Готово
-
-Сваки push у `main` који дира `web/**` покреће **Actions → Deploy site**.
-Ручно: Actions → Deploy site → **Run workflow**.
-
----
-
-## B) Webhook на серверу
-
-Сервер повуче репо и сам изгради сајт. **Тражи Node.js на серверу**
-(Virtualmin: EasyApache/Node, или `nvm`).
-
-### 1. Клонирај репо на сервер (једном)
+Приватан репо, без SSH → HTTPS remote са **fine-grained PAT** (само read за `tspirot/edgeai`):
 
 ```bash
 cd ~
-git clone https://github.com/tspirot/edgeai.git
+git clone https://x-access-token:<PAT>@github.com/tspirot/edgeai.git
 ```
 
-### 2. Подеси deploy/.env
+PAT: github.com → Settings → Developer settings → Fine-grained tokens →
+Repository access: само `tspirot/edgeai`, Permissions → Contents: Read-only.
+
+### 2. Подеси PM2 сервис
 
 ```bash
-cd ~/edgeai/deploy
-cp .env.example .env
-nano .env        # WEBHOOK_SECRET (насумичан низ), REPO_DIR, PUBLIC_HTML
-chmod +x deploy.sh
+cd ~/edgeai
+nano deploy/ecosystem.config.js     # замени USER путање; провери WEBHOOK_SECRET
+npm i -g pm2                          # ако већ није
+pm2 start deploy/ecosystem.config.js
+pm2 save
+pm2 startup                           # да преживи рестарт сервера
 ```
 
-### 3. Изложи webhook.php
+Провера: `curl http://127.0.0.1:9008/webhook/health` → `ok`.
 
-Најлакше: копирај `webhook.php` у `public_html/` (остаје у истом фолдеру као
-`.env` и `deploy.sh` — стави их једно ниво изнад и промени путање, или све у
-`public_html` па заштити `.env`):
+### 3. Apache proxy (Virtualmin)
+
+Virtualmin → домен `edgeai.tsp.edu.rs` → **Services → Configure Website → Edit Directives**,
+додај у `<VirtualHost>` (и у SSL host):
 
 ```apache
-# .htaccess у public_html
-<Files ".env">
-  Require all denied
-</Files>
-<Files "deploy.sh">
-  Require all denied
-</Files>
+ProxyPass        /webhook  http://127.0.0.1:9008/webhook
+ProxyPassReverse /webhook  http://127.0.0.1:9008/webhook
 ```
+
+Модули `proxy` и `proxy_http` морају бити укључени (обично јесу).
+Рестарт Apache-ја. Провера: `curl https://edgeai.tsp.edu.rs/webhook/health` → `ok`.
+
+> Остатак домена (`/`) и даље служи Apache директно из `public_html` — статички фајлови.
 
 ### 4. GitHub webhook
 
 Repo **Settings → Webhooks → Add webhook**:
 
-- Payload URL: `https://edgeai.tsp.edu.rs/webhook.php`
-- Content type: `application/json`
-- Secret: иста вредност као `WEBHOOK_SECRET`
-- Events: **Just the push event**
+| поље | вредност |
+|---|---|
+| Payload URL | `https://edgeai.tsp.edu.rs/webhook` |
+| Content type | `application/json` |
+| Secret | иста вредност као `WEBHOOK_SECRET` у `ecosystem.config.js` |
+| Events | Just the `push` event |
 
-Провера: GitHub прикаже „✔ ping“ · `deploy/last-deploy.log` на серверу показује ток.
-
----
-
-## Ручни деплој (у нужди, без ичега)
+### 5. Прва објава
 
 ```bash
-cd web && npm ci && npm run build
-rsync -avz --delete web/dist/ USER@HOST:/.../public_html/
+cd ~/edgeai && bash deploy/deploy.sh
 ```
 
-`web/public/.htaccess` → копира се у `dist/` и решава SPA рутирање. Не брисати.
+Затим на GitHub-у: Webhooks → Recent Deliveries → **Redeliver** ping.
+
+## Свакодневно
+
+Само `git push` у `main`. Ако push дира `web/**` → сајт се сам преведе и објави
+за ~1 минут. Логови: `deploy/logs/webhook.log` и `deploy/logs/deploy.log`.
+
+Ручни deploy у нужди: `bash ~/edgeai/deploy/deploy.sh`.
+
+## Потребно на серверу
+
+`node` (18+), `npm`, `git`, `bash`, `rsync`, `pm2`. Node се у Virtualmin-у
+добија преко EasyApache/„Node.js“ или `nvm`.

@@ -1,51 +1,44 @@
 ---
 name: deploy
-description: Deploy the Edge AI site (web/) to edgeai.tsp.edu.rs on Virtualmin. Use when asked to deploy, publish, push the site live, or update the subdomain.
+description: Deploy the Edge AI site (web/) to edgeai.tsp.edu.rs. Deploy is automatic via GitHub webhook → PM2 Node service → deploy.sh on the Virtualmin server. Use when asked to deploy, publish, push the site live, or debug the deploy.
 ---
 
 # Deploy сајта на edgeai.tsp.edu.rs
 
-Сервер: Virtualmin (Apache), поддомен `edgeai.tsp.edu.rs`.
-Document root (потврди у Virtualmin-у): `~/domains/edgeai.tsp.edu.rs/public_html`.
+Механизам (исти као tsp портал, **без SSH**, auth **преко secret-а**):
 
-Постоје два начина. **Подразумевани је GitHub Actions** (билд у облаку, деплој преко SSH).
-
-## 1. GitHub Actions (препоручено)
-
-Workflow је `.github/workflows/deploy.yml`. Окида се на push у `main` који мења `web/**`.
-
-Потребне GitHub тајне (Settings → Secrets → Actions):
-
-| тајна | вредност |
-|---|---|
-| `SSH_HOST` | нпр. `tsp.edu.rs` |
-| `SSH_USER` | Virtualmin корисник домена |
-| `SSH_KEY` | приватни SSH кључ (деплој кључ) |
-| `SSH_PORT` | најчешће `22` |
-| `DEPLOY_PATH` | `/home/<user>/domains/edgeai.tsp.edu.rs/public_html` |
-
-Ручно покретање: **Actions → Deloy site → Run workflow**.
-
-## 2. Webhook на серверу (алтернатива, ако нема Actions)
-
-Скрипта `deploy/webhook.php` и `deploy/deploy.sh` (види `deploy/README.md`).
-Тражи Node.js на серверу. У Virtualmin-у: **Webmin → Others → нема**;
-webhook се поставља као PHP скрипта + GitHub webhook (Settings → Webhooks),
-Content-type `application/json`, Secret = вредност `WEBHOOK_SECRET` из `deploy/.env`.
-
-## Ручни деплој (у нужди)
-
-```bash
-cd web
-npm ci
-npm run build
-rsync -avz --delete dist/ <user>@tsp.edu.rs:/home/<user>/domains/edgeai.tsp.edu.rs/public_html/
+```
+git push main ──► https://edgeai.tsp.edu.rs/webhook  (Apache proxy)
+             ──► 127.0.0.1:9008  deploy/webhook-server.js  (PM2: edgeai-webhook)
+             ──► deploy/deploy.sh:  git reset --hard → npm ci → npm run build
+                                    → backup public_html → rsync web/dist → public_html
+                                    (build падне → rollback)
 ```
 
-`web/public/.htaccess` се копира у `dist/` при билду и решава SPA рутирање — не брисати.
+## Свакодневни deploy
 
-## Провера после деплоја
+**Ништа посебно — само `git push` у `main`.** Ако push дира `web/**` или `deploy/**`,
+webhook сам преведе и објави сајт за ~1 минут.
 
-- `https://edgeai.tsp.edu.rs/` се учитава, 3D сцена ради.
-- Директан улаз на `https://edgeai.tsp.edu.rs/projekti/titlovi-uzivo` не даје 404 (значи `.htaccess` ради).
-- У прегледачу нема грешака у конзоли.
+Ручни deploy на серверу: `bash ~/edgeai/deploy/deploy.sh`
+
+## Провера
+
+- `curl https://edgeai.tsp.edu.rs/webhook/health` → `ok` (webhook жив)
+- `https://edgeai.tsp.edu.rs/` се учита, 3D сцена ради
+- директан улаз на `/projekti/titlovi-uzivo` не даје 404 (`.htaccess` ради)
+- логови: `deploy/logs/webhook.log`, `deploy/logs/deploy.log`
+
+## Ако deploy не ради
+
+1. GitHub → repo Settings → Webhooks → Recent Deliveries — види одговор (треба 202).
+   `401` = погрешан secret (упореди са `WEBHOOK_SECRET` у `deploy/ecosystem.config.js`).
+   Timeout/`502` = Node сервис или Apache proxy пали.
+2. На серверу: `pm2 status`, `pm2 logs edgeai-webhook`.
+3. `deploy/logs/deploy.log` — ако је build пао, `rollback` враћа претходну верзију,
+   па сајт ради, али је стар. Поправи узрок и `git push` поново.
+
+## Прва поставка на новом серверу
+
+Види `deploy/README.md` (клон са PAT-ом, `pm2 start deploy/ecosystem.config.js`,
+Apache `ProxyPass /webhook`, GitHub webhook).

@@ -11,8 +11,8 @@
 |---|---|
 | `web/` | сајт (React + Vite + react-three-fiber) — пројекти, упутства, 3D насловна |
 | `projekti/titlovi-uzivo/` | „Титлови уживо“ — препознавање говора на српском на уређају (Python) |
-| `deploy/` | deploy на Virtualmin (webhook + скрипте) |
-| `.github/workflows/` | GitHub Actions: билд и deploy сајта |
+| `deploy/` | webhook deploy на Virtualmin (Node сервис + PM2 + `deploy.sh`) |
+| `.github/workflows/` | CI: провера билда сајта и тестова |
 | `.claude/skills/` | пројектни skill-ови за Claude Code |
 
 ## Брзо
@@ -31,8 +31,9 @@ VS Code: **Run and Debug** има готове конфигурације за �
 
 ## Деплој
 
-Push у `main` који дира `web/**` → GitHub Actions билдује и објављује на
-`edgeai.tsp.edu.rs`. Детаљи и алтернатива (webhook на серверу): `deploy/README.md`.
+`git push` у `main` → GitHub webhook → Node сервис (PM2) на серверу преведе и
+објави сајт на `edgeai.tsp.edu.rs` за ~1 минут (rollback ако build падне).
+Поставка и решавање проблема: `deploy/README.md`.
 
 ## Лиценца
 

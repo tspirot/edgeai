@@ -10,6 +10,11 @@ venv/
 projekti/**/models/
 *.zip
 
+# deploy (серверски радни фајлови)
+deploy/logs/
+deploy/.public_html_backup/
+deploy/.env
+
 # уредници / ОС
 .DS_Store
 .idea/
