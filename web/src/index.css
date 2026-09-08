@@ -225,7 +225,8 @@ img { max-width: 100%; display: block; }
 .hero__stage {
   position: relative;
   width: 100%;
-  height: clamp(300px, 52vh, 560px);
+  /* виши на широким екранима, али никад преко 82% висине прозора */
+  height: min(82vh, clamp(320px, 44vw, 780px));
   overflow: hidden;
   background: var(--paper);
   border-bottom: 1px solid var(--line);
@@ -332,7 +333,7 @@ img { max-width: 100%; display: block; }
 @keyframes hintPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
 @media (max-width: 820px) {
-  .hero__stage { height: clamp(260px, 42vh, 340px); }
+  .hero__stage { height: clamp(260px, 52vw, 400px); }
   .hero__inner { padding: 36px 20px 48px; }
   .hero h1 { font-size: clamp(26px, 8vw, 40px); letter-spacing: -0.02em; }
   .hero__dek { font-size: 16px; line-height: 1.55; }
