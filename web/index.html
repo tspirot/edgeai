@@ -1,9 +1,16 @@
 <!doctype html>
-<html lang="sr">
+<html lang="sr" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      // Постави тему пре исцртавања (нема треперења). Подразумевано светла.
+      try {
+        var t = localStorage.getItem('edgeai-theme');
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+      } catch (e) {}
+    </script>
     <meta
       name="description"
       content="Edge AI Пирот — вештачка интелигенција која ради на самом уређају, без облака. Пројекти, упутства и радионице Техничке школе Пирот."

@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
 
-// Тамна тема је подразумевана. Избор корисника се памти у localStorage.
+// Светла тема је подразумевана. Избор корисника се памти у localStorage.
 const KEY = 'edgeai-theme'
+export const DEFAULT_THEME = 'light'
 
 export function initTheme() {
   let saved = null
   try { saved = localStorage.getItem(KEY) } catch { /* приватни режим */ }
-  const theme = saved === 'light' || saved === 'dark' ? saved : 'dark'
+  const theme = saved === 'light' || saved === 'dark' ? saved : DEFAULT_THEME
   document.documentElement.setAttribute('data-theme', theme)
 }
 
 export function getTheme() {
-  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
 }
 
 export function toggleTheme() {

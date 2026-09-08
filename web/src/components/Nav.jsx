@@ -53,8 +53,9 @@ export default function Nav() {
         </div>
 
         <button
+          type="button"
           className="nav__toggle"
-          onClick={() => setTheme(toggleTheme())}
+          onClick={toggleTheme}
           aria-label={theme === 'light' ? 'Тамна тема' : 'Светла тема'}
           title={theme === 'light' ? 'Тамна тема' : 'Светла тема'}
         >
