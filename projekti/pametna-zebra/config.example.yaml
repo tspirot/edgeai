@@ -1,0 +1,35 @@
+# Копирај у config.yaml и промени по потреби.  zebra run -c config.yaml
+
+video:
+  source: "0"        # "0" камера, путања видеа, или "sim"
+  width: 1280
+  height: 720
+  fps: 30.0
+
+detect:
+  backend: yolo      # yolo | hailo | dummy
+  model: yolov8n.pt
+  conf: 0.35
+  conf_low: 0.15
+
+track:
+  max_age: 30
+  min_hits: 3
+  iou_match: 0.2
+
+safety:
+  ttc_seconds: 3.0          # праг: колико времена до уласка у зону судара
+  conflict_radius_m: 2.0
+  hold_seconds: 2.0
+  meters_per_pixel: 0.05    # из `zebra calibrate`
+
+zone:
+  file: zones.json
+
+io:
+  gpio: true
+  led_pin: 17
+  log_file: brojac.csv
+  log_interval_s: 60.0
+
+log_level: INFO

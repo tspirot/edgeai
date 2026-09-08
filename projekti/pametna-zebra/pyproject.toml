@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pametna-zebra"
+version = "0.1.0"
+description = "Локално бројање пешака и возила и упозорење на судар код пешачког прелаза"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "opencv-python>=4.8",
+]
+
+[project.optional-dependencies]
+yolo = ["ultralytics>=8.2"]
+rpi = ["gpiozero>=2.0", "picamera2>=0.3"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+zebra = "zebra.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

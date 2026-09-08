@@ -1,8 +1,11 @@
 {
   "python.defaultInterpreterPath": "${workspaceFolder}/projekti/titlovi-uzivo/.venv/Scripts/python.exe",
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": ["projekti/titlovi-uzivo"],
-  "python.analysis.extraPaths": ["projekti/titlovi-uzivo/src"],
+  "python.testing.pytestArgs": ["projekti/titlovi-uzivo", "projekti/pametna-zebra"],
+  "python.analysis.extraPaths": [
+    "projekti/titlovi-uzivo/src",
+    "projekti/pametna-zebra/src"
+  ],
   "files.exclude": {
     "**/__pycache__": true,
     "**/*.pyc": true

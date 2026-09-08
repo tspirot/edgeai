@@ -49,6 +49,25 @@
       "args": ["-v"],
       "cwd": "${workspaceFolder}/projekti/titlovi-uzivo",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Зебра: симулација (sim)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "zebra",
+      "args": ["run", "--sim", "--no-gpio", "--max-frames", "150"],
+      "cwd": "${workspaceFolder}/projekti/pametna-zebra",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/pametna-zebra/src" }
+    },
+    {
+      "name": "Зебра: тестови (pytest)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-v"],
+      "cwd": "${workspaceFolder}/projekti/pametna-zebra",
+      "console": "integratedTerminal"
     }
   ]
 }

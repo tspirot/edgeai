@@ -9,6 +9,12 @@ venv/
 # модели (преузимају се локално, велики су)
 projekti/**/models/
 *.zip
+*.pt
+
+# рантајм артефакти пројеката
+projekti/**/brojac.csv
+projekti/**/zones.json
+projekti/**/*.log
 
 # deploy (серверски радни фајлови)
 deploy/logs/
