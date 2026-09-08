@@ -7,8 +7,7 @@ const HUB = new THREE.Vector3(0, 0, 0)
 const CLOUD_POS = new THREE.Vector3(0.4, 1.75, -1.6)
 
 /* --- један чвор = један пројекат ---------------------------------------- */
-/* --- један чвор = један пројекат ---------------------------------------- */
-function Node({ p, onSelect, showLabel = true, isLight = false }) {
+function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }) {
   const ref = useRef()
   const [hover, setHover] = useState(false)
 
