@@ -1,0 +1,30 @@
+# зависности и билдови
+node_modules/
+web/dist/
+**/__pycache__/
+*.pyc
+.venv/
+venv/
+
+# модели (преузимају се локално, велики су)
+projekti/**/models/
+*.zip
+
+# уредници / ОС
+.DS_Store
+.idea/
+*.local
+
+# VS Code: дели се само заједничка конфигурација
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# интерни документи — не иду ни у приватни репо без договора
+interno/
+*budzet*
+*буџет*
+*aproprijacij*
+*апропријациј*

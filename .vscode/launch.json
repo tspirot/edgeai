@@ -1,0 +1,54 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Сајт: Chrome + dev сервер",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/web",
+      "preLaunchTask": "web:dev",
+      "sourceMapPathOverrides": {
+        "/src/*": "${workspaceFolder}/web/src/*"
+      }
+    },
+    {
+      "name": "Сајт: само dev сервер",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "${workspaceFolder}/web",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Титлови: демо (dummy, конзола)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "titlovi",
+      "args": ["run", "--backend", "dummy", "--console"],
+      "cwd": "${workspaceFolder}/projekti/titlovi-uzivo",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/titlovi-uzivo/src" }
+    },
+    {
+      "name": "Титлови: уживо (микрофон)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "titlovi",
+      "args": ["run"],
+      "cwd": "${workspaceFolder}/projekti/titlovi-uzivo",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/titlovi-uzivo/src" }
+    },
+    {
+      "name": "Титлови: тестови (pytest)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-v"],
+      "cwd": "${workspaceFolder}/projekti/titlovi-uzivo",
+      "console": "integratedTerminal"
+    }
+  ]
+}

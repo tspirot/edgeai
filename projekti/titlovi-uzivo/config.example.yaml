@@ -1,0 +1,37 @@
+# Копирај у config.yaml и промени само оно што ти треба.
+# Покретање са конфигурацијом:  titlovi run -c config.yaml
+
+audio:
+  device: null          # индекс или назив улаза; `titlovi devices` за листу
+  samplerate: 16000
+  block_ms: 100
+
+asr:
+  backend: faster-whisper   # faster-whisper | vosk | dummy
+  whisper:
+    model: base             # tiny/base за Raspberry Pi 5, small+ за јачи рачунар
+    compute_type: int8
+    language: sr
+    window_seconds: 12.0
+    step_seconds: 1.5
+    silence_seconds: 0.7
+    energy_threshold: 0.010
+  vosk:
+    model_path: models/vosk
+
+text:
+  script: cyrillic        # cyrillic | latin | as-is
+  max_chars: 240
+
+display:
+  backend: pygame         # pygame | web | console
+  fullscreen: true
+  font_size: 56
+  lines: 3
+  badge: true
+  # само за backend: web
+  host: 0.0.0.0
+  port: 8080
+  open_browser: false
+
+log_level: INFO

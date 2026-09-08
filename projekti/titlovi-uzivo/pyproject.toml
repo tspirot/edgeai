@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "titlovi-uzivo"
+version = "0.1.0"
+description = "Титлови уживо на српском, на самом уређају — без облака"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "sounddevice>=0.4.6",
+    "pyyaml>=6.0",
+    "pygame>=2.5",
+    "faster-whisper>=1.0.0",
+]
+
+[project.optional-dependencies]
+vosk = ["vosk>=0.3.45"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+titlovi = "titlovi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

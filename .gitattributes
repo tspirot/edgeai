@@ -1,0 +1,10 @@
+# Доследни LF свуда — репо се билдује и деплојује на Linux
+* text=auto eol=lf
+
+*.sh   text eol=lf
+*.php  text eol=lf
+
+*.png  binary
+*.jpg  binary
+*.ico  binary
+*.woff2 binary
