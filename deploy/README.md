@@ -1,7 +1,35 @@
 # Deploy на edgeai.tsp.edu.rs
 
-Исти приступ као код `tsp` портала: **GitHub webhook → Node сервис (PM2) → `deploy.sh`**.
-Без SSH, без GitHub Actions. Аутентикација је **преко secret-а** (HMAC `x-hub-signature-256`).
+Два начина, оба без SSH и без GitHub Actions:
+
+- **A) Git poll (препоручено, ништа не зависи од Apache-ја)** — cron сваких пар
+  минута провери `main` и, ако има новог, покрене `deploy.sh`. Види доле.
+- **B) GitHub webhook → Node сервис (PM2) → `deploy.sh`** — брже (одмах), али
+  тражи да Apache/Virtualmin проксира `/webhook` на локални порт. Ако
+  `curl https://edgeai.tsp.edu.rs/webhook/health` не врати `ok` него HTML,
+  proxy није активан — користи начин A.
+
+---
+
+## A) Git poll (без Apache proxy-ја)
+
+```bash
+# репо већ клониран у ~/edgeai (види „Поставка", корак 1)
+mkdir -p ~/edgeai/deploy/logs
+( crontab -l 2>/dev/null | grep -v 'deploy/poll.sh'; \
+  echo "*/2 * * * * /bin/bash $HOME/edgeai/deploy/poll.sh >> $HOME/edgeai/deploy/logs/poll.log 2>&1" ) | crontab -
+crontab -l | grep poll     # провера
+```
+
+Од тада `git push` у `main` → сајт се сам објави за највише ~2 минута.
+Лог: `~/edgeai/deploy/logs/poll.log` и `deploy.log`.
+Ручно одмах: `bash ~/edgeai/deploy/deploy.sh`.
+
+---
+
+## B) GitHub webhook (тренутно)
+
+Аутентикација је **преко secret-а** (HMAC `x-hub-signature-256`).
 
 ```
 GitHub push ──► https://edgeai.tsp.edu.rs/webhook

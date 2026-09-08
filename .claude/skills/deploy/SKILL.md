@@ -17,10 +17,14 @@ git push main ──► https://edgeai.tsp.edu.rs/webhook  (Apache proxy)
 
 ## Свакодневни deploy
 
-**Ништа посебно — само `git push` у `main`.** Ако push дира `web/**` или `deploy/**`,
-webhook сам преведе и објави сајт за ~1 минут.
+**Ништа посебно — само `git push` у `main`.** Сервер сам преведе и објави сајт:
+- **начин A (git poll)**: cron сваких ~2 мин (`deploy/poll.sh`) — ради увек
+- **начин B (webhook)**: одмах, али само ако Apache проксира `/webhook`
 
-Ручни deploy на серверу: `bash ~/edgeai/deploy/deploy.sh`
+Ручни deploy на серверу (увек ради): `bash ~/edgeai/deploy/deploy.sh`
+
+Ако `curl https://edgeai.tsp.edu.rs/webhook/health` врати HTML уместо `ok`,
+Apache proxy није активан → користи git poll (`deploy/README.md`, одељак A).
 
 ## Провера
 
