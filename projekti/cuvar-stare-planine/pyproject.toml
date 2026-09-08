@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuvar-stare-planine"
+version = "0.1.0"
+description = "Фотозамка која на уређају препознаје врсту и мери климу — без сигнала"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "opencv-python>=4.8",
+]
+
+[project.optional-dependencies]
+onnx = ["onnxruntime>=1.17"]
+rpi = ["picamera2>=0.3", "bme680>=1.1", "gpiozero>=2.0"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+cuvar = "cuvar.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

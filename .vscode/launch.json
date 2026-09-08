@@ -68,6 +68,16 @@
       "args": ["-v"],
       "cwd": "${workspaceFolder}/projekti/pametna-zebra",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Чувар: симулација (sim)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "cuvar",
+      "args": ["run", "--sim", "--max-frames", "300"],
+      "cwd": "${workspaceFolder}/projekti/cuvar-stare-planine",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/cuvar-stare-planine/src" }
     }
   ]
 }

@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [titlovi-uzivo, pametna-zebra]
+        project: [titlovi-uzivo, pametna-zebra, cuvar-stare-planine]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

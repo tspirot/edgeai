@@ -1,0 +1,35 @@
+# Копирај у config.yaml.  cuvar run -c config.yaml
+
+camera:
+  source: "0"          # "0" камера, видео фајл, или "sim"
+  width: 1280
+  height: 720
+  fps: 10.0
+
+trigger:
+  change_fraction: 0.02
+  pixel_delta: 25
+  cooldown_s: 8.0
+  warmup_frames: 5
+
+classify:
+  backend: imx500      # imx500 | onnx | dummy
+  model: models/vrste.rpk
+  min_score: 0.55
+  labels: [srna, "divlja svinja", lisica, zec, vuk, medved, ptica]
+
+climate:
+  backend: bme688      # bme688 | dummy
+  i2c_address: 0x77
+
+storage:
+  dir: snimci
+  keep_last: 500
+  save_images: true
+
+power:
+  battery_wh: 77.0
+  active_w: 2.4
+  sleep_w: 0.35
+
+log_level: INFO
