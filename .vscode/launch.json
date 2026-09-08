@@ -78,6 +78,26 @@
       "cwd": "${workspaceFolder}/projekti/cuvar-stare-planine",
       "console": "integratedTerminal",
       "env": { "PYTHONPATH": "${workspaceFolder}/projekti/cuvar-stare-planine/src" }
+    },
+    {
+      "name": "Контрола квалитета: sim",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "qc",
+      "args": ["sim"],
+      "cwd": "${workspaceFolder}/projekti/kontrola-kvaliteta",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/kontrola-kvaliteta/src" }
+    },
+    {
+      "name": "Знаковна азбука: sim",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "znak",
+      "args": ["sim"],
+      "cwd": "${workspaceFolder}/projekti/znakovna-azbuka",
+      "console": "integratedTerminal",
+      "env": { "PYTHONPATH": "${workspaceFolder}/projekti/znakovna-azbuka/src" }
     }
   ]
 }

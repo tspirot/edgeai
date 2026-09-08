@@ -1,10 +1,19 @@
 {
   "python.defaultInterpreterPath": "${workspaceFolder}/projekti/titlovi-uzivo/.venv/Scripts/python.exe",
   "python.testing.pytestEnabled": true,
-  "python.testing.pytestArgs": ["projekti/titlovi-uzivo", "projekti/pametna-zebra"],
+  "python.testing.pytestArgs": [
+    "projekti/titlovi-uzivo",
+    "projekti/pametna-zebra",
+    "projekti/cuvar-stare-planine",
+    "projekti/kontrola-kvaliteta",
+    "projekti/znakovna-azbuka"
+  ],
   "python.analysis.extraPaths": [
     "projekti/titlovi-uzivo/src",
-    "projekti/pametna-zebra/src"
+    "projekti/pametna-zebra/src",
+    "projekti/cuvar-stare-planine/src",
+    "projekti/kontrola-kvaliteta/src",
+    "projekti/znakovna-azbuka/src"
   ],
   "files.exclude": {
     "**/__pycache__": true,

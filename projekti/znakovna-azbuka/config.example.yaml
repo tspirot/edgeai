@@ -1,0 +1,25 @@
+# Копирај у config.yaml.  znak run -c config.yaml
+
+camera:
+  source: "0"
+  width: 1280
+  height: 720
+  fps: 30.0
+
+hands:
+  backend: mediapipe   # mediapipe | dummy
+  min_detection_conf: 0.6
+  min_tracking_conf: 0.5
+
+classifier:
+  k: 5
+  min_confidence: 0.55
+
+vote:
+  window: 8
+  min_count: 5
+  min_confidence: 0.55
+
+dataset_file: podaci.csv
+model_file: model.npz
+log_level: INFO
