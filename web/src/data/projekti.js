@@ -111,6 +111,7 @@ export const projekti = [
     hardver: ['Raspberry Pi 5', 'AI HAT+ Hailo-8L', 'Camera Module 3'],
     tehnologije: ['YOLOv8n', 'ByteTrack', 'LED упозорење'],
     uputstvo: 'ai-hat-hailo',
+    repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/pametna-zebra',
     telemetrija: {
       latencija: '28 ms / кадру',
       npuCpu: 'Hailo-8L (13 TOPS)',
@@ -182,6 +183,7 @@ export const projekti = [
     hardver: ['Raspberry Pi 5', 'AI Camera IMX500', 'BME688'],
     tehnologije: ['класификација врста', 'рад на батерији', 'инференца на сензору'],
     uputstvo: 'ai-camera-imx500',
+    repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/cuvar-stare-planine',
     telemetrija: {
       latencija: '18 ms',
       npuCpu: 'IMX500 сензорски NPU',
@@ -243,6 +245,7 @@ export const projekti = [
     hardver: ['Raspberry Pi 5', 'AI HAT+ Hailo-8L', 'Camera Module 3'],
     tehnologije: ['PatchCore / PaDiM', 'контролисано осветљење'],
     uputstvo: 'ai-hat-hailo',
+    repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/kontrola-kvaliteta',
     telemetrija: {
       latencija: '45 ms / узорку',
       npuCpu: 'Hailo-8L NPU',
@@ -306,6 +309,7 @@ export const projekti = [
     hardver: ['Raspberry Pi 5', 'AI Camera IMX500'],
     tehnologije: ['детекција тачака шаке', 'сопствени скуп података', 'Label Studio'],
     uputstvo: 'ai-camera-imx500',
+    repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/znakovna-azbuka',
     telemetrija: {
       latencija: '35 ms',
       npuCpu: 'IMX500 / Pi 5 CPU',

@@ -574,26 +574,55 @@ blockquote cite { display: block; font-style: normal; font-size: 13px; margin-to
 
 /* ---------- 3D сцена: ознаке ------------------------------------------- */
 .node-label {
-  font-family: var(--font-head);
-  font-size: 12px;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: stretch;
   white-space: nowrap;
-  color: var(--ink);
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  padding: 5px 11px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
-.node-label b { color: var(--brass); font-family: var(--font-mono); margin-right: 3px; }
+.node-label__name {
+  font-family: var(--font-head);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: none;
+  border: none;
+  padding: 5px 11px;
+  cursor: pointer;
+}
+.node-label__name b { color: var(--brass); font-family: var(--font-mono); margin-right: 3px; }
+.node-label__repo {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 9px;
+  border-left: 1px solid var(--line-strong);
+  max-width: 0;
+  padding-inline: 0;
+  border-left-color: transparent;
+  overflow: hidden;
+  transition: max-width 0.18s ease, padding 0.18s ease, color 0.15s ease, border-color 0.18s ease;
+}
+.node-label__repo:hover { color: var(--accent); text-decoration: none; }
 .node-label:hover, .node-label.is-hover {
   border-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+.node-label:hover .node-label__repo,
+.node-label.is-hover .node-label__repo {
+  max-width: 80px;
+  padding: 0 10px 0 9px;
+  border-left-color: var(--line-strong);
 }
 
 .cloud-label {

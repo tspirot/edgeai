@@ -44,14 +44,27 @@ function Node({ p, onSelect, showLabel = true, isLight = false }) {
 
       {showLabel && (
         <Html position={[0, 0.85, 0]} center distanceFactor={9} zIndexRange={[20, 0]}>
-          <button
+          <div
             className={`node-label${hover ? ' is-hover' : ''}`}
-            onClick={() => onSelect(p.slug)}
             onPointerOver={() => setHover(true)}
             onPointerOut={() => setHover(false)}
           >
-            <b>{p.broj}</b> {p.cvor || p.naziv}
-          </button>
+            <button className="node-label__name" onClick={() => onSelect(p.slug)}>
+              <b>{p.broj}</b> {p.cvor || p.naziv}
+            </button>
+            {p.repo && (
+              <a
+                className="node-label__repo"
+                href={p.repo}
+                target="_blank"
+                rel="noreferrer"
+                title="Изворни кôд на GitHub-у"
+                onClick={(e) => e.stopPropagation()}
+              >
+                кôд ↗
+              </a>
+            )}
+          </div>
         </Html>
       )}
     </group>
