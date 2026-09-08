@@ -95,7 +95,7 @@ function Pulse({ from, phase, speed, reduced, isLight = false }) {
 }
 
 /* --- „облак“ горе, замрачен и неповезан -------------------------------- */
-function DisconnectedCloud({ isLight = false }) {
+function DisconnectedCloud({ isLight = false, mobile = false }) {
   const puffs = [
     [0, 0, 0, 0.62],
     [0.62, -0.08, 0, 0.48],
@@ -121,9 +121,11 @@ function DisconnectedCloud({ isLight = false }) {
         transparent
         opacity={isLight ? 0.45 : 0.55}
       />
-      <Html position={[0, 1.0, 0]} center distanceFactor={12}>
-        <span className="cloud-label">облак · искључен</span>
-      </Html>
+      {!mobile && (
+        <Html position={[0, 1.05, 0]} center distanceFactor={14} wrapperClass="node-label-wrap">
+          <span className="cloud-label">облак · искључен</span>
+        </Html>
+      )}
     </group>
   )
 }
@@ -229,7 +231,7 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
           </group>
         ))}
 
-        <DisconnectedCloud isLight={isLight} />
+        <DisconnectedCloud isLight={isLight} mobile={mobile} />
         <Dust count={mobile ? 180 : 650} reduced={reduced} isLight={isLight} />
       </group>
     </>
