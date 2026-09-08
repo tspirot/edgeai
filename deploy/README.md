@@ -30,15 +30,19 @@ git clone https://x-access-token:<PAT>@github.com/tspirot/edgeai.git
 PAT: github.com → Settings → Developer settings → Fine-grained tokens →
 Repository access: само `tspirot/edgeai`, Permissions → Contents: Read-only.
 
-### 2. Подеси PM2 сервис
+### 2. Подеси PM2 сервис (без sudo)
+
+`ecosystem.config.js` је већ намештен за корисника `edgeai` (`/home/edgeai/edgeai`,
+docroot `/home/edgeai/public_html`). Провери само `WEBHOOK_SECRET`.
 
 ```bash
 cd ~/edgeai
-nano deploy/ecosystem.config.js     # замени USER путање; провери WEBHOOK_SECRET
-npm i -g pm2                          # ако већ није
-pm2 start deploy/ecosystem.config.js
-pm2 save
-pm2 startup                           # да преживи рестарт сервера
+command -v pm2 || npm install pm2          # локално ако није системски (нема sudo)
+PM2=$(command -v pm2 || echo ./node_modules/.bin/pm2)
+$PM2 start deploy/ecosystem.config.js
+$PM2 save
+# аутостарт после рестарта сервера — user crontab (pm2 startup тражи root):
+( crontab -l 2>/dev/null | grep -v 'pm2 resurrect'; echo "@reboot $PM2 resurrect" ) | crontab -
 ```
 
 Провера: `curl http://127.0.0.1:9008/webhook/health` → `ok`.

@@ -10,8 +10,16 @@
 set -euo pipefail
 
 REPO_DIR="${REPO_DIR:-$HOME/edgeai}"
-PUBLIC_HTML="${PUBLIC_HTML:-$HOME/domains/edgeai.tsp.edu.rs/public_html}"
 BRANCH="${DEPLOY_BRANCH:-main}"
+
+# document root: из env, иначе аутоматски (Virtualmin: обе варијанте су могуће)
+PUBLIC_HTML="${PUBLIC_HTML:-}"
+if [ -z "$PUBLIC_HTML" ]; then
+  for c in "$HOME/domains/edgeai.tsp.edu.rs/public_html" "$HOME/public_html"; do
+    [ -d "$c" ] && PUBLIC_HTML="$c" && break
+  done
+fi
+: "${PUBLIC_HTML:?Постави PUBLIC_HTML (document root поддомена)}"
 LOG_FILE="$REPO_DIR/deploy/logs/deploy.log"
 BACKUP_DIR="$REPO_DIR/deploy/.public_html_backup"
 
