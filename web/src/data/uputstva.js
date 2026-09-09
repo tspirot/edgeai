@@ -160,6 +160,62 @@ export const uputstva = [
   },
 
   {
+    slug: 'djak-za-volanom-postavka',
+    naziv: 'PiRacer + RPLIDAR: постављање аутомобила',
+    kratko: 'Склапање шасије, PCA9685 серво и ESC, камера напред, RPLIDAR на USB, калибрација волана и гаса, први круг.',
+    nivo: 'напредно',
+    vreme: 'радионица',
+    sadrzaj: [
+      { type: 'p', lead: true, text: 'Кôд је у монорепоу, фасцикла projekti/djak-za-volanom. Циљ радионице: од кутије PiRacer-а до аута који одрађује круг у симулацији, па први спори круг на стази — са тврдим лимитом гаса и лидаром као кочницом.' },
+      { type: 'h', text: 'Шта треба' },
+      { type: 'specs', items: ['Waveshare PiRacer AI Kit', 'Raspberry Pi 4 (4 GB) + хладњак', 'камера (Camera Module 3 или USB, широки угао)', 'Slamtec RPLIDAR A1 + USB адаптер', '2× 18650 напуњене', 'Bluetooth гејмпад'] },
+      { type: 'h', text: 'Склапање и напајање' },
+      {
+        type: 'steps',
+        items: [
+          'Састави шасију по Waveshare упутству: серво у предњи мост, ESC на мотор, PCA9685 на серво и ESC.',
+          'Pi на носач, камеру напред са благим нагибом наниже (да види стазу 30–150 cm испред аута).',
+          'RPLIDAR на равну површину изнад аута, конектор напред; повежи га USB каблом на Pi.',
+          'Батерије за погон одвојено од напајања Pi-ја (power bank) — пад напона при трзају мотора руши Pi.',
+        ],
+      },
+      {
+        type: 'callout',
+        tone: 'alert',
+        title: 'Точкови у ваздуху при првом тесту',
+        text: 'Пре сваког volan drive и volan check, подигни ауто на кутију. ESC може да тргне пуном снагом ако је калибрација погрешна.',
+      },
+      { type: 'h', text: 'Софтвер' },
+      { type: 'code', lang: 'bash', code: 'sudo apt install -y python3-venv pigpio\ngit clone https://github.com/tspirot/edgeai.git\ncd edgeai/projekti/djak-za-volanom\npython3 -m venv .venv && source .venv/bin/activate\npip install -e ".[kamera,lidar,pwm,gamepad]"' },
+      { type: 'h', text: 'RPLIDAR — провера порта' },
+      { type: 'code', lang: 'bash', code: 'volan devices                 # излистај /dev/ttyUSB*\nsudo usermod -aG dialout $USER  # једном, па релогин — приступ порту без sudo\nvolan check                    # камера + лидар + серво тест' },
+      { type: 'p', text: 'Ако лидар није на /dev/ttyUSB0, упиши тачан порт у config.yaml (lidar.port).' },
+      { type: 'h', text: 'Калибрација волана и гаса' },
+      {
+        type: 'steps',
+        items: [
+          'volan check врти серво лево → центар → десно. Ако центар није прав, подеси drive.steer_trim (−1..1).',
+          'Ако ауто скреће супротно од очекиваног, стави drive.invert_steer: true.',
+          'ESC: држи throttle_stop_us тако да мотор мирује; повећавај throttle_full_us опрезно.',
+          'Постави drive.max_throttle на 0.35 за почетак — то је тврди лимит, не мења га модел.',
+        ],
+      },
+      { type: 'h', text: 'Први круг' },
+      { type: 'code', lang: 'bash', code: 'volan sim                     # цео ланац без хардвера — провера логике\nvolan drive --model heuristic # прати светлу траку, без снимања\n# тек кад ово ради поуздано: volan record → volan train → volan drive' },
+      { type: 'h', text: 'Провера — како знам да ради' },
+      {
+        type: 'ul',
+        items: [
+          'volan sim: „Кочница активна у N/100 циклуса“ — препрека на пола симулације зауставља ауто.',
+          'volan check: најближа тачка испред у mm се мења кад руком приђеш лидару.',
+          'volan drive --model heuristic: ауто прати светлију траку и стаје кад му станеш испред.',
+          'Искључиш RPLIDAR каблом усред вожње → ауто стане (застарео скен).',
+        ],
+      },
+    ],
+  },
+
+  {
     slug: 'skolski-asistent-postavka',
     naziv: 'Школски асистент на Jetson Orin Nano',
     kratko: 'JetPack и CUDA, преузимање модела (Whisper, Qwen2-VL int4, Piper), C922 камера, RAG индекс и мерење.',

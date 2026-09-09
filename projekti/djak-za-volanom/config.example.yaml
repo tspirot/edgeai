@@ -1,0 +1,53 @@
+# Копирај у config.yaml и промени само оно што ти треба.
+# Проба без хардвера:  volan sim
+# Вожња:               volan drive -c config.yaml
+
+camera:
+  backend: auto        # auto | picamera2 | opencv | dummy
+  index: 0             # за opencv
+  width: 160
+  height: 120
+  fps: 30
+
+model:
+  backend: tflite      # tflite | heuristic | dummy
+  path: models/pilot.tflite
+  input_width: 160
+  input_height: 120
+  predicts_throttle: false
+  cruise_throttle: 0.35   # гас кад модел не предвиђа гас
+
+lidar:
+  backend: auto        # auto | rplidar | dummy
+  port: /dev/ttyUSB0
+  cone_deg: 60.0       # ширина конуса испред аута (провера препрека)
+  forward_offset_deg: 0.0   # где је „напред“ на лидару
+  min_valid_mm: 120.0
+  max_range_mm: 4000.0
+
+safety:                # обичан праг са хистерезом — НЕ неуронска мрежа
+  brake_mm: 550.0
+  release_mm: 800.0    # мора > brake_mm (хистереза, да не трепери)
+  slow_mm: 1200.0
+  slow_factor: 0.5
+  stale_scan_s: 0.4    # без свежег скена дуже од овога → кочи
+
+drive:
+  hz: 20.0
+  max_throttle: 0.45   # тврди лимит — почни низак, подижи кад буде поуздано
+  steer_trim: 0.0      # механичка корекција центра волана
+  steer_gain: 1.0
+  invert_steer: false
+
+actuator:
+  backend: auto        # auto | pca9685 | dummy
+  steer_channel: 0
+  throttle_channel: 1
+  steer_center_us: 1500
+  throttle_stop_us: 1500
+
+record:
+  out_dir: data
+  jpg_quality: 90
+
+log_level: INFO
