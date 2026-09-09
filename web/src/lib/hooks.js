@@ -21,3 +21,6 @@ export const useReducedMotion = () =>
   useMediaQuery('(prefers-reduced-motion: reduce)')
 
 export const useIsMobile = () => useMediaQuery('(max-width: 820px)')
+
+// Схеме прелазе са водоравног на усправан распоред пре мобилног прелома.
+export const useIsNarrow = () => useMediaQuery('(max-width: 700px)')

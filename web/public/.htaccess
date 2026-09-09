@@ -15,6 +15,14 @@
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 30 days"
   ExpiresByType font/woff2 "access plus 1 year"
+  # Медиј из public/slike/ — имена без хеша, па кратак рок и без immutable
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/avif "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/gif "access plus 30 days"
+  ExpiresByType video/mp4 "access plus 30 days"
+  ExpiresByType video/webm "access plus 30 days"
 </IfModule>
 <IfModule mod_headers.c>
   <FilesMatch "\.(js|css|woff2|svg)$">

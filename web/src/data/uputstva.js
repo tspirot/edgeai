@@ -24,6 +24,22 @@ export const uputstva = [
       },
       { type: 'code', lang: 'bash', code: 'sudo apt update && sudo apt full-upgrade -y\nsudo reboot' },
       {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Основна радна станица',
+        caption:
+          'Овако изгледа Pi 5 пре него што му се дода било шта пројектно. Свака станица у лабораторији креће одавде.',
+        data: {
+          ploca: 'Raspberry Pi 5 (8 GB)',
+          veze: [
+            { port: 'USB-C', ikona: '🔌', naziv: 'Напајање 27 W / 5 A', detalj: 'слабије даје насумичне падове' },
+            { port: 'GPIO', ikona: '🌀', naziv: 'Активни хладњак', detalj: 'без њега процесор успорава' },
+            { port: 'microSD', ikona: '💾', naziv: 'Картица 64 GB', detalj: 'Raspberry Pi OS 64-bit' },
+            { port: 'micro-HDMI', ikona: '🖥️', naziv: 'Монитор', detalj: 'или само SSH преко мреже' },
+          ],
+        },
+      },
+      {
         type: 'callout',
         tone: 'warn',
         title: 'Напајање и хлађење нису опциони',
@@ -50,6 +66,22 @@ export const uputstva = [
           'Причврсти HAT на GPIO и завртњима на дистанце.',
           'Укључи Pi и провери да ли систем види уређај на PCIe магистрали.',
         ],
+      },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Где шта иде',
+        caption:
+          'Најчешћа грешка при монтажи: FPC кабл се тражи на GPIO пиновима. Подаци иду искључиво преко PCIe прикључка — GPIO носи само механику и напајање додатака.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'PCIe', ikona: '⚡', naziv: 'AI HAT+ (Hailo-8L)', detalj: 'FPC кабл — овуда иду подаци' },
+            { port: 'GPIO', ikona: '🔩', naziv: 'Дистанце и завртњи', detalj: 'механичко причвршћење' },
+            { port: 'CSI', ikona: '📷', naziv: 'Камера', detalj: 'за проверу детекције' },
+            { port: 'USB-C', ikona: '🔌', naziv: 'Напајање 27 W', detalj: 'плоча и HAT заједно' },
+          ],
+        },
       },
       { type: 'h', text: 'Софтвер' },
       { type: 'code', lang: 'bash', code: 'sudo apt update\nsudo apt install -y hailo-all\nsudo reboot' },
@@ -80,6 +112,19 @@ export const uputstva = [
       { type: 'h', text: 'Поставка' },
       { type: 'code', lang: 'bash', code: 'sudo apt update\nsudo apt install -y imx500-all\nsudo reboot' },
       { type: 'code', lang: 'bash', code: 'rpicam-hello -t 10s --post-process-file /usr/share/rpi-camera-assets/imx500_mobilenet_ssd.json --viewfinder-width 1920 --viewfinder-height 1080' },
+      {
+        type: 'shema',
+        kind: 'tok',
+        naslov: 'Зашто је ово другачије',
+        caption:
+          'Код обичне камере кадар путује до процесора па се тек тамо обрађује. Код IMX500 мрежа ради на самом сензору, а процесор добија готов резултат — отуда потрошња од непуна 2 W.',
+        pipeline: [
+          { icon: '📷', title: 'IMX500 сензор', detail: 'кадар настаје на чипу' },
+          { icon: '🧠', title: 'Мрежа на сензору', detail: 'инференца пре излаза из камере' },
+          { icon: '📨', title: 'Само резултат', detail: 'ознака и оквир, не цела слика' },
+          { icon: '😴', title: 'Pi већином спава', detail: 'буди се тек на налаз' },
+        ],
+      },
       { type: 'h', text: 'Свој модел' },
       {
         type: 'steps',
@@ -116,6 +161,21 @@ export const uputstva = [
           'Састави „на суво“, па залепи или споји завртњима M3.',
         ],
       },
+      {
+        type: 'shema',
+        kind: 'kuciste',
+        naslov: 'Страница кућишта — принцип',
+        caption:
+          'Дубина зупца мора да буде тачно једнака дебљини плексигласа. Ако је мања, спој не належе; ако је већа, зубац вири преко ивице.',
+        data: {
+          sirina: 'цртај у милиметрима, размера 1:1 — ласер реже онолико колико пише',
+          otvori: [
+            { naziv: 'USB', x: 10, y: 60, w: 22, h: 12 },
+            { naziv: 'HDMI', x: 40, y: 60, w: 26, h: 11 },
+            { naziv: 'камера', x: 76, y: 18, w: 16, h: 17 },
+          ],
+        },
+      },
       { type: 'h', text: '3D штампа' },
       {
         type: 'ul',
@@ -146,6 +206,21 @@ export const uputstva = [
       { type: 'code', lang: 'bash', code: 'git clone https://github.com/tspirot/edgeai.git\ncd edgeai/projekti/titlovi-uzivo\npython3 -m venv .venv && source .venv/bin/activate\npip install -e .' },
       { type: 'h', text: 'Преузимање модела (једном, уз интернет)' },
       { type: 'code', lang: 'bash', code: 'titlovi download-model --backend faster-whisper --model base' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Шта мора да буде прикључено',
+        caption:
+          'Мрежни кабл треба само за корак преузимања модела. Кад једном прође, извуци га — систем ради потпуно офлајн.',
+        data: {
+          ploca: 'Raspberry Pi 5 (8 GB)',
+          veze: [
+            { port: 'USB', ikona: '🎙️', naziv: 'USB микрофон', detalj: 'провери индекс: titlovi devices' },
+            { port: 'HDMI', ikona: '🖥️', naziv: 'Пројектор', detalj: 'titlovi run — цео екран' },
+            { port: 'LAN', ikona: '🌐', naziv: 'Мрежа', detalj: 'само за прво преузимање модела' },
+          ],
+        },
+      },
       { type: 'h', text: 'Провера аудио улаза' },
       { type: 'code', lang: 'bash', code: 'titlovi devices' },
       { type: 'h', text: 'Покретање' },
@@ -178,8 +253,26 @@ export const uputstva = [
           'Камеру постави са стране ученика, у висини рамена, 60–100 cm од столице.',
           'Треба да види уво, раме и кук у профилу — не одозго, не искоса.',
           '3D штампан држач да угао остане исти од часа до часа.',
+          'Провери да ли се у кадру виде уво, раме и кук — то су три тачке из којих се рачунају углови.',
           'У config.yaml: pose.side (left/right, која страна тела гледа камеру) или остави auto.',
         ],
+      },
+      {
+        type: 'shema',
+        kind: 'scena',
+        naslov: 'Где стоји камера',
+        caption:
+          'Из профила се углови врата и трупа виде као прави углови. Постављена спреда или одозго, камера мери пројекцију угла — број који се мења кад се ученик само окрене.',
+        data: {
+          kamera: { naziv: 'Камера са стране', vfov: 52, visina: 'висина рамена' },
+          zone: [{ naziv: 'Мерни кадар — уво, раме, кук', od: 26, do: 76 }],
+          objekti: [
+            { ikona: '🧍', naziv: 'Ученик у профилу', x: 50, y: 48 },
+            { ikona: '🪑', naziv: 'Столица', x: 74, y: 60 },
+            { ikona: '📏', naziv: '60–100 cm', x: 26, y: 30 },
+          ],
+          tlo: 'Радно место — поглед одозго',
+        },
       },
       { type: 'h', text: 'Лична калибрација' },
       { type: 'code', lang: 'bash', code: 'drzanje calibrate        # ученик седи усправно и мирно ~5 s' },
@@ -237,6 +330,22 @@ export const uputstva = [
       { type: 'h', text: 'Калибрација „напред“' },
       { type: 'p', text: 'SLAM претпоставља да лидарска 0° гледа право напред. Ако је сензор монтиран заокренуто, стави угао у lidar.forward_offset_deg (нпр. 90 или 180). Провера: стани возилом ка зиду на 1 m и мапирај 5 s — зид на мапи мора да буде тачно испред возила.' },
       {
+        type: 'shema',
+        kind: 'scena',
+        naslov: 'Провера оријентације',
+        caption:
+          'Постави возило управно на зид, на метар растојања, и мапирај пет секунди. Ако се зид на мапи појави са стране уместо испред — 0° лидара није поравнат са „напред“ и треба подесити forward_offset_deg.',
+        data: {
+          kamera: { naziv: 'RPLIDAR 0° — „напред“', vfov: 44, visina: '360°' },
+          zone: [{ naziv: 'Очекивано: зид право испред', od: 56, do: 80 }],
+          objekti: [
+            { ikona: '🧱', naziv: 'Зид на 1 m', x: 50, y: 68 },
+            { ikona: '🚗', naziv: 'Возило', x: 50, y: 12 },
+          ],
+          tlo: 'Провера пре мапирања — поглед одозго',
+        },
+      },
+      {
         type: 'callout',
         tone: 'warn',
         title: 'Спор сензор — спора вожња',
@@ -280,6 +389,23 @@ export const uputstva = [
           'RPLIDAR на равну површину изнад аута, конектор напред; повежи га USB каблом на Pi.',
           'Батерије за погон одвојено од напајања Pi-ја (power bank) — пад напона при трзају мотора руши Pi.',
         ],
+      },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Шема повезивања аутомобила',
+        caption:
+          'Две одвојене гране напајања нису препорука него услов: када мотор тргне, напон падне, и Pi се ресетује ако виси на истом пакету.',
+        data: {
+          ploca: 'Raspberry Pi 4 (4 GB)',
+          veze: [
+            { port: 'CSI / USB', ikona: '📷', naziv: 'Камера напред', detalj: 'нагиб наниже, 30–150 cm' },
+            { port: 'USB', ikona: '🌀', naziv: 'RPLIDAR A1', detalj: 'конектор окренут напред' },
+            { port: 'I²C', ikona: '🎛️', naziv: 'PCA9685', detalj: 'серво волана + ESC гаса' },
+            { port: 'BT', ikona: '🎮', naziv: 'Гејмпад', detalj: 'ручна вожња при снимању' },
+            { port: 'USB-C', ikona: '🔋', naziv: 'Power bank за Pi', detalj: 'ОДВОЈЕНО од 2× 18650' },
+          ],
+        },
       },
       {
         type: 'callout',
@@ -358,6 +484,23 @@ export const uputstva = [
         ],
       },
       { type: 'h', text: 'Камера и микрофон' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Шема повезивања станице',
+        caption:
+          'Модели иду на NVMe, не на картицу — Qwen2-VL се учитава при сваком покретању и са картице то траје неупоредиво дуже.',
+        data: {
+          ploca: 'Jetson Orin Nano (8 GB)',
+          veze: [
+            { port: 'USB 3', ikona: '🎥', naziv: 'Logitech C922', detalj: 'слика и микрофон у једном' },
+            { port: 'M.2', ikona: '💽', naziv: 'NVMe SSD', detalj: 'Whisper, Qwen2-VL, Piper, RAG' },
+            { port: '3.5 mm', ikona: '🔊', naziv: 'Звучник', detalj: 'Piper изговара одговор' },
+            { port: 'DP', ikona: '🖥️', naziv: 'Екран', detalj: 'исписан одговор уз говор' },
+            { port: '19 V', ikona: '🔌', naziv: 'Напајање + хладњак', detalj: 'MAX-N режим тражи хлађење' },
+          ],
+        },
+      },
       { type: 'code', lang: 'bash', code: 'asistent devices                 # индекс камере и микрофона\nv4l2-ctl --list-devices           # провера да систем види C922' },
       { type: 'p', text: 'У config.yaml постави camera.index и, за Jetson, asr.whisper.device: cuda и vlm.device: auto.' },
       { type: 'h', text: 'RAG над школским материјалима (опционо)' },
@@ -399,6 +542,25 @@ export const uputstva = [
           'Резервно напајање и резервна SD картица.',
           'Бројке: тачност, кашњење, кадрови у секунди — на графикону, не напамет.',
         ],
+      },
+      {
+        type: 'shema',
+        kind: 'scena',
+        naslov: 'Распоред станице',
+        caption:
+          'Посетилац прилази с фронта, плоча са једном реченицом стоји изнад уређаја, а екран са бројкама гледа према публици. Резервно напајање је иза стола, не преко пута пролаза.',
+        data: {
+          kamera: { naziv: 'Уређај са сензором', vfov: 70, visina: 'ниво стола' },
+          zone: [
+            { naziv: 'Простор за посетиоца — демо од 30 s', od: 40, do: 82 },
+          ],
+          objekti: [
+            { ikona: '📊', naziv: 'Екран са бројкама', x: 20, y: 18 },
+            { ikona: '🪧', naziv: 'Плоча с објашњењем', x: 78, y: 18 },
+            { ikona: '🧑', naziv: 'Посетилац', x: 50, y: 66 },
+          ],
+          tlo: 'Сто станице — поглед одозго',
+        },
       },
       { type: 'h', text: 'Прича за медије' },
       {

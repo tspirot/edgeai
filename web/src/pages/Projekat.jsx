@@ -16,7 +16,7 @@ export default function Projekat() {
 
   return (
     <>
-      <Seo title={p.naziv} description={p.kratko} />
+      <Seo title={p.naziv} description={p.kratko} slika={p.slika} />
       <header className="pagehead">
         <div className="wrap">
           <div className="crumbs">
@@ -46,7 +46,7 @@ export default function Projekat() {
       {p.pipeline && (
         <section className="section" style={{ borderTop: 'none', paddingBottom: 32 }}>
           <div className="wrap">
-            <DataPipeline pipeline={p.pipeline} />
+            <DataPipeline pipeline={p.pipeline} boja={p.boja} />
           </div>
         </section>
       )}
@@ -54,7 +54,7 @@ export default function Projekat() {
       <section className="section">
         <div className="wrap layout-two">
           <div>
-            <Content blocks={p.sadrzaj} />
+            <Content blocks={p.sadrzaj} boja={p.boja} />
           </div>
           <aside className="aside">
             <h4>Технологије</h4>

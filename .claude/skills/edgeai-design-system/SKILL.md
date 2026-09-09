@@ -70,6 +70,55 @@ description: Design system guidelines, UI/UX conventions, color contrast standar
 
 - EdgeVsCloud (src/components/EdgeVsCloud.jsx): Поређење латенције, приватности и протока.
 - ProjectTelemetry (src/components/ProjectTelemetry.jsx): Лајв метрика (RAM, FPS, вати, модел).
-- DataPipeline (src/components/DataPipeline.jsx): Интерактивни дијаграм тока података од сензора до излаза.
+- DataPipeline (src/components/DataPipeline.jsx): Заглавље и оквир; сам дијаграм црта TokShema (SVG).
 - CaptionSimulator (src/components/CaptionSimulator.jsx): Симулатор титлова уживо са одвојеним потврђеним речима.
 - ProgramTimeline (src/components/ProgramTimeline.jsx): Временска линија фаза програма са статусима.
+
+---
+
+## 5. Графика и медиј
+
+Сајт нема декоративних слика. Свака графика носи информацију коју текст не носи
+једнако добро — шему повезивања, распоред на терену, ток сигнала.
+
+### Кодиране схеме имају предност над фајловима
+
+Носећи слој графике су SVG схеме цртане React компонентама у
+`src/components/sheme/` (`HardverShema`, `ScenaShema`, `TokShema`,
+`TackeShakeShema`, `KucisteShema`), уграђене преко блока
+`{type:'shema', kind, data}` (види `src/components/Shema.jsx`).
+
+Предности које растер нема: прате тему светло/тамно, оштре су на сваком екрану,
+не траже фајл (па раде и за пројекте који још нису склопљени) и мере се у
+килобајтима кода, не у мегабајтима слике.
+
+**Правило боја у SVG-у**: ниједна боја се не пише као hex у компоненти схеме.
+Користе се класе из `index.css` (`.shema-box`, `.shema-veza`, `.shema-t-ink`,
+`.shema-t-muted`, `.shema-t-port`, `.shema-ploca`, `.shema-tlo`, `.shema-zona`)
+и `boja` prop за акценат пројекта. Образац је `BrandMark.jsx`; `favicon.svg` је
+пример шта не радити — има хардкодоване тамне боје и не прати тему.
+
+Провера: `grep -n '#[0-9A-Fa-f]\{3,6\}' src/components/sheme/` не сме имати погодак.
+
+### Усправни распоред испод 700 px
+
+Хук `useIsNarrow()` (`src/lib/hooks.js`, 700 px) пребацује схеме са водоравног
+на усправан распоред — плоча на врху, периферије у колони. Прелом је **пре**
+мобилног (`useIsMobile()`, 820 px), јер дијаграм остаје без ширине раније него
+текст. Схеме се не скролују водоравно; мењају распоред.
+
+### Кретање
+
+Анимације у схемама (путујућа тачка кроз `TokShema`) гасе се под
+`useReducedMotion()`. Видео се не пушта сам — `Figure` тада приказује дугме.
+
+### Растер и видео
+
+- Путања `public/slike/<slug>/`, конвенције у `web/public/slike/README.md`.
+- Улазна тачка је искључиво `Figure` (`src/components/Figure.jsx`): `alt` обавезан,
+  `loading="lazy"`, фиксни `aspect-ratio` да распоред не скаче, плејсхолдер
+  уместо покварене слике.
+- **Видео (`.mp4`) уместо GIF-а** — око десет пута мањи фајл за исти садржај.
+- Растер не прати тему. Ако мора у обе, дај `srcDark` варијанту.
+- Слика за дељење: `public/slike/share/edgeai-share.png` (1200×630), поставља је
+  `Seo.jsx`; појединачна страна је мења преко `slika` prop-а.

@@ -1,4 +1,9 @@
-export default function DataPipeline({ pipeline }) {
+import TokShema from './sheme/TokShema'
+
+/* Ток обраде сигнала. Од верзије са графиком цртеж носи TokShema (SVG),
+   а овде остају само заглавље и оквир секције. */
+
+export default function DataPipeline({ pipeline, boja }) {
   if (!pipeline || pipeline.length === 0) return null
 
   return (
@@ -11,26 +16,9 @@ export default function DataPipeline({ pipeline }) {
         </p>
       </div>
 
-      <div className="pipeline-flow">
-        {pipeline.map((step, idx) => (
-          <div key={idx} className="pipeline-step">
-            <div className="pipeline-step__num">0{idx + 1}</div>
-            <div className="pipeline-step__card">
-              <div className="pipeline-step__icon">{step.icon}</div>
-              <div className="pipeline-step__content">
-                <span className="pipeline-step__title">{step.title}</span>
-                <span className="pipeline-step__detail">{step.detail}</span>
-              </div>
-            </div>
-            {idx < pipeline.length - 1 && (
-              <div className="pipeline-arrow" aria-hidden="true">
-                <span>→</span>
-              </div>
-            )}
-          </div>
-        ))}
+      <div className="pipeline-crtez">
+        <TokShema pipeline={pipeline} boja={boja} />
       </div>
     </div>
   )
 }
-

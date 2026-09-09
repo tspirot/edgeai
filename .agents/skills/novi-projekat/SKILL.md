@@ -26,6 +26,9 @@ description: Add a new student project to the Edge AI site (project page, 3D her
      tehnologije: ['...'],
      uputstvo: 'slug-uputstva',    // необавезно, веза ка упутству
      repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/kratko-ime', // ако има кôд
+     telemetrija: { latencija: '...', npuCpu: '...', potrosnja: '...', offline: '100% Офлајн' },
+     pipeline: [ { icon: '📷', title: '...', detail: '...' }, /* 4–6 корака */ ],
+     slika: '/slike/kratko-ime/hero.webp',  // необавезно; тек кад слика заиста постоји
      sadrzaj: [ /* блокови, види доле */ ],
    }
    ```
@@ -41,12 +44,42 @@ description: Add a new student project to the Edge AI site (project page, 3D her
    `{type:'p', text, lead?}` · `{type:'h'|'h3', text}` · `{type:'ul'|'ol'|'steps', items:[]}`
    · `{type:'code', code, lang?}` · `{type:'callout', tone:'info'|'warn'|'alert', title, text}`
    · `{type:'specs', items:[]}` · `{type:'quote', text, cite?}`
+   · `{type:'shema', kind, naslov?, caption?, data}` · `{type:'figure', src, alt, caption?, poster?}`
+   · `{type:'galerija', items:[]}`
 
-4. **Ако пројекат има кôд**: направи `projekti/<slug>/` (по узору на `titlovi-uzivo`),
+4. **Графика је обавезна — свака страна пројекта мора имати бар једну схему.**
+   Схеме се цртају кодом (`web/src/components/sheme/`), прате тему светло/тамно
+   и не траже никакав фајл, па раде и за пројекте који још нису склопљени:
+
+   | `kind` | Шта црта | Подаци |
+   | :--- | :--- | :--- |
+   | `hardver` | плоча и периферије на означеним портовима | `data: { ploca, veze:[{port, ikona, naziv, detalj}] }` |
+   | `scena` | поглед одозго: видно поље, зоне, објекти | `data: { kamera:{naziv, vfov, visina}, zone:[{naziv, od, do}], objekti:[{ikona, naziv, x, y}], tlo }` |
+   | `tok` | ток сигнала корак по корак | чита поље `pipeline` пројекта |
+   | `tackeShake` | 21 тачка шаке | без података |
+   | `kuciste` | страница кућишта за ласер | `data: { sirina, otvori:[{naziv, x, y, w, h}] }` |
+
+   Минимум по пројекту: **`hardver` схема** уз одељак „Хардвер“. Ако пројекат
+   гледа неки простор (прелаз, стазу, траку, ходник), додај и **`scena`**.
+   `tok` схему не додајеш ручно — исцртава се сама из поља `pipeline`.
+   Координате у `scena` су проценти (`x`, `y`, `od`, `do`), не пиксели.
+
+   `caption` пиши као реченицу која објашњава **зашто** је нешто тако постављено,
+   а не шта се на цртежу види.
+
+5. **Фотографије и видео** (`figure`) додај тек кад фајл заиста постоји у
+   `web/public/slike/<slug>/` — види `web/public/slike/README.md`. Видео (`.mp4`)
+   уместо GIF-а; `alt` је обавезан. Не остављај блок који показује на фајл
+   који не постоји — боље без слике него са празним оквиром.
+
+6. **Ако пројекат има кôд**: направи `projekti/<slug>/` (по узору на `titlovi-uzivo`),
    додај `repo` у унос и по потреби ново упутство (skill `novo-uputstvo`).
+   `projekti/<slug>/README.md` се аутоматски рендерује на дну везаног упутства
+   (`uputstvo:` слог) — увоз преко `web/src/data/readme.js`, ништа се не подешава ручно.
 
-5. **Провера**: `cd web && npm run dev` → `/projekti`, `/projekti/<slug>`, насловна.
-   Затим `npm run build` да нема грешке.
+7. **Провера**: `cd web && npm run dev` → `/projekti`, `/projekti/<slug>`, насловна.
+   Погледај страну у **обе теме** (прекидач у навигацији) и на уској ширини —
+   схеме прелазе у усправан распоред испод 700 px. Затим `npm run build`.
 
 ## Замена постојећег прототипа
 

@@ -987,57 +987,9 @@ blockquote cite { display: block; font-style: normal; font-size: 13px; margin-to
   color: var(--muted);
   margin: 0;
 }
-.pipeline-flow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-}
-.pipeline-step {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-.pipeline-step__num {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  color: var(--muted);
-  writing-mode: vertical-lr;
-  transform: rotate(180deg);
-}
-.pipeline-step__card {
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 12px 15px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 175px;
-}
-.pipeline-step__icon {
-  font-size: 20px;
-}
-.pipeline-step__content {
-  display: flex;
-  flex-direction: column;
-}
-.pipeline-step__title {
-  font-family: var(--font-head);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--ink);
-}
-.pipeline-step__detail {
-  font-size: 11.5px;
-  color: var(--muted);
-}
-.pipeline-arrow {
-  color: var(--accent);
-  font-size: 18px;
-  font-weight: 700;
+.pipeline-crtez {
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
 }
 
 /* ---------- Program Timeline ---------------------------------------------- */
@@ -1310,6 +1262,146 @@ blockquote cite { display: block; font-style: normal; font-size: 13px; margin-to
   gap: 12px;
   align-items: center;
 }
+
+/* ===========================================================================
+   Графика: слике, видео и кодиране SVG схеме
+   ========================================================================== */
+
+/* --- Figure: растер, GIF и видео ---------------------------------------- */
+.figure { margin: 26px 0; }
+.figure--puna { margin: 0; }
+.figure__media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.figure__media > img,
+.figure__media > video,
+.figure__pusti > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.figure__cap {
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+/* Плејсхолдер кад фајл недостаје — никад покварена слика. */
+.figure__nema {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 20px;
+  text-align: center;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 9px, var(--surface-3) 9px 10px),
+    var(--surface-2);
+}
+.figure__nema span { font-size: 26px; opacity: 0.65; }
+.figure__nema p { margin: 0; font-size: 12.5px; color: var(--muted); max-width: 34ch; }
+/* Ручно покретање анимације под „смањено кретање“. */
+.figure__pusti {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  border: 0;
+  padding: 20px;
+  cursor: pointer;
+  background: var(--surface-2);
+  color: var(--ink);
+  font: inherit;
+}
+.figure__pusti > img { position: absolute; inset: 0; opacity: 0.4; }
+.figure__pusti-znak {
+  position: relative;
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--btn-primary-ink);
+  font-size: 17px;
+}
+.figure__pusti-txt { position: relative; font-size: 12.5px; color: var(--muted); }
+.figure__pusti:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+/* --- Галерија ------------------------------------------------------------ */
+.galerija-wrap { margin: 26px 0; }
+.galerija { display: grid; gap: 12px; }
+.galerija--2 { grid-template-columns: repeat(2, 1fr); }
+.galerija--3 { grid-template-columns: repeat(3, 1fr); }
+.galerija__cap { margin: 9px 0 0; font-size: 13px; color: var(--muted); }
+@media (max-width: 700px) {
+  .galerija--2, .galerija--3 { grid-template-columns: 1fr; }
+}
+
+/* --- Shema: оквир око кодиране SVG схеме -------------------------------- */
+.shema { margin: 28px 0; }
+.shema__naslov {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 9px;
+}
+.shema__platno {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 18px 16px;
+}
+.shema__opis { margin-top: 9px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+.shema-svg { display: block; width: 100%; height: auto; }
+/* Усправни цртежи не треба да се разливају преко целе ширине текста. */
+.shema-svg--usko { max-width: 320px; margin: 0 auto; }
+
+/* Елементи схема — све боје из променљивих, тако да прате тему. */
+.shema-ploca { fill: var(--surface-2); stroke: var(--line-strong); stroke-width: 1.5; }
+.shema-box { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
+.shema-tlo { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; }
+.shema-zona { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 4 4; }
+.shema-objekat { fill: var(--surface-3); stroke: var(--line-strong); stroke-width: 1; }
+.shema-veza { stroke: var(--line-strong); stroke-width: 1.6; stroke-linecap: round; fill: none; }
+.shema-zub { fill: var(--surface-3); stroke: var(--line-strong); stroke-width: 1; }
+.shema-port-tacka { fill: var(--line-strong); }
+.shema-emoji { font-size: 15px; }
+.shema-t-ink { fill: var(--ink); font-family: var(--font-head); font-size: 13.5px; font-weight: 600; }
+.shema-t-muted { fill: var(--muted); font-family: var(--font-body); font-size: 11.5px; }
+.shema-t-mini { fill: var(--muted); font-family: var(--font-body); font-size: 10.5px; }
+.shema-t-port {
+  fill: var(--muted); font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.07em; text-transform: uppercase;
+}
+.shema-chip-txt {
+  fill: var(--muted); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+}
+
+/* --- Медијска трака на картици пројекта --------------------------------- */
+.card__media {
+  position: relative;
+  margin: -20px -20px 14px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+.card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Кад слике нема: акценат пројекта као тиха подлога иза емоџија. */
+.card__media--prazna { display: grid; place-items: center; }
+.card__media--prazna span { font-size: 30px; opacity: 0.85; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
