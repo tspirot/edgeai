@@ -10,7 +10,8 @@
 
 ## Хардвер
 
-- NVIDIA Jetson Orin Nano Super Developer Kit (8 GB), активни хладњак, напајање 19 V
+- NVIDIA Jetson Orin Nano Developer Kit (8 GB), активни хладњак, напајање 19 V
+  (уз JetPack 6.2 иста плоча ради у „Super“ режиму — до 67 TOPS)
 - Logitech C922 Pro Stream (1080p, аутофокус, стерео микрофон)
 - NVMe SSD за моделе и базу материјала
 - Звучник или слушалице

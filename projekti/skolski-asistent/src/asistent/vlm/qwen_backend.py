@@ -1,7 +1,7 @@
 """Qwen2-VL — визуелно-језички модел на самом уређају (transformers).
 
 Препоручено: Qwen2-VL-2B-Instruct, int4 квантизација — стаје у ~6 GB и ради
-уживо на Jetson Orin Nano Super. Модел се преузме једном, после тога офлајн.
+уживо на Jetson Orin Nano (8 GB). Модел се преузме једном, после тога офлајн.
 """
 
 from __future__ import annotations

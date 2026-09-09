@@ -370,13 +370,13 @@ export const projekti = [
     boja: '#4ED8A3',
     cvor: 'Школски асистент',
     pozicija: [1.6, 1.6, 0.35],
-    hardver: ['Jetson Orin Nano Super', 'Logitech C922', 'активни хладњак', 'NVMe SSD'],
+    hardver: ['Jetson Orin Nano (8 GB)', 'Logitech C922', 'активни хладњак', 'NVMe SSD'],
     tehnologije: ['Qwen2-VL (VLM)', 'faster-whisper', 'Piper TTS', 'RAG над материјалима'],
     uputstvo: 'skolski-asistent-postavka',
     repo: 'https://github.com/tspirot/edgeai/tree/main/projekti/skolski-asistent',
     telemetrija: {
       latencija: '~2.5 s до одговора',
-      npuCpu: 'Orin Nano Super (67 TOPS)',
+      npuCpu: 'Orin Nano 8 GB (до 67 TOPS)',
       potrosnja: '~15 W',
       offline: '100% Офлајн',
       memorija: '~6 GB VRAM',
@@ -400,7 +400,7 @@ export const projekti = [
       {
         type: 'p',
         text:
-          'Осталих пет пројеката ради на Raspberry Pi-ју са малим моделима за једну ствар. Овде треба језички модел који истовремено гледа слику и разуме питање — то на Pi-ју не иде. Jetson Orin Nano Super (67 TOPS, 8 GB) покреће квантизован VLM од 2 милијарде параметара уживо. То је прилика да ученици виде докле „мало“ рачунарство данас стиже.',
+          'Осталих пет пројеката ради на Raspberry Pi-ју са малим моделима за једну ствар. Овде треба језички модел који истовремено гледа слику и разуме питање — то на Pi-ју не иде. Jetson Orin Nano (8 GB) покреће квантизован VLM од 2 милијарде параметара уживо; уз JetPack 6.2 иста плоча ради у „Super“ режиму (до 67 TOPS). То је прилика да ученици виде докле „мало“ рачунарство данас стиже.',
       },
       { type: 'h', text: 'Како ради' },
       {
@@ -424,7 +424,7 @@ export const projekti = [
       {
         type: 'specs',
         items: [
-          'NVIDIA Jetson Orin Nano Super Developer Kit (8 GB)',
+          'NVIDIA Jetson Orin Nano Developer Kit (8 GB)',
           'Logitech C922 Pro Stream (1080p, аутофокус, стерео микрофон)',
           'Активни хладњак и напајање 19 V',
           'NVMe SSD за моделе и базу материјала',

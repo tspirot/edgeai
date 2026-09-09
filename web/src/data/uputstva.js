@@ -161,14 +161,15 @@ export const uputstva = [
 
   {
     slug: 'skolski-asistent-postavka',
-    naziv: 'Школски асистент на Jetson Orin Nano Super',
+    naziv: 'Школски асистент на Jetson Orin Nano',
     kratko: 'JetPack и CUDA, преузимање модела (Whisper, Qwen2-VL int4, Piper), C922 камера, RAG индекс и мерење.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
-      { type: 'p', lead: true, text: 'Кôд је у монорепоу, фасцикла projekti/skolski-asistent. Циљ радионице: ланац камера → говор → VLM → говор који ради потпуно офлајн на Jetson Orin Nano Super.' },
+      { type: 'p', lead: true, text: 'Кôд је у монорепоу, фасцикла projekti/skolski-asistent. Циљ радионице: ланац камера → говор → VLM → говор који ради потпуно офлајн на Jetson Orin Nano (8 GB).' },
       { type: 'h', text: 'Шта треба' },
-      { type: 'specs', items: ['Jetson Orin Nano Super Developer Kit (8 GB)', 'NVMe SSD (модели су велики)', 'Logitech C922', 'активни хладњак и напајање 19 V', 'звучник или слушалице'] },
+      { type: 'specs', items: ['Jetson Orin Nano Developer Kit (8 GB)', 'NVMe SSD (модели су велики)', 'Logitech C922', 'активни хладњак и напајање 19 V', 'звучник или слушалице'] },
+      { type: 'callout', tone: 'info', title: '„Super“ је софтвер, не други уређај', text: 'Jetson Orin Nano Developer Kit (8 GB) и „Orin Nano Super“ су иста плоча. JetPack 6.2 подиже такт и NPU са 40 на до 67 TOPS — довољан је најновији JetPack.' },
       { type: 'h', text: 'Систем (JetPack)' },
       {
         type: 'steps',
