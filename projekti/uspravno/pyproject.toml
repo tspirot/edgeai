@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "uspravno"
+version = "0.1.0"
+description = "Надзор држања кичме из тачака тела — локално, без слике"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+kamera = ["opencv-python>=4.8"]
+poza = ["mediapipe>=0.10"]
+rpi = ["gpiozero>=2.0", "picamera2>=0.3"]
+grafik = ["matplotlib>=3.7"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+drzanje = "drzanje.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

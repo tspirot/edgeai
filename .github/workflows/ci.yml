@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [titlovi-uzivo, pametna-zebra, cuvar-stare-planine, kontrola-kvaliteta, znakovna-azbuka, skolski-asistent, djak-za-volanom, hodnik-u-glavi]
+        project: [titlovi-uzivo, pametna-zebra, cuvar-stare-planine, kontrola-kvaliteta, znakovna-azbuka, skolski-asistent, djak-za-volanom, hodnik-u-glavi, uspravno]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -1,0 +1,40 @@
+# Копирај у config.yaml и промени само оно што ти треба.
+# Проба без камере:  drzanje sim
+# Калибрација па рад: drzanje calibrate  →  drzanje run
+
+camera:
+  backend: auto        # auto | picamera2 | opencv | dummy
+  index: 0
+  width: 640
+  height: 480
+  fps: 15
+
+pose:
+  backend: auto        # auto | mediapipe | dummy
+  min_visibility: 0.5
+  side: auto           # auto | left | right — која страна тела гледа камеру
+  smoothing: 0.4       # 0 = без изглађивања, ~0.4 умерено
+
+posture:
+  neck_threshold_deg: 12.0    # одступање угла врата од личне референце
+  trunk_threshold_deg: 10.0   # одступање угла трупа
+  clear_margin_deg: 4.0       # хистереза (да подсетник не „трепери“)
+  bad_after_s: 3.0            # колико лош положај траје пре бројања
+  alert_after_s: 20.0        # колико низа погрбљености пре подсетника
+  alert_cooldown_s: 60.0     # најмањи размак између подсетника
+
+feedback:
+  backend: auto        # auto | gpio | console | none
+  led_pin: 17
+  buzzer_pin: 18
+  buzzer: false        # тон уз светло
+  blink_s: 4.0
+
+screening:              # опциони „скрининг“ режим (поглед спреда)
+  enabled: false
+  log_path: data/skrining.csv
+  asymmetry_flag_deg: 3.0
+
+reference_path: data/referenca.json
+log_path: data/drzanje.csv
+log_level: INFO
