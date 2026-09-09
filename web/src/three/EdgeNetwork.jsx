@@ -45,7 +45,7 @@ function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }
         <Html
           position={[0, 0.72, 0]}
           center
-          distanceFactor={mobile ? 8.5 : 6.5}
+          distanceFactor={mobile ? 8.5 : 7.8}
           zIndexRange={[10, 0]}
           wrapperClass="node-label-wrap"
         >
