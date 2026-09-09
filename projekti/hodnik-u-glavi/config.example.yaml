@@ -1,0 +1,43 @@
+# Копирај у config.yaml и промени само оно што ти треба.
+# Проба без хардвера:  mapa sim
+# Мапирање правим лидаром: mapa map --seconds 90 --out out/skola.npz
+
+lidar:
+  backend: auto        # auto | rplidar | dummy
+  port: /dev/ttyUSB0
+  min_mm: 150.0        # ближе = шум / делови возила
+  max_mm: 6000.0
+  forward_offset_deg: 0.0   # где је „напред“ на лидару у односу на возило
+
+icp:
+  max_iter: 20
+  tol: 0.0001          # праг помака (m) за прекид
+  max_pairs_dist: 0.5  # одбаци парове тачака даље од овога
+  min_points: 40
+
+slam:
+  keyframes: 6         # последњих N скенова чини „мапу“ за поравнање
+  subsample: 1
+  min_fitness: 0.35    # испод овог удела упарених — не помери положај
+
+grid:
+  res_m: 0.05          # величина ћелије мапе
+  size_m: 20.0
+  hit_logodds: 0.85
+  miss_logodds: -0.4
+  clamp: 6.0
+  occupied_threshold: 0.5
+
+planner:
+  inflate_m: 0.25      # прошири препреке за пола ширине возила
+  allow_diagonal: true
+  unknown_is_blocked: false   # false: вози кроз непознато, препланирај; true: само по мапи
+
+pursuit:
+  lookahead_m: 0.5
+  wheelbase_m: 0.16    # размак предње и задње осовине PiRacer-а
+  max_steer_rad: 0.5
+  cruise_speed: 0.3
+  goal_tol_m: 0.2
+
+log_level: INFO
