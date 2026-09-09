@@ -5,6 +5,8 @@ web/dist/
 *.pyc
 .venv/
 venv/
+*.egg-info/
+.pytest_cache/
 
 # модели (преузимају се локално, велики су)
 projekti/**/models/

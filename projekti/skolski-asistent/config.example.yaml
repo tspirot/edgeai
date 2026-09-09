@@ -1,0 +1,45 @@
+# Копирај у config.yaml и промени само оно што ти треба.
+# Покретање:  asistent ask -c config.yaml --image primer.jpg --question "Шта је ово?"
+
+camera:
+  index: 0            # C922 је обично 0; `asistent devices` за листу
+  width: 1280
+  height: 720
+  warmup_frames: 5
+
+asr:
+  backend: faster-whisper   # faster-whisper | dummy
+  samplerate: 16000
+  block_ms: 100
+  whisper:
+    model: base             # base за брзину, small+ за тачност
+    device: cpu             # на Jetson Orin: cuda
+    compute_type: int8
+    language: sr
+    silence_seconds: 0.8
+    max_seconds: 15.0
+
+vlm:
+  backend: qwen              # qwen | dummy
+  model: Qwen/Qwen2-VL-2B-Instruct
+  quantization: int4        # int4 | int8 | none
+  device: auto
+  max_new_tokens: 256
+  temperature: 0.2
+
+tts:
+  backend: piper            # piper | console
+  voice: sr_RS-serbian-medium
+  model_path: models/piper
+  speak: true
+
+rag:
+  enabled: false
+  index_path: models/rag/index.json
+  embed_backend: hashing    # hashing (без зависности) | sentence-transformers
+  top_k: 3
+  chunk_chars: 800
+  chunk_overlap: 150
+  min_score: 0.15
+
+log_level: INFO

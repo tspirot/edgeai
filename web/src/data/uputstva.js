@@ -160,6 +160,69 @@ export const uputstva = [
   },
 
   {
+    slug: 'skolski-asistent-postavka',
+    naziv: 'Школски асистент на Jetson Orin Nano Super',
+    kratko: 'JetPack и CUDA, преузимање модела (Whisper, Qwen2-VL int4, Piper), C922 камера, RAG индекс и мерење.',
+    nivo: 'напредно',
+    vreme: 'радионица',
+    sadrzaj: [
+      { type: 'p', lead: true, text: 'Кôд је у монорепоу, фасцикла projekti/skolski-asistent. Циљ радионице: ланац камера → говор → VLM → говор који ради потпуно офлајн на Jetson Orin Nano Super.' },
+      { type: 'h', text: 'Шта треба' },
+      { type: 'specs', items: ['Jetson Orin Nano Super Developer Kit (8 GB)', 'NVMe SSD (модели су велики)', 'Logitech C922', 'активни хладњак и напајање 19 V', 'звучник или слушалице'] },
+      { type: 'h', text: 'Систем (JetPack)' },
+      {
+        type: 'steps',
+        items: [
+          'Флешуј најновији JetPack (Ubuntu + CUDA + cuDNN + TensorRT) на NVMe преко SDK Manager-а или SD-Card Image алата.',
+          'После првог подизања: sudo apt update && sudo apt full-upgrade -y.',
+          'Провери да CUDA ради: nvcc --version и nvidia-smi (односно jetson_release).',
+          'Укључи режим максималних перформанси.',
+        ],
+      },
+      { type: 'code', lang: 'bash', code: 'sudo nvpmodel -m 0        # MAX-N режим\nsudo jetson_clocks         # закуцај фреквенције\ntegrastats                 # потрошња и заузеће, за мерења' },
+      { type: 'h', text: 'Инсталација пројекта' },
+      { type: 'code', lang: 'bash', code: 'git clone https://github.com/tspirot/edgeai.git\ncd edgeai/projekti/skolski-asistent\npython3 -m venv .venv && source .venv/bin/activate\npip install -e ".[kamera,zvuk,asr,vlm,tts]"' },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'torch на Jetson-у није са PyPI-ја',
+        text: 'Инсталирај NVIDIA-ин torch/torchvision build за свој JetPack (jetson-ai-lab / форум). Обичан pip torch нема CUDA за ARM и VLM ће радити на процесору — преспоро.',
+      },
+      { type: 'h', text: 'Модели (једном, уз интернет)' },
+      { type: 'code', lang: 'bash', code: 'asistent download-model --what all' },
+      {
+        type: 'ul',
+        items: [
+          'faster-whisper base (или small) → models/faster-whisper',
+          'Qwen2-VL-2B-Instruct → models/vlm (int4 квантизација се ради при учитавању, bitsandbytes)',
+          'Piper глас sr_RS-serbian-medium: .onnx и .onnx.json ручно у models/piper (huggingface.co/rhasspy/piper-voices)',
+        ],
+      },
+      { type: 'h', text: 'Камера и микрофон' },
+      { type: 'code', lang: 'bash', code: 'asistent devices                 # индекс камере и микрофона\nv4l2-ctl --list-devices           # провера да систем види C922' },
+      { type: 'p', text: 'У config.yaml постави camera.index и, за Jetson, asr.whisper.device: cuda и vlm.device: auto.' },
+      { type: 'h', text: 'RAG над школским материјалима (опционо)' },
+      { type: 'code', lang: 'bash', code: '# .txt и .md фајлови: приручници, стандарди, објашњења\nasistent index build materijali/\nasistent index show\nasistent ask --rag --image zadatak.jpg --question "Помози ми са овим задатком"' },
+      { type: 'h', text: 'Провера — како знам да ради' },
+      {
+        type: 'steps',
+        items: [
+          'Без хардвера и модела: asistent ask --vlm dummy --asr dummy --tts console --image primer.jpg --question "Шта је ово?" — цео ланац одговори.',
+          'Са моделима: покажи електричну шему, питај шта је елемент означен словом — одговор стигне за 2–4 s.',
+          'Искључи мрежу (nmcli radio all off) и понови — мора да ради исто.',
+          'Мери: asistent ask -v испише VLM латенцију; tegrastats у другом терминалу даје потрошњу.',
+        ],
+      },
+      {
+        type: 'callout',
+        tone: 'alert',
+        title: 'Тачност се проверава, не претпоставља',
+        text: 'Мали VLM греши. Направи скуп од 20–30 сопствених питања са познатим одговором и мери погодак са RAG-ом и без њега — то је резултат за Demo Day.',
+      },
+    ],
+  },
+
+  {
     slug: 'demo-day',
     naziv: 'Припрема за Demo Day',
     kratko: 'Шта треба да ради, како се показује и шта се мери — контролна листа пред јавну презентацију.',
