@@ -348,7 +348,8 @@ img { max-width: 100%; display: block; }
 @keyframes hintPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
 @media (max-width: 820px) {
-  .hero__stage { height: clamp(300px, 62vw, 440px); }
+  /* Девет ознака тражи висину; на 300px се преклапају. */
+  .hero__stage { height: clamp(380px, 92vw, 560px); }
   .hero__inner { padding: 36px 20px 48px; }
   .hero h1 {
     font-size: clamp(23px, 6.6vw, 34px);
@@ -594,8 +595,9 @@ blockquote cite { display: block; font-style: normal; font-size: 13px; margin-to
   background: color-mix(in srgb, var(--accent-soft) 60%, transparent);
   transition: color 0.15s ease, background 0.15s ease;
 }
-/* мобилни: ситније ознаке да не покривају чворове */
-.node-label--sm .node-label__name { font-size: 10px; padding: 3px 8px; }
+/* Мобилни: ниже ознаке. Висина је овде критична — девет ознака дели ниско
+   платно, па се вишак реда претвара у преклапање. */
+.node-label--sm .node-label__name { font-size: 10px; line-height: 1.3; padding: 2px 7px; }
 .node-label--sm .node-label__repo { font-size: 9px; padding: 0 7px; }
 .node-label__repo:hover {
   color: var(--accent);

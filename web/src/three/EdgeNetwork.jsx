@@ -6,6 +6,15 @@ import * as THREE from 'three'
 const HUB = new THREE.Vector3(0, 0, 0)
 const CLOUD_POS = new THREE.Vector3(0.6, 2.35, -5.5)
 
+/* На уском екрану платно је ниско, па ознаке имају мало пиксела по јединици
+   висине. Зато се распоред тамо сабије водоравно (да ознаке остану у кадру) и
+   развуче усправно (да се не преклапају). Мења се само положај чворова —
+   не и размера самих тела, да не постану јајаста. */
+const MOB_XZ = 0.78
+const MOB_Y = 1.3
+const pozicijaZa = (poz, mobile) =>
+  mobile ? [poz[0] * MOB_XZ, poz[1] * MOB_Y, poz[2] * MOB_XZ] : poz
+
 /* --- један чвор = један пројекат ---------------------------------------- */
 function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }) {
   const ref = useRef()
@@ -19,7 +28,7 @@ function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }
   })
 
   return (
-    <group position={p.pozicija}>
+    <group position={pozicijaZa(p.pozicija, mobile)}>
       <mesh
         ref={ref}
         onPointerOver={(e) => { e.stopPropagation(); setHover(true); document.body.style.cursor = 'pointer' }}
@@ -220,13 +229,13 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
         {projekti.map((p) => (
           <group key={p.slug}>
             <Line
-              points={[p.pozicija, [0, 0, 0]]}
+              points={[pozicijaZa(p.pozicija, mobile), [0, 0, 0]]}
               color={isLight ? '#0C6146' : '#2f6a55'}
               lineWidth={1}
               transparent
               opacity={isLight ? 0.3 : 0.4}
             />
-            <Pulse from={p.pozicija} phase={Math.random()} speed={0.28} reduced={reduced} isLight={isLight} />
+            <Pulse from={pozicijaZa(p.pozicija, mobile)} phase={Math.random()} speed={0.28} reduced={reduced} isLight={isLight} />
             <Node p={p} onSelect={onSelect} showLabel isLight={isLight} mobile={mobile} />
           </group>
         ))}
