@@ -44,6 +44,8 @@ description: Add a new student project to the Edge AI site (project page, 3D her
 
 4. **Ако пројекат има кôд**: направи `projekti/<slug>/` (по узору на `titlovi-uzivo`),
    додај `repo` у унос и по потреби ново упутство (skill `novo-uputstvo`).
+   `projekti/<slug>/README.md` се аутоматски рендерује на дну везаног упутства
+   (`uputstvo:` слог) — увоз преко `web/src/data/readme.js`, ништа се не подешава ручно.
 
 5. **Провера**: `cd web && npm run dev` → `/projekti`, `/projekti/<slug>`, насловна.
    Затим `npm run build` да нема грешке.

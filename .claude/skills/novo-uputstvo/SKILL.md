@@ -28,6 +28,7 @@ description: Add a new guide/tutorial to the Edge AI site (uputstva section). Us
 - Бар један `callout` са замком коју ученици обично упадну.
 - Заврши провером („како знам да ради“).
 
-Повежи упутство са пројектом: у `projekti.js` постави `uputstvo: '<slug>'`.
+Повежи упутство са пројектом: у `projekti.js` постави `uputstvo: '<slug>'`. Тиме се
+`README.md` тог пројекта аутоматски приказује на дну стране упутства.
 
 Провера: `cd web && npm run dev` → `/uputstva` и `/uputstva/<slug>`, па `npm run build`.

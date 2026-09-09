@@ -23,5 +23,7 @@ export default defineConfig({
   server: {
     host: true,
     port: 5173,
+    // README-и пројеката живе у ../projekti (ван корена сајта) — увозе се преко ?raw.
+    fs: { allow: ['..'] },
   },
 })

@@ -452,6 +452,24 @@ a.card:hover .card__arrow { color: var(--accent); transform: translate(3px, -3px
 .prose li::marker { color: var(--accent); }
 .prose a { text-decoration: underline; text-underline-offset: 2px; }
 
+/* README пројекта на дну упутства */
+.readme-blok {
+  margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line);
+}
+.readme-blok .kicker { margin-bottom: 18px; }
+.readme { max-width: 74ch; }
+.readme h2 { font-size: 22px; margin-top: 40px; }
+.readme h3 { font-size: 18px; }
+.readme h4 { font-size: 15px; font-weight: 700; margin-top: 26px; }
+.readme table {
+  width: 100%; border-collapse: collapse; font-size: 13.5px; display: block;
+  overflow-x: auto;
+}
+.readme th, .readme td {
+  border: 1px solid var(--line); padding: 7px 11px; text-align: left; vertical-align: top;
+}
+.readme th { background: var(--surface-2); font-weight: 600; }
+
 .steps { list-style: none; padding: 0 !important; counter-reset: step; }
 .steps li {
   position: relative; padding-left: 44px; margin: 16px 0; min-height: 30px;

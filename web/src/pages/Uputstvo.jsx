@@ -1,7 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Content from '../components/Content'
+import Readme from '../components/Readme'
 import { getUputstvo, uputstva } from '../data/uputstva'
+import { projekti } from '../data/projekti'
+import { getReadme } from '../data/readme'
 import NotFound from './NotFound'
 
 export default function Uputstvo() {
@@ -9,6 +12,10 @@ export default function Uputstvo() {
   const u = getUputstvo(slug)
   if (!u) return <NotFound />
   const ostala = uputstva.filter((x) => x.slug !== slug).slice(0, 4)
+  const vezaniProjekti = projekti
+    .filter((p) => p.uputstvo === slug)
+    .map((p) => ({ ...p, readme: getReadme(p.slug) }))
+    .filter((p) => p.readme)
 
   return (
     <>
@@ -31,7 +38,17 @@ export default function Uputstvo() {
 
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap layout-two">
-          <div><Content blocks={u.sadrzaj} /></div>
+          <div>
+            <Content blocks={u.sadrzaj} />
+            {vezaniProjekti.map((p) => (
+              <div key={p.slug} className="readme-blok">
+                <p className="kicker">
+                  README пројекта · {p.ikona} {p.naziv}
+                </p>
+                <Readme markdown={p.readme} />
+              </div>
+            ))}
+          </div>
           <aside className="aside">
             <h4>Друга упутства</h4>
             <ul>
