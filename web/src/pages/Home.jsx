@@ -19,7 +19,7 @@ export default function Home() {
     <>
       <Seo
         title={null}
-        description="Edge AI Пирот — вештачка интелигенција која ради на самом уређају, без облака. Пројекти, упутства и радионице Техничке школе Пирот."
+        description="Edge AI: Наука у петој брзини — програм Техничке школе Пирот. Вештачка интелигенција која ради на самом уређају, без облака. Пројекти, упутства и радионице."
       />
 
       <section className="hero">
@@ -43,6 +43,7 @@ export default function Home() {
 
         <div className="hero__inner">
           <span className="hero__badge"><i />локална инференца · без облака</span>
+          <p className="hero__slogan">Edge AI: <em>Наука у петој брзини</em></p>
           <h1>Вештачка интелигенција која ради <em>на самом уређају</em></h1>
           <p className="hero__dek">
             Програм радионица Техничке школе Пирот. Ученици праве уређаје који

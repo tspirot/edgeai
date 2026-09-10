@@ -20,7 +20,9 @@ function meta(kljuc, vrednost, atribut = 'name') {
     ако се не наведе, користи се заједничка картица програма. */
 export default function Seo({ title, description, slika }) {
   useEffect(() => {
-    const pun = title ? `${title} · Edge AI Пирот` : 'Edge AI Пирот'
+    const pun = title
+      ? `${title} · Edge AI Пирот`
+      : 'Edge AI: Наука у петој брзини'
     document.title = pun
 
     meta('description', description)

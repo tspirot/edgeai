@@ -9,11 +9,14 @@ export default function Footer() {
           <div className="footer__brand">
             <span className="nav__brand" style={{ fontSize: 18 }}>
               <BrandMark size={24} />
-              <span>Edge AI <b style={{ color: 'var(--accent)' }}>Пирот</b></span>
+              <span className="nav__brand-text">
+                <span>Edge AI <b style={{ color: 'var(--accent)' }}>Пирот</b></span>
+                <span className="nav__brand-tag">Наука у петој брзини</span>
+              </span>
             </span>
             <p>
-              Вештачка интелигенција на самом уређају — без облака. Програм
-              радионица Техничке школе Пирот.
+              „Edge AI: Наука у петој брзини“ — вештачка интелигенција на самом
+              уређају, без облака. Програм радионица Техничке школе Пирот.
             </p>
           </div>
           <div className="footer__col">

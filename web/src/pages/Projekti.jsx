@@ -5,7 +5,7 @@ import { projekti, rezervneIdeje } from '../data/projekti'
 export default function Projekti() {
   return (
     <>
-      <Seo title="Пројекти" description="Пет прототипова програма Edge AI Пирот — детекција објеката, класификација врста, контрола квалитета, титлови уживо и знаковна азбука." />
+      <Seo title="Пројекти" description="Пет прототипова програма „Edge AI: Наука у петој брзини“ — детекција објеката, класификација врста, контрола квалитета, титлови уживо и знаковна азбука." />
       <header className="pagehead">
         <div className="wrap">
           <div className="crumbs"><a href="/">Почетна</a><span>/</span><span>Пројекти</span></div>

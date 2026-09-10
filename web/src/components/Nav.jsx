@@ -31,7 +31,10 @@ export default function Nav() {
       <nav className="nav__inner wrap" aria-label="Главна навигација">
         <NavLink to="/" className="nav__brand">
           <BrandMark />
-          <span>Edge AI <b>Пирот</b></span>
+          <span className="nav__brand-text">
+            <span>Edge AI <b>Пирот</b></span>
+            <span className="nav__brand-tag">Наука у петој брзини</span>
+          </span>
         </NavLink>
         <div className="nav__status-pill" title="Систем ради локално без облака">
           <span className="nav__status-pulse" />
