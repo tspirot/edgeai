@@ -1,0 +1,40 @@
+# Пример конфигурације. Копирај у config.yaml и мењај само оно што треба.
+# Покретање: dvojnik slozi snimak/ -c config.yaml
+
+kamera:
+  index: 0              # dvojnik devices каже који је
+  sirina: 640
+  visina: 480
+  # Ове четири вредности МОРАЈУ да одговарају стварној поставци — из њих се
+  # рачуна пројекција. Погрешно растојање даје модел погрешног облика, не само
+  # величине. Измери их једном, па не дирај камеру.
+  vfov: 42.0            # усправно видно поље објектива, степени
+  rastojanje: 300.0     # mm, од осе стола до објектива
+  visina_kamere: 220.0  # mm, објектив изнад површине стола
+  cilj: 60.0            # mm, висина тачке у коју камера гледа, на оси стола
+  zagrevanje: 5
+
+sto:
+  backend: koracni      # koracni | dummy
+  pinovi: [18, 23, 24, 25]   # IN1–IN4 на ULN2003, BCM нумерација
+  koraka_po_krugu: 4096      # 28BYJ-48 у полукорачном режиму
+  pauza_ms: 300         # чекање да се предмет умири пре кадра
+  obrnut_smer: false
+
+silueta:
+  prag: 18.0            # разлика у сивом изнад које је предмет
+  zatvaranje: 2         # лепи ситне прекиде у обрису
+  samo_najveca: true    # одбаци мрве поред предмета
+
+zapremina:
+  precnik: 160.0        # mm, радни простор око осе стола
+  visina: 200.0         # mm
+  podela: 160           # воксела по оси; 160³ ≈ 4 милиона
+  van_kadra_rezi: true  # воксел који се ниједном не види не постоји
+
+mreza:
+  vrsta: blokovska      # blokovska (без зависности) | glatka (тражи scikit-image)
+  naziv: dvojnik
+
+kadrova: 120            # 3° по кадру
+log_level: INFO

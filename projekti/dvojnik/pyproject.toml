@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dvojnik"
+version = "0.1.0"
+description = "Двојник — 3D скенер предмета на окретном столу, на самом уређају"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+kamera = ["opencv-python>=4.8"]
+sto = ["Jetson.GPIO>=2.1; platform_machine=='aarch64'", "RPi.GPIO>=0.7; platform_machine!='aarch64'"]
+glatko = ["scikit-image>=0.22"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+dvojnik = "dvojnik.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

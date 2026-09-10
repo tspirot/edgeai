@@ -4,14 +4,19 @@ import { Grid, Html, Line, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 const HUB = new THREE.Vector3(0, 0, 0)
-const CLOUD_POS = new THREE.Vector3(0.6, 2.35, -5.5)
+const CLOUD_POS = new THREE.Vector3(0.6, 2.95, -5.5)
 
 /* На уском екрану платно је ниско, па ознаке имају мало пиксела по јединици
    висине. Зато се распоред тамо сабије водоравно (да ознаке остану у кадру) и
    развуче усправно (да се не преклапају). Мења се само положај чворова —
-   не и размера самих тела, да не постану јајаста. */
+   не и размера самих тела, да не постану јајаста.
+
+   MOB_Y је спуштен са 1.3 на 1.15 кад је сцена добила једанаести чвор. Основни
+   усправни распон је тада проширен са −1.9…1.7 на −2.4…1.75, па мобилни
+   распоред и са мањим множиоцем даје практично исти размак између ознака као
+   пре (0.41 × 1.15 ≈ 0.47). Без тога би најнижи чвор пробио под. */
 const MOB_XZ = 0.78
-const MOB_Y = 1.3
+const MOB_Y = 1.15
 const pozicijaZa = (poz, mobile) =>
   mobile ? [poz[0] * MOB_XZ, poz[1] * MOB_Y, poz[2] * MOB_XZ] : poz
 
@@ -50,11 +55,16 @@ function Node({ p, onSelect, showLabel = true, isLight = false, mobile = false }
         <lineBasicMaterial color={p.boja} transparent opacity={hover ? 0.95 : (isLight ? 0.75 : 0.5)} />
       </lineSegments>
 
+      {/* Ознака је HTML који се увећава како чвор прилази камери. Сцена се
+          врти, па се пре или касније свака два чвора нађу близу на екрану —
+          ниједан распоред чворова то не решава на сваком углу ротације. Једино
+          што делује свуда је мања ознака, а мања мора да буде и зато што их је
+          од једанаестог пројекта превише за стари размер. */}
       {showLabel && (
         <Html
           position={[0, 0.72, 0]}
           center
-          distanceFactor={mobile ? 8.5 : 7.8}
+          distanceFactor={mobile ? 6.6 : 6.0}
           zIndexRange={[10, 0]}
           wrapperClass="node-label-wrap"
         >
@@ -199,7 +209,7 @@ export default function EdgeNetwork({ projekti, onSelect, reduced = false, mobil
       />
 
       <Grid
-        position={[0, -2.3, 0]}
+        position={[0, -2.9, 0]}
         args={[40, 40]}
         cellSize={0.9}
         cellThickness={isLight ? 0.5 : 0.6}
