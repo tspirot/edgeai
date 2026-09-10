@@ -1,0 +1,134 @@
+# Каталог шара — почетни, НЕПОТПУН и НЕПОТВРЂЕН.
+#
+# Званични каталог броји преко стотину шара и орнамената; овде их је шачица.
+# Свака одредница носи `izvor` (одакле је назив преузет) и `potvrdila_radionica`
+# (да ли је неко ко тка то потврдио). Програм уз свако значење исписује ту
+# ознаку и НЕ приказује непотврђено значење као чињеницу.
+#
+# Посао ученика: проћи кроз ово са школском радионицом ћилима, исправити
+# значења, допунити списак и `potvrdila_radionica` пребацити на `true` — уз име
+# особе која је потврдила и датум. Тек тада одредница важи.
+#
+# `deo` (поље / бордура / ћенар) намерно стоји као „непознато“ где извор о томе
+# ништа не каже. Боље празно него измишљено.
+#
+# Извори за називе:
+#   nkns      — Национални регистар нематеријалног културног наслеђа Србије
+#               (пиротско ћилимарство, упис 18.06.2012, редни број 6)
+#   vikipedija — чланак „Пиротски ћилим“ на српској Википедији
+#   literatura — секундарни извори о значењу шара (проверити код Музеја Понишавља)
+
+verzija: 1
+
+motivi:
+  - id: kornjaca
+    naziv: корњача
+    znacenje: Дуг живот, постојаност и благостање. Стоји и на грбу града Пирота.
+    deo: непознато
+    izvor: [nkns, vikipedija, literatura]
+    potvrdila_radionica: false
+
+  - id: sofra
+    naziv: софра
+    znacenje: Окупљање породице, договор и заједништво — трпеза око које се седи.
+    deo: непознато
+    izvor: [vikipedija, literatura]
+    potvrdila_radionica: false
+
+  - id: gugutke
+    naziv: гугутке
+    znacenje: Срећа, слога у кући и брачна жеља.
+    deo: непознато
+    izvor: [nkns, vikipedija, literatura]
+    potvrdila_radionica: false
+
+  - id: djulovi
+    naziv: ђулови
+    znacenje: Вегетабилна шара — руже. Мекши, украсни елемент међу геометријским.
+    deo: непознато
+    izvor: [nkns, literatura]
+    potvrdila_radionica: false
+
+  - id: venci
+    naziv: венци
+    znacenje: Успех и постигнуће.
+    deo: непознато
+    izvor: [nkns, literatura]
+    potvrdila_radionica: false
+
+  - id: drvo-zivota
+    naziv: разгранато дрво (дрво живота)
+    znacenje: Веза генерација, стабилност породице и напредак.
+    deo: непознато
+    izvor: [nkns, vikipedija, literatura]
+    potvrdila_radionica: false
+
+  - id: skorpion
+    naziv: шкорпион
+    znacenje: Фигурална шара. Значење проверити у радионици.
+    deo: непознато
+    izvor: [nkns]
+    potvrdila_radionica: false
+
+  - id: jelenak
+    naziv: јеленак
+    znacenje: Фигурална шара. Значење проверити у радионици.
+    deo: непознато
+    izvor: [nkns]
+    potvrdila_radionica: false
+
+  - id: guster
+    naziv: гуштер
+    znacenje: Фигурална шара. Значење проверити у радионици.
+    deo: непознато
+    izvor: [nkns]
+    potvrdila_radionica: false
+
+  - id: kuke
+    naziv: куке
+    znacenje: Аутохтона геометријска шара.
+    deo: непознато
+    izvor: [vikipedija]
+    potvrdila_radionica: false
+
+  - id: cendjeli
+    naziv: ченђели
+    znacenje: Аутохтона геометријска шара.
+    deo: непознато
+    izvor: [vikipedija]
+    potvrdila_radionica: false
+
+  - id: perca
+    naziv: перћа
+    znacenje: Аутохтона геометријска шара.
+    deo: непознато
+    izvor: [vikipedija]
+    potvrdila_radionica: false
+
+  - id: kondiceva
+    naziv: Кондићева шара
+    znacenje: Заштита од урока, зависти и лоших утицаја; слога у кући.
+    deo: непознато
+    izvor: [literatura]
+    potvrdila_radionica: false
+
+  - id: rasiceva
+    naziv: Рашићева шара
+    znacenje: Напредак, успех и заштита куће.
+    deo: непознато
+    izvor: [literatura]
+    potvrdila_radionica: false
+
+  - id: prestolonaslednik
+    naziv: престолонаследник
+    znacenje: Предаја знања с колена на колено. Назив се везује за обичај даривања ћилима престолонаследнику.
+    deo: непознато
+    izvor: [literatura]
+    potvrdila_radionica: false
+
+  - id: cuvarkuca
+    naziv: чуваркућа
+    znacenje: Заштита куће.
+    deo: непознато
+    izvor: [literatura]
+    potvrdila_radionica: false

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pirotski-cilim"
+version = "0.1.0"
+description = "Шара у духу пиротског ћилима — препознавање шара и предлог нове, на самом уређају"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Техничка школа Пирот" }]
+dependencies = [
+    "numpy>=1.24",
+    "pyyaml>=6.0",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+kamera = ["opencv-python>=4.8"]
+klasifikator = ["torch>=2.2", "timm>=1.0"]
+difuzija = ["torch>=2.2", "diffusers>=0.30", "transformers>=4.45", "accelerate>=0.30"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+cilim = "cilim.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+cilim = ["*.yaml"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,49 @@
+# Пример конфигурације. Копирај у config.yaml и мењај само оно што треба —
+# све опције већ имају разумне подразумеване вредности.
+# Покретање: cilim smisli -c config.yaml …
+
+camera:
+  index: 0            # cilim devices каже који је
+  width: 1280
+  height: 720
+
+pravila:
+  # Дебљине појасева као удео половине краће странице.
+  spoljasnji_cenar: 0.04
+  bordura: 0.14
+  unutrasnji_cenar: 0.05
+  ogledalo_uspravno: true
+  ogledalo_vodoravno: true
+  # Најкраћи потез који разбој још изводи, у ћелијама картона.
+  # Повећај ако ткаља каже да су предлози преситни.
+  min_niti: 3
+
+karton:
+  redova: 64
+  kolona: 48
+  niti_po_celiji: 2   # колико нити потке чини једну ћелију
+  piksela_po_celiji: 12
+
+klasifikator:
+  backend: vit        # vit | dummy
+  model: vit_small_patch16_224
+  tezine: models/klasifikator/sare.pt   # настају обуком, не преузимају се
+  device: auto        # на Jetson-у: auto (нађе CUDA)
+  min_pouzdanost: 0.45
+
+generator:
+  backend: difuzija   # difuzija | pravila
+  model: runwayml/stable-diffusion-v1-5
+  controlnet: lllyasviel/sd-controlnet-scribble
+  lora: models/generator/cilim-lora        # настаје обуком на школском скупу
+  download_root: models/generator
+  device: auto
+  velicina: 512
+  koraka: 20
+  jacina_skice: 0.9   # колико ControlNet држи скицу; ниже = слободнији модел
+
+# Празно = каталог који долази уз пакет (cilim/motivi.yaml).
+# Кад радионица направи свој, упиши путању овде.
+katalog: ""
+
+log_level: INFO
