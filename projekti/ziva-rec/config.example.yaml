@@ -1,0 +1,29 @@
+# Пример конфигурације. Копирај у config.yaml и мењај само оно што треба.
+# Покретање: govor ispravi snimak.wav -c config.yaml --govornik baba-mara
+
+audio:
+  uredjaj: null          # индекс микрофона; null = подразумевани (govor devices)
+  samplerate: 16000      # Whisper тражи 16 kHz
+  kanali: 1
+  tisina_s: 1.2          # тишина после које се исказ сматра готовим
+  prag_energije: 0.012   # RMS праг говор/тишина
+  maks_s: 600.0
+
+asr:
+  backend: faster-whisper   # faster-whisper | dummy
+  model: large-v3-turbo
+  model_dir: ""             # локалне ДООБУЧЕНЕ тежине — кад их буде, стави путању овде
+  download_root: models/whisper
+  device: cuda              # Jetson: cuda
+  compute_type: int8
+  language: sr
+  beam_size: 5
+  vad_filter: true
+
+korpus:
+  koren: korpus
+  min_skor_za_isticanje: 0.35   # изнад овога сегмент је „вреди сачувати“
+  min_trajanje_s: 1.0           # краће не иде у корпус
+
+recnik: ""               # празно = речник уз пакет (govor/recnik.yaml)
+log_level: INFO

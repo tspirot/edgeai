@@ -1,0 +1,96 @@
+# Речник пиротског говora — почетни, МАЛИ и за проверу.
+#
+# Пун речник је Златковићев „Речник пиротског говора“ (Службени гласник, 2014),
+# ~10.000 одредница. Овде их је шачица, свака са пољем `izvor` и
+# `potvrdio_govornik`. Док потврде нема, станица уз одредницу исписује ознаку.
+#
+# Посао ученика: проширивати списак из снимака и Златковића, а `potvrdio_govornik`
+# постављати на `true` тек кад неко ко тако говори каже да је тачно — уз име и
+# село. Одредница без извора је измишљена одредница; то овде не сме.
+#
+# Извори:
+#   zlatkovic  — Драгољуб Златковић, „Речник пиротског говора“, 2014
+#   snimak:<id>— забележено у снимку тог броја (види korpus)
+#   zivkovic   — Новица Живковић, „Говор Пирота“, Пиротски зборник 39
+
+verzija: 1
+
+odrednice:
+  - rec: лебац
+    znaci: хлеб
+    napomena: изгубљено /х/, плус наставак -ац
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: работим
+    znaci: радим
+    izvor: [zlatkovic, zivkovic]
+    potvrdio_govornik: false
+
+  - rec: убав
+    znaci: леп
+    napomena: по-убав = лепши, нај-убав = најлепши
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: голем
+    znaci: велик
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: сакам
+    znaci: желим, хоћу
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: съга
+    znaci: сада
+    napomena: чуван полугласник
+    izvor: [zlatkovic, zivkovic]
+    potvrdio_govornik: false
+
+  - rec: тъг
+    znaci: тада
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: със
+    znaci: са, с
+    izvor: [zlatkovic, zivkovic]
+    potvrdio_govornik: false
+
+  - rec: детиште
+    znaci: дете (аугментатив/хипокористик)
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: комшика
+    znaci: комшиница, сусетка
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: вревим
+    znaci: причам, говорим
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: пенџер
+    znaci: прозор
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: чушка
+    znaci: паприка
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: погача
+    znaci: врста хлеба, погача
+    napomena: иста реч као у стандарду — ту је због устаљених израза
+    izvor: [zlatkovic]
+    potvrdio_govornik: false
+
+  - rec: море
+    znaci: узвик у обраћању (бре, море)
+    izvor: [zivkovic]
+    potvrdio_govornik: false
