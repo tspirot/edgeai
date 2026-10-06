@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=AI Projekti (Pokretač)
+Comment=Pokreni sve AI projekte jednim klikom
+Exec=/home/pi/primeri/pokreni.sh
+Icon=applications-games
+Terminal=false
+Categories=Application;Development;Education;

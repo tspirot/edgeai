@@ -1,0 +1,309 @@
+================================================================================
+          NAJBRŽI NAČIN — POKRETANJE JEDNIM KLIKOM (AI POKRETAČ)
+================================================================================
+Kreiran je moderni grafički (GUI) i konzolni (CLI) centar za pokretanje svih
+projekata jednim klikom, sa automatskim oslobađanjem kamere i praćenjem rada:
+
+NAČIN A (Direktno sa Desktopa na TV ekranu):
+    Dvoklik na ikonicu "AI Projekti (Pokretač)" na radnoj površini (Desktop).
+
+NAČIN B (Iz terminala):
+    cd ~/primeri
+    ./pokreni.sh
+
+NAČIN C (Konzolni tekstualni meni preko SSH bez ekrana):
+    cd ~/primeri
+    python pokretac.py --cli
+
+
+================================================================================
+           RUČNO POKRETANJE PO PROJEKTIMA (VIRTUELNO OKRUZENJE)
+================================================================================
+
+KORAK 1: AKTIVACIJA VIRTUELNOG OKRUZENJA (ENV)
+--------------------------------------------------------------------------------
+Pre pokretanja bilo kog projekta, OBAVEZNO aktiviraj virtuelno okruzenje:
+
+Komanda:
+    source ~/venv/bin/activate
+
+(Ako koristis lokalni env iz foldera primeri, komanda je: source ~/primeri/env/bin/activate)
+
+Znak da je okruzenje uspesno aktivirano:
+Na samom pocetku linije u terminalu stajace:
+    (venv) pi@raspberrypi:~ $
+
+
+================================================================================
+KORAK 2: POKRETANJE PROJEKATA PO PODFOLDERIMA
+================================================================================
+
+1. PROJEKAT: KLON (Celo Telo vs Lice, Ruke, Prsti, Osecanja i Nikola Tesla)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/klon
+Fajl:    klon.py
+Opis:    Podeljen ekran (Split-Screen) sa 2 cista rezima pracenja:
+         - DALEKO:    Prati CELO TELO sa detaljno modelovanom glavom/kacigom,
+                      vizirom, trupom, rukama i nogama u 1:1 pokretu.
+         - BLIZU:     Prati LICE, RUKE I PRSTE:
+                      * Diskretne, elegantne konstelacijske linije i svetlece
+                        tacke na licu kao sa slike.
+                      * Prati svaku saku i sve prste pojedinacno.
+                      * AI PREPOZNAVANJE OSECANJA: Srecan (osmeh), Iznenadjen,
+                        Ljut/Zamisljen, Tuzan, Zazmuren, Smiren/Neutralan.
+         
+         SPECIJALNI REZIMI - NIKOLA TESLA & MATRIX DIGITALNI KLON:
+         - Taster [s]: Ciklično prebacuje desni prikaz između 3 modela:
+                       1. CYBER AVATAR: Zlatno-tirkizni holografski avatar tela/lica
+                       2. FOTO-KLON NIKOLE TESLE: Živi, animirani Tesla čije lice
+                          u realnom vremenu otvara usta dok pričate, smeši se,
+                          podiže obrve i trepće identično kao i vi!
+                       3. MATRIX KLON: Zelena digitalna kiša (Matrix Rain) koja
+                          pada u pozadini, neonski fosforno-zeleni žičani model
+                          lica i tela sa skenirajućim laserskim snopom i telemetrijom!
+         
+         Kontrole: [s] Prebacivanje modela (Cyber Avatar <-> Tesla <-> Matrix)
+                   [q] Izlaz.
+
+Komande:
+    cd ~/primeri/klon
+    python klon.py
+
+
+2. PROJEKAT: VOZIBEZBEDNO (AI Nadzor Vozaca / Detekcija Umora)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/vozibezbedno
+Fajl:    vozibezbedno.py
+Opis:    MediaPipe Face Mesh pracenje lica, treptaja (EAR), zevanja (MAR),
+         3D nagiba glave (Head Pose) i HUD telemetrija sa grafikonom na TV-u.
+
+Komande:
+    cd ~/primeri/vozibezbedno
+    python vozibezbedno.py
+
+
+3. PROJEKAT: MESEC (Meseceva Kugla sa Osvetljenjem u Ruci)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/mesec
+Fajl:    mesec.py
+Opis:    Magicni 3D mesec koji lebdi u dlanu, prati saku i stvara dinamicno
+         radijalno osvetljenje koje obasjava lice i sobu.
+         Kontrole: [m] Promena teme/boje, [+/-] Velicina, [q] Izlaz.
+
+Komande:
+    cd ~/primeri/mesec
+    python mesec.py
+
+
+4. PROJEKAT: PROBA (Detekcija Ruku i HUD Pravougaonik)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/proba
+Fajl:    proba.py
+Opis:    Detekcija ruku, brojanje podignutih prstiju i interaktivni
+         hologramski pravougaonik izmedju palca i kaziprsta obe ruke.
+         Kontrole: [c] Zamena boja, [n] NoIR filter, [q] Izlaz.
+
+Komande:
+    cd ~/primeri/proba
+    python proba.py
+
+
+5. PROJEKAT: PUCKETANJE (Nevidljivost / Thanos Snap Efekat)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/pucketanje
+Fajl:    pucketanje.py
+Opis:    MediaPipe Selfie Segmentation + Hands pracenje:
+         - Pucketanjem prstima (Snap gesture - palac i srednji prst) ili pritiskom
+           na taster [Space] postajete nevidljivi (telo se menja pozadinom).
+         - Podesene tacne prirodne BGR boje sa Camera Module 3 (IMX708 NoIR).
+         Kontrole: [Pucketanje] / [Space] Nevidljivost ON/OFF
+                   [c] Obrni crvenu/plavu (R/B Swap)
+                   [n] NoIR IR balans filter
+                   [r] Ponovno snimanje prazne pozadine
+                   [q] ili [ESC] Izlaz.
+
+Komande:
+    cd ~/primeri/pucketanje
+    python pucketanje.py
+
+
+6. PROJEKAT: SELEKTOVANJE
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/selektovanje
+Fajl:    proba.py
+
+Komande:
+    cd ~/primeri/selektovanje
+    python proba.py
+
+
+7. PROJEKAT: VREMENSKA MASINA
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/vremenskamasina
+Fajl:    time_travel_snap.py
+
+Komande:
+    cd ~/primeri/vremenskamasina
+    python time_travel_snap.py
+
+
+8. PROJEKAT: DEČIJE CARSTVO (Kolekcija Igrica za Predškolce)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/igrice
+Pokretač: pokretac_igrice.py
+Opis:    Kolekcija od 6 interaktivnih igara prilagođenih deci predškolskog uzrasta
+         koja se igraju pokretima ruku i lica preko kamere (bez čitanja):
+         1. baloni/baloni.py   - Čarobni mehurići (puckanje balona u vazduhu)
+         2. nahrani/nahrani.py - Nahrani životinje (zeka, kuca, maca, majmunče)
+         3. crtanje/crtanje.py - Čarobni štapić (crtanje duginim svetlom)
+         4. korpica/korpica.py - Uhvati zvezdice u korpicu
+         5. ogledalo/ogledalo.py - Smešno ogledalo sa maskama i mimikom
+         6. sortiranje/sortiranje.py - Spajanje istih sličica u kućice
+         
+         Glavni meni omogućava izbor igre klikom mišem ili tasterima 1-6.
+         Izlazak na [ESC] ili [q] vraća nazad u meni.
+
+Komande:
+    cd ~/primeri/igrice
+    python pokretac_igrice.py
+
+
+9. PROJEKAT: TITLOVI-UZIVO (Govor u Tekst na Srpskom - Bez Oblaka)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/titlovi-uzivo
+Opis:    Offline AI prepoznavanje govora na srpskom jeziku u realnom vremenu
+         (Whisper int8) kreirano za ucenike ostecenog sluha.
+         - 100% lokalno na RPi 5 bez interneta i bez slanja zvuka u oblak.
+         - Prikaz preko HDMI ekrana (Pygame), preko web pregledaca (LAN:8080)
+           ili u konzoli.
+         Kontrole u Pygame prikazu: [F] Ceo ekran  |  [q] ili [ESC] Izlaz.
+
+Komande (ima sopstveni .venv):
+    cd ~/primeri/titlovi-uzivo
+    source .venv/bin/activate
+
+    # Prikaz preko celog ekrana (HDMI TV/Monitor):
+    titlovi run
+
+    # Prikaz na latinici umesto cirilice:
+    titlovi run --script latin
+
+    # Prikaz u Web pregledacu (telefon/tablet na LAN mrezi http://<ip>:8080):
+    titlovi run --display web
+
+    # Brza proba u terminalu:
+    titlovi run --console
+
+
+10. PROJEKAT: KVO-TE (AI Mašina sa Pirotskim Dijalektom)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/projekti/kvo-te  (ili /home/pi/primeri/kvo-te)
+Fajl:    kvo_te.py
+Opis:    Interaktivni lokalni AI mudrac koji odgovara na pitanja na izvornom
+         pirotskom (torlackom) dijalektu. Pruza savete o stednji, hrani
+         (peglana kobasica, kackavalj), zivotu, vremenu i prica viceve.
+         - 100% lokalno i oflajn na Raspberry Pi 5.
+         - Govori naglas preko zvucnika (espeak-ng na srpskom).
+         - Pygame retro-etno interfejs za TV/HDMI ili brzi CLI za terminal.
+
+         Kontrole na ekranu:
+         - [Tastatura + ENTER]: Upisi bilo koje pitanje
+         - [1] do [6]: Brze teme (Pare, Jelo, Kvo te muci, Vreme, Ljubav, Vic)
+         - [r]: Pirotski recnik (objasnjava pirotske reci)
+         - [m]: Ukljuci/iskljuci glas (Mute)
+         - [f]: Ceo ekran (Fullscreen)
+         - [q] ili [ESC]: Izlaz
+
+Komande:
+    source ~/primeri/env/bin/activate
+    cd ~/projekti/kvo-te
+
+    # Prikaz preko celog ekrana (HDMI TV/Monitor):
+    python kvo_te.py
+
+    # Prikaz u prozoru:
+    python kvo_te.py --windowed
+
+    # Brzi rad u terminalu (preko SSH bez grafickog ekrana):
+    python kvo_te.py --cli
+
+
+11. PROJEKAT: LIDAR (RPLIDAR C1 360° Skener & Radar)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/lidar
+Fajl:    lidar.py  (ili test_lidar.py za brzi test)
+Opis:    360° laserski radar za Slamtec RPLIDAR C1 povezan preko USB porta.
+         - Radi na 460800 baud sa automatskom detekcijom USB porta (/dev/ttyUSB*).
+         - Detektuje prepreke, crta 360° radarsku mapu sa zonom upozorenja (<50cm).
+         - Podržava ugrađenu simulaciju (taster 's') ako senzor nije povezan.
+         - Zoom opcije: 2m, 4m, 6m, 8m, 12m i 3 različite teme boja.
+
+         Kontrole na ekranu:
+         - [s]: Uključi / Isključi simulaciju (Room demo)
+         - [+/-]: Povećaj / Smanji domet (Zoom)
+         - [c]: Promeni temu boja (Sajber Neon / Vojni radar / Heatmap)
+         - [r]: Ponovno povezivanje / pretraga USB porta
+         - [m]: Start / Stop motor skenera
+         - [q] ili [ESC]: Izlaz
+
+Komande:
+    source ~/primeri/env/bin/activate
+    cd ~/primeri/lidar
+
+    # Pokretanje grafičkog radara na TV/HDMI ekranu:
+    python lidar.py
+
+    # Sigurnosna barijera na 1m sa zvučnim i vizuelnim alarmom upada:
+    python lidar_alarm_barijera.py
+
+    # Matrix 3D konture lica i laserski hologram (zelena digitalna kiša):
+    python lidar_matrix_face.py
+
+    # Brzi dijagnostički test u terminalu (0°, 90°, 180°, 270°):
+    python test_lidar.py
+
+
+12. PROJEKAT: HEMIJA (AR Cepanje i Spajanje Atoma — Sinteza Molekula)
+--------------------------------------------------------------------------------
+Folder:  /home/pi/primeri/hemija
+Fajl:    hemija.py
+Opis:    Interaktivna proširena stvarnost (AR) u stilu edukativnih holograma:
+         - Biranje hemijskih elemenata iz Periodnog sistema na srpskom jeziku
+           (Vodonik, Kiseonik, Ugljenik, Azot, Natrijum, Hlor).
+         - Cepanje hemijskih veza obema rukama (hvatanje palcem i kažiprstom
+           i razvlačenje dok veza ne pukne uz zvučni prasak i varnice).
+         - Spajanje slobodnih atoma po stvarnim hemijskim valencama.
+         - Automatsko prepoznavanje i sinteza molekula uz specijalne AR efekte:
+           1) Voda (H2O) — pljusak, tečna aura i mehurići
+           2) Ugljen-dioksid (CO2) — gasni dimni oblak i prstenovi
+           3) Kuhinjska so (NaCl) — blistavi kristalni dijamant i zvuk zvona
+           4) Metan (CH4) — plavičasti plamen zemnog gasa i varnice
+           5) Amonijak (NH3) — hemijska izmaglica
+           6) Hlorovodonik (HCl) — kiselinska aura i šištanje
+
+         Kontrole na ekranu:
+         - [Pinch obema rukama]: Uhvati 2 atoma i razvuci ih da pukne veza
+         - [Prinos atoma]: Prinesi atome jedan drugom da se spoje
+         - [p]: Otvori / zatvori traku Periodnog sistema elemenata na vrhu
+         - [1 - 6]: Brzi eksperimenti (1:Voda, 2:CO2, 3:So, 4:Metan, 5:NH3, 6:HCl)
+         - [Space] / [r]: Resetuj radni sto i eksperiment
+         - [m]: Uključi / isključi zvuk
+         - [q] ili [ESC]: Izlaz
+
+Komande:
+    source ~/primeri/env/bin/activate
+    cd ~/primeri/hemija
+    python hemija.py
+
+
+
+================================================================================
+KORAK 3: IZLAZAK I DEAKTIVACIJA
+================================================================================
+- Za zaustavljanje bilo kog programa dok je prozor aktivan pritisni:
+    'q' ili 'ESC' (ili Ctrl+C u terminalu)
+
+- Kada zavrsis sa radom i zelis da ugasis virtuelno okruzenje, ukucaj:
+    deactivate
+
+================================================================================

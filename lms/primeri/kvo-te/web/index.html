@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Кво те — Аутентични локални AI мозак на пиротском торлачком дијалекту са научним САНУ речником и говором.">
+  <title>КВО ТЕ — Пиротски AI Мозак</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Декоративна пиротска ћилим трака -->
+  <div class="kilim-ribbon" aria-hidden="true"></div>
+
+  <div class="app-layout">
+    <!-- Навигација и заглавље -->
+    <header class="app-header">
+      <div class="header-branding">
+        <div class="logo-badge">КВО ТЕ</div>
+        <div class="header-titles">
+          <h1>КВО ТЕ <span class="tag-accent">AI</span></h1>
+          <p class="subtitle">Пиротски народни ум &bull; 2.726 одредница САНУ речника</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <a href="chat.html" class="action-btn chatgpt-btn" style="background: rgba(217, 45, 32, 0.2); border-color: var(--pirot-red); color: #fff; text-decoration: none;" title="Пређи на ChatGPT интерфејс (ПиротGPT)">
+          <span class="btn-icon">💬</span>
+          <span class="btn-label">ПиротGPT (Chat)</span>
+        </a>
+        <button id="btnToggleSound" class="action-btn active" title="Укључи / искључи глас (M)">
+          <span class="btn-icon">🔊</span>
+          <span class="btn-label">Глас: <strong id="lblSoundStatus">Укључен</strong></span>
+        </button>
+        <button id="btnOpenDictionary" class="action-btn" title="Отвори пиротски речник (R)">
+          <span class="btn-icon">📖</span>
+          <span class="btn-label">САНУ Речник</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Главни интерактивни део -->
+    <main class="main-container">
+      <!-- Маскота / Аватар Пироћанца са гласовним таласима -->
+      <section class="mascot-section">
+        <div class="avatar-card">
+          <div class="avatar-wrapper">
+            <div class="voice-wave voice-wave-1"></div>
+            <div class="voice-wave voice-wave-2"></div>
+            <div class="avatar-circle">
+              <span class="avatar-emoji">👴🏻</span>
+              <span class="shajkaca-badge">🧣</span>
+            </div>
+            <div class="status-indicator" title="AI Мозак је на вези"></div>
+          </div>
+          <div class="avatar-details">
+            <h2 class="mascot-name">Стари Пироћанац</h2>
+            <span class="mascot-status">„Памет не наплаћујем, ал’ струју гасим!”</span>
+          </div>
+        </div>
+
+        <!-- Централни одговор са ефектом куцаће машине -->
+        <div class="current-speech-bubble" id="currentSpeechBubble">
+          <div class="bubble-header">
+            <span class="bubble-tag">ОДГОВОР ПИРОЋАНЦА:</span>
+            <div class="bubble-tools">
+              <button id="btnReplayAudio" class="icon-tool" title="Понови глас">📢</button>
+              <button id="btnCopyAnswer" class="icon-tool" title="Копирај одговор">📋</button>
+            </div>
+          </div>
+          <div class="bubble-text" id="aiResponseText">
+            Помоз' Бог, комшија! Улази, питај кво те мучи, ал' затварај врата да не бега топлота из собу!
+          </div>
+          <div class="bubble-question" id="lastQuestionBadge">
+            👉 <em>Поздрав</em>
+          </div>
+        </div>
+      </section>
+
+      <!-- Брза питања (Quick categories) -->
+      <section class="shortcuts-section" aria-label="Брза питања">
+        <div class="section-label">⚡ БРЗА ПИТАЊА (или притисни тастере 1 - 6):</div>
+        <div class="chips-grid">
+          <button class="chip-btn" data-key="1" data-query="паре и штедња" id="btnPare">
+            <span class="chip-num">1</span>
+            <span class="chip-icon">💰</span>
+            <span class="chip-text">Паре и штедња</span>
+          </button>
+          <button class="chip-btn" data-key="2" data-query="пеглана кобасица и храна" id="btnHrana">
+            <span class="chip-num">2</span>
+            <span class="chip-icon">🥓</span>
+            <span class="chip-text">Пеглана кобасица</span>
+          </button>
+          <button class="chip-btn" data-key="3" data-query="кво те мучи" id="btnMuka">
+            <span class="chip-num">3</span>
+            <span class="chip-icon">🤔</span>
+            <span class="chip-text">Кво те мучи?</span>
+          </button>
+          <button class="chip-btn" data-key="4" data-query="време и нишавац" id="btnVreme">
+            <span class="chip-num">4</span>
+            <span class="chip-icon">💨</span>
+            <span class="chip-text">Време и нишавац</span>
+          </button>
+          <button class="chip-btn" data-key="5" data-query="љубав и брак" id="btnLjubav">
+            <span class="chip-num">5</span>
+            <span class="chip-icon">❤️</span>
+            <span class="chip-text">Љубав и брак</span>
+          </button>
+          <button class="chip-btn" data-key="6" data-query="испричај ми пиротски виц" id="btnVic">
+            <span class="chip-num">6</span>
+            <span class="chip-icon">😂</span>
+            <span class="chip-text">Пиротски виц</span>
+          </button>
+          <button class="chip-btn chip-recnik" data-key="r" data-action="random-rec" id="btnRandomRec">
+            <span class="chip-num">R</span>
+            <span class="chip-icon">✨</span>
+            <span class="chip-text">Случајна реч</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Историја разговора -->
+      <section class="chat-section">
+        <div class="chat-header">
+          <span class="chat-title">💬 Разговор са комшијом</span>
+          <button id="btnClearChat" class="text-tool">Очисти историју</button>
+        </div>
+        <div class="chat-feed" id="chatFeed">
+          <!-- Поруке се овде додају кроз JS -->
+        </div>
+      </section>
+
+      <!-- Поље за унос питања -->
+      <section class="input-section">
+        <form id="chatForm" class="input-form">
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="userInput" 
+              placeholder="Упиши питање овде... (нпр. 'како да уштедим', 'кво значи аљав', 'кажи ми виц')" 
+              autocomplete="off"
+              maxlength="200"
+              required
+            />
+            <button type="submit" id="btnSubmit" class="send-btn" title="Пошаљи (ENTER)">
+              <span class="send-icon">➤</span>
+            </button>
+          </div>
+        </form>
+        <div class="input-hints">
+          <span>💡 Савет: Можеш питати на <strong>пиротском</strong> или <strong>књижевном српском</strong>.</span>
+          <span class="hotkey-tip">ENTER = пошаљи &bull; 1-6 = пречице &bull; R = речник</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Модал: Научни речник САНУ (2.726 одредница) -->
+  <div class="modal-overlay" id="dictModal" aria-hidden="true">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2>📚 САНУ Речник пиротског говора</h2>
+          <span class="modal-subtitle">Драгољуб Златковић, Институт за српски језик САНУ</span>
+        </div>
+        <button class="close-modal" id="btnCloseModal" title="Затвори (ESC)">&times;</button>
+      </div>
+
+      <div class="dict-search-bar">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="dictSearchInput" 
+          placeholder="Претражи пиротску реч или српски појам (нпр. абьр, аљав, невеста, качамак)..."
+          autocomplete="off"
+        />
+        <button id="btnRandomInDict" class="dict-btn-small">🎲 Случајна</button>
+      </div>
+
+      <div class="dict-stats" id="dictStats">
+        Учитавање речника...
+      </div>
+
+      <div class="dict-results" id="dictResults">
+        <!-- Резултати речника -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

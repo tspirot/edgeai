@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ПиротGPT — ChatGPT за Пироћанци. Разговарај са моделом на аутентичном пиротском торлачком дијалекту.">
+  <title>ПиротGPT — Торлачки AI Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+  <!-- Декоративна пиротска ћилим трака на самом врху -->
+  <div class="top-kilim-line" aria-hidden="true"></div>
+
+  <div class="chatgpt-container">
+    <!-- ЛЕВА БОЧНА ТРАКА (SIDEBAR) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <button id="btnNewChat" class="new-chat-btn" title="Покрени нов разговор">
+          <span class="icon">＋</span>
+          <span class="text">Нов муабет</span>
+        </button>
+        <button id="btnSidebarCloseMobile" class="mobile-sidebar-close" title="Затвори мени">&times;</button>
+      </div>
+
+      <!-- ИЗБОР ПЕРСОНЕ / КАРАКТЕРА МОДЕЛА -->
+      <div class="persona-section">
+        <div class="sidebar-section-title">САГЕГОВОРНИК (ПЕРСОНА)</div>
+        <div class="persona-selector">
+          <button class="persona-btn active" data-persona="stedisa" title="Бајица Станко: штедиша који гаси сијалице и чува паре">
+            <span class="persona-icon">💰</span>
+            <div class="persona-info">
+              <span class="persona-name">Бајица Станко</span>
+              <span class="persona-role">Тврди штедиша</span>
+            </div>
+          </button>
+          <button class="persona-btn" data-persona="meraklija" title="Чика Добри: боем, пеглана кобасица, ракија и вицеви">
+            <span class="persona-icon">🥓</span>
+            <div class="persona-info">
+              <span class="persona-name">Чика Добри</span>
+              <span class="persona-role">Мераклија &amp; боем</span>
+            </div>
+          </button>
+          <button class="persona-btn" data-persona="profesor" title="Проф. Златковић: зналац САНУ речника и народних изрека">
+            <span class="persona-icon">📜</span>
+            <div class="persona-info">
+              <span class="persona-name">Проф. Златковић</span>
+              <span class="persona-role">САНУ Зналац речи</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- ИСТОРИЈА МУАБЕТА (CHAT SESSIONS) -->
+      <div class="history-section">
+        <div class="sidebar-section-title">ПРЕТХОДНИ МУАБЕТИ</div>
+        <div class="history-list" id="historyList">
+          <!-- Спискови се пуне динамички из localStorage -->
+        </div>
+      </div>
+
+      <!-- ДОЊЕ ОПЦИЈЕ У SIDEBAR-У -->
+      <div class="sidebar-footer">
+        <div class="footer-control-row">
+          <label class="toggle-control" title="Гласно читање сваког одговора на пиротском">
+            <input type="checkbox" id="chkAutoSpeak" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">🔊 Ауто-говор (TTS)</span>
+          </label>
+        </div>
+        <a href="index.html" class="sidebar-nav-link" title="Пређи на класични киоск приказ">
+          <span class="icon">📺</span>
+          <span>Киоск / AI Мозак</span>
+        </a>
+        <div class="branding-mini">
+          <span>ПиротGPT &bull; Торлак-4o v2</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ГЛАВНА ОБЛАСТ ЗА РАЗГОВОР (MAIN CHAT) -->
+    <main class="main-chat">
+      <!-- Горња навигациона трака -->
+      <header class="chat-topbar">
+        <div class="topbar-left">
+          <button id="btnToggleSidebar" class="icon-btn-toggle" title="Прикажи/сакриј бочну траку">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+          </button>
+          <div class="model-badge">
+            <span class="model-name">ПиротGPT</span>
+            <span class="model-version">Торлак-4o</span>
+          </div>
+          <div class="active-persona-indicator" id="topbarPersonaBadge">
+            <span class="persona-dot"></span>
+            <span id="lblActivePersona">Бајица Станко (Штедиша)</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button id="btnOpenSettings" class="topbar-action-btn" title="AI Модел и кључеви">
+            <span>⚙️</span>
+            <span class="btn-text">AI Модел</span>
+          </button>
+          <button id="btnClearCurrentChat" class="topbar-action-btn" title="Обриши тренутни муабет">
+            <span>🗑️</span>
+            <span class="btn-text">Очисти</span>
+          </button>
+          <a href="index.html" class="topbar-action-btn highlight" title="Пређи на графички киоск">
+            <span>📺</span>
+            <span class="btn-text">Киоск режим</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Контејнер са порукама -->
+      <div class="messages-viewport" id="messagesViewport">
+        <!-- Почетни поздрав када је разговор празан -->
+        <div class="welcome-hero" id="welcomeHero">
+          <div class="welcome-emblem">
+            <span class="emblem-char">П</span>
+            <span class="shajkaca-badge">🧣</span>
+          </div>
+          <h1 class="welcome-title">Кво те мучи, комшија?</h1>
+          <p class="welcome-subtitle">
+            Питај било шта на српском или пиротском. Одговарам искључиво на аутентичном торлачком говору!
+          </p>
+
+          <!-- Препоручена питања (Prompt Cards) -->
+          <div class="starter-cards-grid">
+            <button class="starter-card" data-prompt="Како да сачувам паре кад сви оће да ми ги узну?">
+              <div class="starter-icon">💰</div>
+              <div class="starter-label">Савет за штедњу</div>
+              <div class="starter-text">„Како да сачувам паре кад сви оће да ми ги узну?”</div>
+            </button>
+            <button class="starter-card" data-prompt="Која је тајна добре пиротске пеглане кобасице?">
+              <div class="starter-icon">🥓</div>
+              <div class="starter-label">Пеглана кобасица</div>
+              <div class="starter-text">„Која је тајна добре пиротске пеглане кобасице?”</div>
+            </button>
+            <button class="starter-card" data-prompt="Шта значи пиротска реч 'аљав' и 'абьр' у САНУ речнику?">
+              <div class="starter-icon">📖</div>
+              <div class="starter-label">САНУ Речник</div>
+              <div class="starter-text">„Шта значе речи 'аљав' и 'абьр' у САНУ речнику?”</div>
+            </button>
+            <button class="starter-card" data-prompt="Испричај ми један аутентични пиротски виц о паре">
+              <div class="starter-icon">😂</div>
+              <div class="starter-label">Пиротски хумор</div>
+              <div class="starter-text">„Испричај ми један аутентични пиротски виц о паре”</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Овде се ређају поруке муабета -->
+        <div class="messages-thread" id="messagesThread"></div>
+      </div>
+
+      <!-- ДОЊА ПЛУТАЈУЋА ТРАКА ЗА УНОС (CHATGPT INPUT) -->
+      <div class="input-container">
+        <form class="chat-input-box" id="composerForm">
+          <textarea
+            id="chatPromptInput"
+            rows="1"
+            placeholder="Питај комшију шта оћеш... (Shift+Enter за нови ред)"
+            autocomplete="off"
+            required
+          ></textarea>
+          <div class="composer-actions">
+            <button type="submit" id="btnSend" class="send-message-btn" title="Пошаљи поруку (ENTER)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="19" x2="12" y2="5"/>
+                <polyline points="5 12 12 5 19 12"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="chat-disclaimer">
+          ПиротGPT може да угаси сијалицу да не арчи струју. Одговори су 100% на аутентичном пиротском торлачком говору.
+        </div>
+      </div>
+    </main>
+  <!-- ДИЈАЛОГ ЗА ПОДЕШАВАЊА AI МОДЕЛА (LLM SETTINGS MODAL) -->
+  <div class="settings-modal-backdrop" id="settingsModal" style="display: none;">
+    <div class="settings-modal-card">
+      <div class="settings-modal-header">
+        <div class="settings-modal-title">
+          <span class="icon">⚙️</span>
+          <span>Подешавања AI Модела (LLM)</span>
+        </div>
+        <button id="btnCloseSettings" class="modal-close-btn" title="Затвори">&times;</button>
+      </div>
+
+      <div class="settings-modal-body">
+        <p class="settings-intro">
+          Повежите ПиротGPT са правим AI моделом (LLM) за паметне, дугачке и досетљиве одговоре на торлачком, или користите уграђени офлајн мозак.
+        </p>
+
+        <div class="settings-field">
+          <label for="selAiProvider">AI Провајдер (Модел):</label>
+          <select id="selAiProvider" class="settings-select">
+            <option value="groq">Groq Cloud (Изузетно брз, бесплатан кључ — Llama 3.3 70B)</option>
+            <option value="gemini">Google Gemini (Бесплатан кључ — Gemini 2.5 Flash)</option>
+            <option value="openrouter">OpenRouter (Подржава Claude, GPT-4, DeepSeek...)</option>
+            <option value="openai">OpenAI (GPT-4o mini / GPT-4o)</option>
+            <option value="ollama">Ollama (Локални AI модел на твом рачунару)</option>
+            <option value="oflajn">Офлајн Пиротски Мозак (Паметна правила без интернета)</option>
+          </select>
+        </div>
+
+        <div class="settings-field" id="groupApiKey">
+          <label for="txtApiKey">API Кључ (API Key):</label>
+          <div class="input-with-action">
+            <input type="password" id="txtApiKey" class="settings-input" placeholder="Унесите ваш API кључ...">
+            <button type="button" id="btnToggleKeyVisibility" class="btn-input-accessory" title="Прикажи/сакриј кључ">👁️</button>
+          </div>
+          <span class="field-hint" id="apiKeyHint">Кључ се безбедно чува локално у config.yaml.</span>
+        </div>
+
+        <div class="settings-field" id="groupModelName">
+          <label for="txtAiModel">Назив модела (Опционо / Остави празно за default):</label>
+          <input type="text" id="txtAiModel" class="settings-input" placeholder="нпр. llama-3.3-70b-versatile, gemini-2.5-flash...">
+        </div>
+
+        <div class="settings-status-box" id="settingsStatusBox" style="display: none;"></div>
+      </div>
+
+      <div class="settings-modal-footer">
+        <button type="button" id="btnTestConnection" class="settings-btn secondary">
+          <span>⚡</span> Провери везу са моделом
+        </button>
+        <button type="button" id="btnSaveSettings" class="settings-btn primary">
+          <span>💾</span> Сачувај подешавања
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="chat.js?v=2.2"></script>
+</body>
+</html>

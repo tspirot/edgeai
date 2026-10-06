@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "SSH FS - proba",
+			"uri": "ssh://proba/"
+		}
+	],
+	"settings": {}
+}
