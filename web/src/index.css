@@ -516,6 +516,64 @@ pre {
   padding: 16px 18px; overflow-x: auto; font-size: 13.5px; line-height: 1.6;
 }
 pre code { color: var(--ink); }
+
+/* Боје синтаксе (components/Kod.jsx). Сви парови са --surface имају контраст ≥ 7:1. */
+:root {
+  --k-kom: #93A89B;
+  --k-str: #A9E08A;
+  --k-br: #F5C26B;
+  --k-kw: #F2A0D0;
+  --k-kon: #F5C26B;
+  --k-fn: #7FD0FF;
+  --k-ugr: #C9B6FF;
+  --k-dek: #C9B6FF;
+  --k-var: #F5C26B;
+  --k-flag: #C9B6FF;
+  --k-kljuc: #7FD0FF;
+}
+:root[data-theme="light"] {
+  --k-kom: #46594E;
+  --k-str: #17591A;
+  --k-br: #7A4A00;
+  --k-kw: #9B1C6B;
+  --k-kon: #7A4A00;
+  --k-fn: #0B5394;
+  --k-ugr: #5B2EA6;
+  --k-dek: #5B2EA6;
+  --k-var: #7A4A00;
+  --k-flag: #5B2EA6;
+  --k-kljuc: #0B5394;
+}
+pre code .k-kom { color: var(--k-kom); font-style: italic; }
+pre code .k-str { color: var(--k-str); }
+pre code .k-br { color: var(--k-br); }
+pre code .k-kw { color: var(--k-kw); font-weight: 600; }
+pre code .k-kon { color: var(--k-kon); }
+pre code .k-fn { color: var(--k-fn); }
+pre code .k-ugr { color: var(--k-ugr); }
+pre code .k-dek { color: var(--k-dek); }
+pre code .k-var { color: var(--k-var); }
+pre code .k-flag { color: var(--k-flag); }
+pre code .k-kljuc { color: var(--k-kljuc); }
+
+/* Кратки квиз на крају лекције (components/Kviz.jsx). */
+.kviz { margin: 48px 0 8px; padding-top: 32px; border-top: 1px solid var(--line); }
+.kviz__pitanje { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 18px 20px; margin: 0 0 16px; min-width: 0; }
+.kviz__pitanje legend { font-family: var(--font-head); font-weight: 600; padding: 0 6px; margin-left: -6px; }
+.kviz__opcija {
+  display: flex; gap: 10px; align-items: flex-start; padding: 9px 12px; margin: 6px 0;
+  border: 1px solid var(--line); border-radius: 8px; cursor: pointer; background: var(--surface-2);
+}
+.kviz__opcija:hover { border-color: var(--line-strong); }
+.kviz__opcija input { margin-top: 4px; accent-color: var(--accent); }
+.kviz__opcija.is-tacno { border-color: var(--accent); background: var(--accent-soft); }
+.kviz__opcija.is-pogresno { border-color: var(--alert); }
+.kviz__oznaka { margin-left: auto; font-family: var(--font-mono); font-size: 12px; font-weight: 700; white-space: nowrap; }
+.kviz__opcija.is-tacno .kviz__oznaka { color: var(--accent); }
+.kviz__opcija.is-pogresno .kviz__oznaka { color: var(--alert); }
+.kviz__obj { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+.kviz__akcije { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+.kviz__rezultat { font-family: var(--font-head); font-weight: 600; }
 :not(pre) > code {
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 5px;
   padding: 1px 6px; font-size: 0.86em; color: var(--brass);

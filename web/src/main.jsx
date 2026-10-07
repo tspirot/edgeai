@@ -10,6 +10,9 @@ import Projekti from './pages/Projekti'
 import Projekat from './pages/Projekat'
 import Uputstva from './pages/Uputstva'
 import Uputstvo from './pages/Uputstvo'
+import Lms from './pages/Lms'
+import Lekcija from './pages/Lekcija'
+import Primer from './pages/Primer'
 import OProgramu from './pages/OProgramu'
 import NotFound from './pages/NotFound'
 
@@ -25,6 +28,9 @@ const router = createBrowserRouter([
       { path: 'projekti/:slug', element: <Projekat /> },
       { path: 'uputstva', element: <Uputstva /> },
       { path: 'uputstva/:slug', element: <Uputstvo /> },
+      { path: 'lms', element: <Lms /> },
+      { path: 'lms/primeri/:slug', element: <Primer /> },
+      { path: 'lms/:slug', element: <Lekcija /> },
       { path: 'o-programu', element: <OProgramu /> },
       { path: '*', element: <NotFound /> },
     ],

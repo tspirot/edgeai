@@ -2,6 +2,7 @@
 
 import Figure from './Figure'
 import Galerija from './Galerija'
+import Kod from './Kod'
 import Shema from './Shema'
 
 function Block({ b, boja }) {
@@ -31,11 +32,7 @@ function Block({ b, boja }) {
         </ol>
       )
     case 'code':
-      return (
-        <pre>
-          <code>{b.code}</code>
-        </pre>
-      )
+      return <Kod code={b.code} lang={b.lang} />
     case 'callout':
       return (
         <aside className={`callout callout--${b.tone || 'info'}`}>

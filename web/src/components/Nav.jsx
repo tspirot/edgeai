@@ -6,6 +6,7 @@ import { useTheme, toggleTheme } from '../lib/theme'
 const LINKS = [
   { to: '/projekti', label: 'Пројекти' },
   { to: '/uputstva', label: 'Упутства' },
+  { to: '/lms', label: 'Учионица' },
   { to: '/o-programu', label: 'О програму' },
 ]
 

@@ -10,6 +10,7 @@
 | путања | шта је |
 |---|---|
 | `web/` | сајт (React + Vite + react-three-fiber) — пројекти, упутства, 3D насловна |
+| `lms/primeri/` | примери за Raspberry Pi 5 (Python) — вежбе уз лекције на страни `/lms` |
 | `projekti/titlovi-uzivo/` | „Титлови уживо“ — препознавање говора на српском на уређају (Python) |
 | `deploy/` | webhook deploy на Virtualmin (Node сервис + PM2 + `deploy.sh`) |
 | `.github/workflows/` | CI: провера билда сајта и тестова |

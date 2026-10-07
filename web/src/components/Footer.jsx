@@ -23,6 +23,7 @@ export default function Footer() {
             <h4>Садржај</h4>
             <Link to="/projekti">Пројекти</Link>
             <Link to="/uputstva">Упутства</Link>
+            <Link to="/lms">Учионица</Link>
             <Link to="/o-programu">О програму</Link>
           </div>
           <div className="footer__col">
