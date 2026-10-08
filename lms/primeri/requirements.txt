@@ -1,0 +1,19 @@
+# Python библиотеке за примере (Raspberry Pi 5, Raspberry Pi OS 64-bit).
+# Инсталација у активном окружењу:  pip install -r requirements.txt
+#
+# НЕ иду преко pip-а (инсталирају се са apt):
+#   sudo apt install python3-picamera2 espeak-ng python3-tk
+# Да би окружење видело picamera2, направи га са:
+#   python3 -m venv --system-site-packages env
+#
+# Верзија mediapipe је једина закључана: примери у порукама грешке траже управо њу.
+# Остале верзије нису закључане нити провераване на Pi-ју.
+
+numpy
+opencv-python
+mediapipe==0.10.14
+pygame
+pyserial
+rplidar-roboticia
+pyyaml
+pypdf

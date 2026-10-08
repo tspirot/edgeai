@@ -1,3 +1,8 @@
+NAPOMENA: putanje u ovom fajlu pretpostavljaju da su primeri u /home/pi/primeri.
+Ako su drugde, postavi PRIMERI_DIR=/putanja/do/primeri pre pokretanja pokretac.py,
+ili samo pokreni ./pokreni.sh iz foldera primeri (koristi svoj folder).
+Spisak potrebnih biblioteka je u requirements.txt, opis u README.md.
+
 ================================================================================
           NAJBRŽI NAČIN — POKRETANJE JEDNIM KLIKOM (AI POKRETAČ)
 ================================================================================
@@ -97,14 +102,14 @@ Komande:
 
 4. PROJEKAT: PROBA (Detekcija Ruku i HUD Pravougaonik)
 --------------------------------------------------------------------------------
-Folder:  /home/pi/primeri/proba
+Folder:  /home/pi/primeri/test
 Fajl:    proba.py
 Opis:    Detekcija ruku, brojanje podignutih prstiju i interaktivni
          hologramski pravougaonik izmedju palca i kaziprsta obe ruke.
          Kontrole: [c] Zamena boja, [n] NoIR filter, [q] Izlaz.
 
 Komande:
-    cd ~/primeri/proba
+    cd ~/primeri/test
     python proba.py
 
 
@@ -127,27 +132,7 @@ Komande:
     python pucketanje.py
 
 
-6. PROJEKAT: SELEKTOVANJE
---------------------------------------------------------------------------------
-Folder:  /home/pi/primeri/selektovanje
-Fajl:    proba.py
-
-Komande:
-    cd ~/primeri/selektovanje
-    python proba.py
-
-
-7. PROJEKAT: VREMENSKA MASINA
---------------------------------------------------------------------------------
-Folder:  /home/pi/primeri/vremenskamasina
-Fajl:    time_travel_snap.py
-
-Komande:
-    cd ~/primeri/vremenskamasina
-    python time_travel_snap.py
-
-
-8. PROJEKAT: DEČIJE CARSTVO (Kolekcija Igrica za Predškolce)
+6. PROJEKAT: DEČIJE CARSTVO (Kolekcija Igrica za Predškolce)
 --------------------------------------------------------------------------------
 Folder:  /home/pi/primeri/igrice
 Pokretač: pokretac_igrice.py
@@ -168,9 +153,9 @@ Komande:
     python pokretac_igrice.py
 
 
-9. PROJEKAT: TITLOVI-UZIVO (Govor u Tekst na Srpskom - Bez Oblaka)
+7. PROJEKAT: TITLOVI-UZIVO (Govor u Tekst na Srpskom - Bez Oblaka)
 --------------------------------------------------------------------------------
-Folder:  /home/pi/primeri/titlovi-uzivo
+Folder:  /home/pi/primeri/titlovi-uzivo  (u repou je pod projekti/titlovi-uzivo; kopiraj ga ovde)
 Opis:    Offline AI prepoznavanje govora na srpskom jeziku u realnom vremenu
          (Whisper int8) kreirano za ucenike ostecenog sluha.
          - 100% lokalno na RPi 5 bez interneta i bez slanja zvuka u oblak.
@@ -195,7 +180,7 @@ Komande (ima sopstveni .venv):
     titlovi run --console
 
 
-10. PROJEKAT: KVO-TE (AI Mašina sa Pirotskim Dijalektom)
+8. PROJEKAT: KVO-TE (AI Mašina sa Pirotskim Dijalektom)
 --------------------------------------------------------------------------------
 Folder:  /home/pi/projekti/kvo-te  (ili /home/pi/primeri/kvo-te)
 Fajl:    kvo_te.py
@@ -228,7 +213,7 @@ Komande:
     python kvo_te.py --cli
 
 
-11. PROJEKAT: LIDAR (RPLIDAR C1 360° Skener & Radar)
+9. PROJEKAT: LIDAR (RPLIDAR C1 360° Skener & Radar)
 --------------------------------------------------------------------------------
 Folder:  /home/pi/primeri/lidar
 Fajl:    lidar.py  (ili test_lidar.py za brzi test)
@@ -263,7 +248,7 @@ Komande:
     python test_lidar.py
 
 
-12. PROJEKAT: HEMIJA (AR Cepanje i Spajanje Atoma — Sinteza Molekula)
+10. PROJEKAT: HEMIJA (AR Cepanje i Spajanje Atoma — Sinteza Molekula)
 --------------------------------------------------------------------------------
 Folder:  /home/pi/primeri/hemija
 Fajl:    hemija.py

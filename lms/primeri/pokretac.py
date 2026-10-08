@@ -22,7 +22,7 @@ if "DISPLAY" not in os.environ:
 if "WAYLAND_DISPLAY" not in os.environ:
     os.environ["WAYLAND_DISPLAY"] = "wayland-0"
 
-BASE_DIR = Path("/home/pi/primeri").resolve()
+BASE_DIR = Path(os.environ.get("PRIMERI_DIR") or Path(__file__).resolve().parent).resolve()
 PYTHON_ENV = str(BASE_DIR / "env" / "bin" / "python")
 
 # Provera postojanja virtuelnog okruženja, fallback na sistemski python3
@@ -86,7 +86,7 @@ PROJECTS = [
         "badge": "GESTOVI & HUD",
         "color": "#10b981",
         "icon": "🖐️",
-        "dir": str(BASE_DIR / "proba"),
+        "dir": str(BASE_DIR / "test"),
         "cmd": [PYTHON_ENV, "proba.py"],
         "desc": "Brojanje prstiju obe šake i interaktivni hologramski pravougaonik između palca i kažiprsta.",
         "controls": "[n] NoIR filter  |  [+/-] Zasićenost  |  [q] Izlaz"
@@ -104,25 +104,13 @@ PROJECTS = [
         "controls": "[1-6] Izbor igrice  |  [Miš] Klik na karticu  |  [q] Izlaz"
     },
     {
-        "id": "vremenskamasina",
-        "num": "7",
-        "name": "VREMENSKA MAŠINA",
-        "badge": "TIME TRAVEL SNAP",
-        "color": "#ec4899",
-        "icon": "⏳",
-        "dir": str(BASE_DIR / "vremenskamasina"),
-        "cmd": [PYTHON_ENV, "time_travel_snap.py"],
-        "desc": "Pucketanjem prstima putujete kroz epohe: 15. vek, barok, 1920-te i cyberpunk budućnost.",
-        "controls": "[Pucketanje] / [Space] Promena epohe  |  [q] Izlaz"
-    },
-    {
         "id": "kvo-te",
         "num": "8",
         "name": "KVO-TE (Pirotski AI Mudrac)",
         "badge": "TORLAČKI AI & GLAS",
         "color": "#d97706",
         "icon": "🧣",
-        "dir": "/home/pi/projekti/kvo-te" if os.path.exists("/home/pi/projekti/kvo-te") else str(BASE_DIR / "kvo-te"),
+        "dir": str(Path.home() / "projekti" / "kvo-te") if (Path.home() / "projekti" / "kvo-te").exists() else str(BASE_DIR / "kvo-te"),
         "cmd": [PYTHON_ENV, "kvo_te.py"],
         "desc": "Pirotski AI mudrac koji savetuje, priča viceve i govori naglas na izvornom pirotskom govoru.",
         "controls": "[ENTER] Upis pitanja  |  [1-6] Brze teme  |  [m] Mute  |  [q] Izlaz"
@@ -135,7 +123,7 @@ PROJECTS = [
         "color": "#14b8a6",
         "icon": "🎙️",
         "dir": str(BASE_DIR / "titlovi-uzivo"),
-        "cmd": ["/home/pi/primeri/titlovi-uzivo/.venv/bin/titlovi", "run"] if os.path.exists("/home/pi/primeri/titlovi-uzivo/.venv/bin/titlovi") else ["titlovi", "run"],
+        "cmd": [str(BASE_DIR / "titlovi-uzivo" / ".venv" / "bin" / "titlovi"), "run"] if (BASE_DIR / "titlovi-uzivo" / ".venv" / "bin" / "titlovi").exists() else ["titlovi", "run"],
         "desc": "100% lokalno AI prepoznavanje govora na srpskom jeziku u realnom vremenu bez interneta.",
         "controls": "[f] Ceo ekran  |  [q] / [ESC] Izlaz"
     },
@@ -176,6 +164,13 @@ PROJECTS = [
         "controls": "[Pinch 2 ruke] Cepanje veze  |  [Prinos] Spajanje atoma  |  [1-6] Eksperimenti  |  [p] Periodni sistem  |  [q] Izlaz"
     }
 ]
+
+# Ponudi samo projekte cije folderi stvarno postoje na ovom racunaru
+# (npr. titlovi-uzivo je u repou pod projekti/, pa ga ovde nema dok se ne kopira),
+# i prenumerisi ih da meni nema rupa.
+PROJECTS = [p for p in PROJECTS if os.path.isdir(p["dir"])]
+for _i, _p in enumerate(PROJECTS, start=1):
+    _p["num"] = str(_i)
 
 # Globalna referenca na pokrenuti podproces
 current_process = None

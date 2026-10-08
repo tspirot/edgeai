@@ -36,7 +36,7 @@ import numpy as np
 BASE_DIR = Path(__file__).resolve().parent
 PYTHON_EXE = sys.executable
 
-rpi_venv = Path("/home/pi/primeri/env/bin/python")
+rpi_venv = BASE_DIR.parent / "env" / "bin" / "python"   # primeri/env, pored igrice/
 if rpi_venv.exists():
     PYTHON_EXE = str(rpi_venv)
 
@@ -46,9 +46,7 @@ CANVAS_H = 1080
 WINDOW_NAME = "Decije Carstvo - Igrice za Predskolce (RPi 5)"
 
 # Pronađi putanju do sortiranja (bilo u primeri/sortiranje ili lokalno)
-sortiranje_path = Path("/home/pi/primeri/sortiranje/sortiranje.py")
-if not sortiranje_path.exists():
-    sortiranje_path = BASE_DIR.parent / "sortiranje" / "sortiranje.py"
+sortiranje_path = BASE_DIR.parent / "sortiranje" / "sortiranje.py"
 
 GAMES = [
     {

@@ -41,6 +41,12 @@ deactivate                            # када завршиш`,
         title: 'Која путања?',
         text: 'У pokretanje.txt стоје обе: ~/venv и ~/primeri/env. Покретач (pokreni.sh) користи /home/pi/primeri/env, па је то подразумевано окружење за примере.',
       },
+      {
+        type: 'callout',
+        tone: 'info',
+        title: 'Прави ново окружење',
+        text: 'Ако окружење не постоји, направи га овако: python3 -m venv --system-site-packages env, па source env/bin/activate и pip install -r requirements.txt (фајл је у lms/primeri). Опција --system-site-packages је потребна да окружење види picamera2, који се инсталира преко apt.',
+      },
       { type: 'h', text: 'Покретање примера' },
       {
         type: 'code',
