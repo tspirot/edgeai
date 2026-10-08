@@ -4,7 +4,8 @@ import Content from '../components/Content'
 import Kviz from '../components/Kviz'
 import ProjectCard from '../components/ProjectCard'
 import { projekti } from '../data/projekti'
-import { lekcije, getLekcija, primeriLekcije } from '../data/lms'
+import { getLekcija, primeriLekcije, lekcijeGrupe, oznaka } from '../data/lms'
+import { uputstva } from '../data/uputstva'
 import NotFound from './NotFound'
 
 export default function Lekcija() {
@@ -12,11 +13,13 @@ export default function Lekcija() {
   const l = getLekcija(slug)
   if (!l) return <NotFound />
 
-  const redom = [...lekcije].sort((a, b) => a.redosled - b.redosled)
+  const redom = lekcijeGrupe(l.grupa)
   const i = redom.findIndex((x) => x.slug === slug)
   const prethodna = redom[i - 1]
   const sledeca = redom[i + 1]
   const preduslov = l.preduslov ? getLekcija(l.preduslov) : null
+  const preporuka = l.preporuka ? getLekcija(l.preporuka) : null
+  const vezanaUputstva = (l.uputstva || []).map((x) => uputstva.find((u) => u.slug === x)).filter(Boolean)
   const vezbe = primeriLekcije(l)
   const vezaniProjekti = (l.projekti || []).map((s) => projekti.find((p) => p.slug === s)).filter(Boolean)
 
@@ -33,7 +36,7 @@ export default function Lekcija() {
           <h1>{l.naziv}</h1>
           <p>{l.kratko}</p>
           <div className="card__meta">
-            <span className="tag">Лекција {l.redosled}</span>
+            <span className="tag">{oznaka(l)}</span>
             <span className="tag">{l.nivo}</span>
             <span className="tag">{l.vreme}</span>
           </div>
@@ -43,10 +46,16 @@ export default function Lekcija() {
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap layout-two">
           <div>
+            {preporuka && (
+              <aside className="callout callout--info">
+                <strong>Препоручено прво (можеш и да прескочиш)</strong>
+                <p><Link to={`/lms/${preporuka.slug}`}>{oznaka(preporuka)}: {preporuka.naziv}</Link></p>
+              </aside>
+            )}
             {preduslov && (
               <aside className="callout callout--info">
                 <strong>Прво прођи</strong>
-                <p><Link to={`/lms/${preduslov.slug}`}>{preduslov.naziv}</Link></p>
+                <p><Link to={`/lms/${preduslov.slug}`}>{oznaka(preduslov)}: {preduslov.naziv}</Link></p>
               </aside>
             )}
             <Content
@@ -84,6 +93,17 @@ export default function Lekcija() {
               </>
             )}
 
+            {vezanaUputstva.length > 0 && (
+              <>
+                <h2>Повезано упутство</h2>
+                <ul>
+                  {vezanaUputstva.map((u) => (
+                    <li key={u.slug}><Link to={`/uputstva/${u.slug}`}>{u.naziv}</Link> — {u.kratko}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
             <Kviz key={l.slug} id={l.slug} pitanja={l.kviz} />
 
             <nav className="card__meta" aria-label="Лекције" style={{ marginTop: 40, justifyContent: 'space-between' }}>
@@ -92,7 +112,7 @@ export default function Lekcija() {
             </nav>
           </div>
           <aside className="aside">
-            <h4>Све лекције</h4>
+            <h4>{l.grupa === 'uvod' ? 'Предзнање' : 'Све лекције'}</h4>
             <ul>
               {redom.map((x) => (
                 <li key={x.slug}>

@@ -1,9 +1,27 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
-import { lekcije, primeri, getLekcija } from '../data/lms'
+import { primeri, getLekcija, lekcijeGrupe, oznaka } from '../data/lms'
+
+function LekcijaKartica({ l }) {
+  return (
+    <Link to={`/lms/${l.slug}`} className="card">
+      <span className="card__arrow" aria-hidden="true">↗</span>
+      <span className="card__idx">{oznaka(l)}</span>
+      <span className="card__title">{l.naziv}</span>
+      <p className="card__text">{l.kratko}</p>
+      <span className="card__meta">
+        <span className="tag">{l.nivo}</span>
+        <span className="tag">{l.vreme}</span>
+        {l.primeri.length > 0 && <span className="tag tag--hw">{l.primeri.length} вежби</span>}
+        {l.preduslov && <span className="tag">након: {getLekcija(l.preduslov)?.naziv}</span>}
+      </span>
+    </Link>
+  )
+}
 
 export default function Lms() {
-  const redom = [...lekcije].sort((a, b) => a.redosled - b.redosled)
+  const uvod = lekcijeGrupe('uvod')
+  const redom = lekcijeGrupe('glavna')
   const bezLekcije = primeri.filter((p) => p.lekcije.length === 0)
 
   return (
@@ -19,22 +37,22 @@ export default function Lms() {
 
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap">
+          <h2>Предзнање</h2>
+          <p>
+            Ако ти је Python, NumPy, OpenCV или рад на Pi-ју нов, прођи ово прво. Ако већ знаш, слободно
+            прескочи и крени од лекције 1.
+          </p>
+          <div className="grid grid--2">
+            {uvod.map((l) => <LekcijaKartica key={l.slug} l={l} />)}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
           <h2>Лекције</h2>
           <div className="grid grid--2">
-            {redom.map((l) => (
-              <Link key={l.slug} to={`/lms/${l.slug}`} className="card">
-                <span className="card__arrow" aria-hidden="true">↗</span>
-                <span className="card__idx">Лекција {l.redosled}</span>
-                <span className="card__title">{l.naziv}</span>
-                <p className="card__text">{l.kratko}</p>
-                <span className="card__meta">
-                  <span className="tag">{l.nivo}</span>
-                  <span className="tag">{l.vreme}</span>
-                  {l.primeri.length > 0 && <span className="tag tag--hw">{l.primeri.length} вежби</span>}
-                  {l.preduslov && <span className="tag">након: {getLekcija(l.preduslov)?.naziv}</span>}
-                </span>
-              </Link>
-            ))}
+            {redom.map((l) => <LekcijaKartica key={l.slug} l={l} />)}
           </div>
         </div>
       </section>

@@ -2,10 +2,11 @@
    Веза иде у оба смера: лекција.primeri → пример.slug, пример.lekcije → лекција.slug. */
 
 import { kviz } from './lmsKviz'
+import { uvodLekcije } from './lmsUvod'
 
 const REPO = 'https://github.com/tspirot/edgeai/tree/main/lms/primeri'
 
-const lekcijeBaza = [
+const glavneLekcije = [
   {
     slug: 'kamera-i-slika',
     redosled: 1,
@@ -14,6 +15,7 @@ const lekcijeBaza = [
     nivo: 'основно',
     vreme: '30 мин',
     preduslov: null,
+    preporuka: 'opencv-osnove',
     ishodi: [
       'знаш да је кадар низ бројева облика (висина, ширина, канали)',
       'умеш да ухватиш један кадар преко Picamera2 и испишеш његов облик',
@@ -566,10 +568,48 @@ const razbaci = (pitanja = [], lekcijaIdx) =>
     }
   })
 
+/* Увод иде испред главне путање у низу; `grupa` разликује нумерацију („Увод N" / „Лекција N"). */
+const lekcijeBaza = [...uvodLekcije, ...glavneLekcije.map((l) => ({ grupa: 'glavna', ...l }))]
+
 export const lekcije = lekcijeBaza.map((l, idx) => ({ ...l, kviz: razbaci(kviz[l.slug], idx) }))
 
 /* Примери из lms/primeri/. `lekcije: []` значи да лекција за њих тек стиже. */
 export const primeri = [
+  {
+    slug: 'numpy-kadar',
+    naziv: 'NumPy: кадар као низ',
+    kratko: 'Прави кадар од нуле, чита му облик, сече област, прави маску и мења пикселе. Без камере.',
+    folder: 'uvod',
+    fajl: 'numpy_kadar.py',
+    hardver: ['без камере', 'NumPy'],
+    nivo: 'основно',
+    lekcije: ['numpy-i-nizovi'],
+    pokretanje: 'cd ~/primeri/uvod\npython numpy_kadar.py',
+  },
+  {
+    slug: 'opencv-slika',
+    naziv: 'OpenCV: једна слика',
+    kratko: 'Учитава logo.png, црта линије, кругове и текст, па пореди сиву и HSV верзију.',
+    folder: 'uvod',
+    fajl: 'opencv_slika.py',
+    hardver: ['без камере', 'OpenCV'],
+    nivo: 'основно',
+    lekcije: ['opencv-osnove'],
+    kontrole: '[q] или [ESC] излаз · --snimi уписује izlaz.png без прозора',
+    pokretanje: 'cd ~/primeri/uvod\npython opencv_slika.py\npython opencv_slika.py --snimi   # без екрана, преко SSH-а',
+  },
+  {
+    slug: 'opencv-kamera',
+    naziv: 'OpenCV: петља са камером',
+    kratko: 'Најмања могућа „игра": кадар, огледало, FPS и излаз на [q].',
+    folder: 'uvod',
+    fajl: 'opencv_kamera.py',
+    hardver: ['Camera Module 3 или USB камера', 'OpenCV'],
+    nivo: 'основно',
+    lekcije: ['opencv-osnove'],
+    kontrole: '[q] или [ESC] излаз',
+    pokretanje: 'cd ~/primeri/uvod\npython opencv_kamera.py',
+  },
   {
     slug: 'test-kamere',
     naziv: 'Провера камере',
@@ -744,6 +784,11 @@ export const primeri = [
     pokretanje: 'cd ~/primeri/vozibezbedno\npython vozibezbedno.py',
   },
 ]
+
+/* Ознака у интерфејсу: „Увод 2" или „Лекција 3". */
+export const oznaka = (l) => (l.grupa === 'uvod' ? `Увод ${l.redosled}` : `Лекција ${l.redosled}`)
+export const lekcijeGrupe = (grupa) =>
+  lekcije.filter((l) => l.grupa === grupa).sort((a, b) => a.redosled - b.redosled)
 
 export const getLekcija = (slug) => lekcije.find((l) => l.slug === slug)
 export const getPrimer = (slug) => primeri.find((p) => p.slug === slug)

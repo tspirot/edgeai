@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Readme from '../components/Readme'
 import Kod from '../components/Kod'
-import { getPrimer, lekcijeZaPrimer, primerRepo } from '../data/lms'
+import { getPrimer, lekcijeZaPrimer, primerRepo, oznaka } from '../data/lms'
 import { getPrimerReadme } from '../data/readme'
 import NotFound from './NotFound'
 
@@ -43,7 +43,7 @@ export default function Primer() {
                   {lekcije.map((l, i) => (
                     <span key={l.slug}>
                       {i > 0 && ', '}
-                      <Link to={`/lms/${l.slug}`}>Лекција {l.redosled}: {l.naziv}</Link>
+                      <Link to={`/lms/${l.slug}`}>{oznaka(l)}: {l.naziv}</Link>
                     </span>
                   ))}
                 </p>
