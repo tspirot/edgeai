@@ -48,23 +48,29 @@ GitHub push ──► https://edgeai.tsp.edu.rs/webhook
 
 ### 1. Клонирај репо
 
-Приватан репо, без SSH → HTTPS remote са **fine-grained PAT** (само read за `tspirot/edgeai`):
+Приватан репо, без SSH пријаве на сервер. Најбоље је **deploy key** само за читање:
 
 ```bash
-cd ~
-git clone https://x-access-token:<PAT>@github.com/tspirot/edgeai.git
+ssh-keygen -t ed25519 -f ~/.ssh/edgeai_deploy -N ""      # на серверу
+cat ~/.ssh/edgeai_deploy.pub                            # додај у GitHub → репо → Settings → Deploy keys (без write)
+GIT_SSH_COMMAND='ssh -i ~/.ssh/edgeai_deploy' git clone git@github.com:tspirot/edgeai.git ~/edgeai
+git -C ~/edgeai config core.sshCommand 'ssh -i ~/.ssh/edgeai_deploy'
 ```
 
-PAT: github.com → Settings → Developer settings → Fine-grained tokens →
-Repository access: само `tspirot/edgeai`, Permissions → Contents: Read-only.
+Ако је SSH из сервера ка GitHub-у блокиран, може fine-grained PAT (само `tspirot/edgeai`,
+Contents: Read-only) у HTTPS remote-у. Тада се токен чува у `~/edgeai/.git/config`: не стављај га
+у команде које се чувају у историји љуске и ротирај га редовно.
 
 ### 2. Подеси PM2 сервис (без sudo)
 
 `ecosystem.config.js` је већ намештен за корисника `edgeai` (`/home/edgeai/edgeai`,
-docroot `/home/edgeai/public_html`). Провери само `WEBHOOK_SECRET`.
+docroot `/home/edgeai/public_html`). **Тајна се не уписује у тај фајл** (он је у git-у):
+чита се из `deploy/.env` на серверу, који је игнорисан у git-у и кога `deploy.sh` не брише.
 
 ```bash
 cd ~/edgeai
+cp deploy/.env.example deploy/.env && chmod 600 deploy/.env
+# уреди deploy/.env: WEBHOOK_SECRET=$(openssl rand -hex 32)   (иста вредност иде у GitHub, корак 4)
 command -v pm2 || npm install pm2          # локално ако није системски (нема sudo)
 PM2=$(command -v pm2 || echo ./node_modules/.bin/pm2)
 $PM2 start deploy/ecosystem.config.js
@@ -98,7 +104,7 @@ Repo **Settings → Webhooks → Add webhook**:
 |---|---|
 | Payload URL | `https://edgeai.tsp.edu.rs/webhook` |
 | Content type | `application/json` |
-| Secret | иста вредност као `WEBHOOK_SECRET` у `ecosystem.config.js` |
+| Secret | иста вредност као `WEBHOOK_SECRET` у `deploy/.env` на серверу |
 | Events | Just the `push` event |
 
 ### 5. Прва објава
@@ -108,6 +114,19 @@ cd ~/edgeai && bash deploy/deploy.sh
 ```
 
 Затим на GitHub-у: Webhooks → Recent Deliveries → **Redeliver** ping.
+
+## Ротација тајне (и прелаз са старе верзије)
+
+Старије верзије су имале `WEBHOOK_SECRET` уписан у `ecosystem.config.js` у git-у, па ту
+вредност треба сматрати откривеном. Редослед да деплој не стане:
+
+1. На серверу направи нову тајну и упиши је у `deploy/.env` (нови фајл, види горе).
+2. `git pull`, па `pm2 restart edgeai-webhook --update-env`. Од ове верзије сервис
+   **одбија да се покрене без тајне** и одбија сваки захтев без исправног потписа.
+3. У GitHub → Settings → Webhooks промени **Secret** на ту исту нову вредност.
+4. Проверај: Recent Deliveries → Redeliver → одговор `200`.
+
+Између корака 2 и 3 push-еви ће добијати `401` — то је очекивано и траје само док не промениш тајну на GitHub-у.
 
 ## Свакодневно
 

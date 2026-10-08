@@ -23,6 +23,12 @@ const BRANCH = process.env.DEPLOY_BRANCH || 'main';
 const DEPLOY_SCRIPT = path.join(__dirname, 'deploy.sh');
 const LOG_FILE = path.join(__dirname, 'logs', 'webhook.log');
 
+// Fail closed: сервис без тајне не сме ни да се покрене (иначе би свако могао да окине деплој).
+if (!SECRET) {
+  console.error('WEBHOOK_SECRET није подешен — одбијам да се покренем. Види deploy/.env.example.');
+  process.exit(1);
+}
+
 try {
   fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
 } catch (err) {
@@ -36,7 +42,7 @@ function log(msg) {
 }
 
 function verifySignature(payload, signature) {
-  if (!SECRET) return true;
+  if (!SECRET) return false; // без тајне ништа није потврђено
   const digest = 'sha256=' + crypto.createHmac('sha256', SECRET).update(payload).digest('hex');
   try {
     return crypto.timingSafeEqual(Buffer.from(digest), Buffer.from(signature || ''));
@@ -89,7 +95,7 @@ const server = http.createServer((req, res) => {
   req.on('data', (chunk) => { body += chunk.toString(); });
   req.on('end', () => {
     const signature = req.headers['x-hub-signature-256'];
-    if (SECRET && !verifySignature(body, signature)) {
+    if (!verifySignature(body, signature)) {
       log('ОДБИЈЕН: неважећи потпис');
       res.writeHead(401);
       res.end('Unauthorized');
