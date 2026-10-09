@@ -5,6 +5,7 @@ import Kod from '../components/Kod'
 import { getPrimer, lekcijeZaPrimer, primerRepo, oznaka } from '../data/lms'
 import { getPrimerReadme } from '../data/readme'
 import NotFound from './NotFound'
+import { ghBlob } from '../lib/github'
 
 export default function Primer() {
   const { slug } = useParams()
@@ -62,6 +63,10 @@ export default function Primer() {
             <p>
               <a href={primerRepo(p)} target="_blank" rel="noreferrer">Изворни кôд ↗</a>
               {' '}({p.folder}/{p.fajl})
+              {' · '}
+              <a href={ghBlob(`lms/primeri/${p.folder}/${p.fajl}`)} target="_blank" rel="noreferrer">датотека ↗</a>
+              {' · '}
+              <a href={ghBlob('lms/primeri/requirements.txt')} target="_blank" rel="noreferrer">requirements.txt ↗</a>
             </p>
 
             {readme && (

@@ -7,6 +7,7 @@ import { projekti } from '../data/projekti'
 import { getLekcija, primeriLekcije, lekcijeGrupe, oznaka } from '../data/lms'
 import { uputstva } from '../data/uputstva'
 import NotFound from './NotFound'
+import { ghEdit } from '../lib/github'
 
 export default function Lekcija() {
   const { slug } = useParams()
@@ -103,6 +104,12 @@ export default function Lekcija() {
                 </ul>
               </>
             )}
+
+            <p className="card__text" style={{ marginTop: 32 }}>
+              <a href={ghEdit(l.grupa === 'uvod' ? 'web/src/data/lmsUvod.js' : 'web/src/data/lms.js')} target="_blank" rel="noreferrer">
+                Нашао/ла си грешку? Исправи ову лекцију на GitHub-у ↗
+              </a>
+            </p>
 
             <Kviz key={l.slug} id={l.slug} pitanja={l.kviz} />
 

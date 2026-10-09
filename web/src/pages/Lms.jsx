@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { primeri, getLekcija, lekcijeGrupe, oznaka } from '../data/lms'
+import { ghTree, ghBlob } from '../lib/github'
 
 function LekcijaKartica({ l }) {
   return (
@@ -61,7 +62,8 @@ export default function Lms() {
         <div className="wrap">
           <h2>Примери</h2>
           <p>
-            Све апликације из <b>lms/primeri</b>.
+            Све апликације из <a href={ghTree('lms/primeri')} target="_blank" rel="noreferrer"><b>lms/primeri</b> ↗</a>
+            (зависности: <a href={ghBlob('lms/primeri/requirements.txt')} target="_blank" rel="noreferrer">requirements.txt ↗</a>).
             {bezLekcije.length > 0 && ` ${bezLekcije.length} од њих још нема лекцију — ту су за радозналост.`}
           </p>
           <div className="grid grid--3">

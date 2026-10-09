@@ -1,6 +1,7 @@
 import Seo from '../components/Seo'
 import ProjectCard from '../components/ProjectCard'
 import { projekti, rezervneIdeje } from '../data/projekti'
+import { GH_REPO, ghTree } from '../lib/github'
 
 export default function Projekti() {
   return (
@@ -11,6 +12,7 @@ export default function Projekti() {
           <div className="crumbs"><a href="/">Почетна</a><span>/</span><span>Пројекти</span></div>
           <h1>Пројекти</h1>
           <p>Свака група води један прототип од идеје до демоа. Сви раде офлајн, сви су везани за Пирот.</p>
+          <p><a href={ghTree('projekti')} target="_blank" rel="noreferrer">Изворни кôд свих пројеката на GitHub-у ↗</a></p>
         </div>
       </header>
 
@@ -18,7 +20,7 @@ export default function Projekti() {
         <div className="wrap">
           <div className="grid grid--3">
             {projekti.map((p) => <ProjectCard key={p.slug} p={p} />)}
-            <a className="card" href="https://github.com/tspirot/edgeai" target="_blank" rel="noreferrer">
+            <a className="card" href={GH_REPO} target="_blank" rel="noreferrer">
               <span className="card__arrow" aria-hidden="true">↗</span>
               <span className="card__idx">06</span>
               <span className="card__title">Имаш идеју?</span>

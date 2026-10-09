@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import BrandMark from './BrandMark'
+import { GH_REPO, ghTree, ghBlob } from '../lib/github'
 
 export default function Footer() {
   return (
@@ -28,8 +29,14 @@ export default function Footer() {
           </div>
           <div className="footer__col">
             <h4>Спољно</h4>
-            <a href="https://github.com/tspirot/edgeai" target="_blank" rel="noreferrer">
+            <a href={GH_REPO} target="_blank" rel="noreferrer">
               GitHub · tspirot/edgeai
+            </a>
+            <a href={ghTree('lms/primeri')} target="_blank" rel="noreferrer">
+              Примери за Pi (lms/primeri)
+            </a>
+            <a href={ghTree('projekti')} target="_blank" rel="noreferrer">
+              Изворни кôд пројеката
             </a>
             <a href="https://tsp.edu.rs" target="_blank" rel="noreferrer">
               tsp.edu.rs
@@ -38,7 +45,9 @@ export default function Footer() {
         </div>
         <div className="footer__legal">
           © {new Date().getFullYear()} Техничка школа Пирот · edgeai.tsp.edu.rs ·
-          Садржај под лиценцом CC BY-SA 4.0, кôд под MIT лиценцом.
+          Садржај под лиценцом{' '}
+          <a href={ghBlob('LICENSE-CONTENT')} target="_blank" rel="noreferrer">CC BY-SA 4.0</a>, кôд под{' '}
+          <a href={ghBlob('LICENSE')} target="_blank" rel="noreferrer">MIT</a> лиценцом.
         </div>
       </div>
     </footer>
