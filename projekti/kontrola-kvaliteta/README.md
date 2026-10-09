@@ -1,9 +1,27 @@
 # Контрола квалитета без примера грешке
 
+<!-- значке:почетак -->
+![статус: предлог](https://img.shields.io/badge/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B3-2f6fed) ![платформа: Raspberry Pi 5](https://img.shields.io/badge/%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0-Raspberry_Pi_5-c51a4a) ![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776ab) ![лиценца: MIT](https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D1%86%D0%B0-MIT-2ea44f) [![Страница на сајту](https://img.shields.io/badge/сајт-edgeai.tsp.edu.rs-0c6146)](https://edgeai.tsp.edu.rs/projekti/kontrola-kvaliteta)
+<!-- значке:крај -->
+
 Визуелна контрола гумених и текстилних узорака кроз **детекцију аномалија**.
 Модел се тренира **само на исправним комадима** и пријављује све што одступа —
 рупу, ману у ткању, страно тело. Пројекат програма
 [Edge AI Пирот](https://edgeai.tsp.edu.rs).
+
+<!-- преглед:почетак -->
+## Преглед
+
+| | |
+|---|---|
+| **Програм** | Edge AI Пирот · пројекат 04 |
+| **Статус** | предлог |
+| **Платформа** | Raspberry Pi 5 |
+| **Хардвер** | Raspberry Pi 5, AI HAT+ Hailo-8L, Camera Module 3 |
+| **Технологије** | PatchCore / PaDiM, контролисано осветљење |
+| **На сајту** | [страница пројекта](https://edgeai.tsp.edu.rs/projekti/kontrola-kvaliteta) · [упутство](https://edgeai.tsp.edu.rs/uputstva/ai-hat-hailo) |
+| **Тестови** | `pytest` у овом фолдеру |
+<!-- преглед:крај -->
 
 ## Зашто аномалије, а не класификација
 

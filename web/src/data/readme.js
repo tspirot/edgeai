@@ -8,10 +8,15 @@ const files = import.meta.glob('../../../projekti/*/README.md', {
   eager: true,
 })
 
+/* GitHub README-и имају на врху значке и табелу „Преглед“ (између маркера <!-- …:почетак --> и
+   <!-- …:крај -->), а на дну одељак о приватности са релативним везама. На сајту то дуплира
+   страницу пројекта, па се ти блокови овде уклањају. */
+const GENERISANO = /<!-- (значке|преглед|приватност):почетак -->[\s\S]*?<!-- \1:крај -->\n*/g
+
 const readmeBySlug = {}
 for (const [put, sadrzaj] of Object.entries(files)) {
   const m = put.match(/projekti\/([^/]+)\/README\.md$/)
-  if (m) readmeBySlug[m[1]] = sadrzaj
+  if (m) readmeBySlug[m[1]] = sadrzaj.replace(/\r\n/g, '\n').replace(GENERISANO, '')
 }
 
 export const getReadme = (slug) => readmeBySlug[slug] || null
@@ -22,10 +27,16 @@ const primeriFiles = import.meta.glob('../../../lms/primeri/*/README.md', {
   eager: true,
 })
 
+/* README-и ових фолдера су за GitHub (значке, релативне везе), а страница примера на
+   сајту већ показује исто: покретање, тастере и лекцију. Зато се овде не увлаче. */
+const BEZ_README_NA_SAJTU = new Set([
+  'uvod', 'test', 'igrice', 'sortiranje', 'klon', 'hemija', 'mesec', 'pucketanje', 'vozibezbedno',
+])
+
 const readmeByFolder = {}
 for (const [put, sadrzaj] of Object.entries(primeriFiles)) {
   const m = put.match(/lms\/primeri\/([^/]+)\/README\.md$/)
-  if (m) readmeByFolder[m[1]] = sadrzaj
+  if (m && !BEZ_README_NA_SAJTU.has(m[1])) readmeByFolder[m[1]] = sadrzaj
 }
 
 export const getPrimerReadme = (folder) => readmeByFolder[folder] || null

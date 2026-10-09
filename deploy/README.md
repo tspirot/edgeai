@@ -1,5 +1,16 @@
 # Deploy на edgeai.tsp.edu.rs
 
+<!-- преглед:почетак -->
+![начин: A: git poll (препоручено)](https://img.shields.io/badge/%D0%BD%D0%B0%D1%87%D0%B8%D0%BD-A%3A_git_poll_%28%D0%BF%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%83%D1%87%D0%B5%D0%BD%D0%BE%29-2ea44f) ![начин: B: webhook + PM2](https://img.shields.io/badge/%D0%BD%D0%B0%D1%87%D0%B8%D0%BD-B%3A_webhook_%2B_PM2-2f6fed) ![сервер: Virtualmin · Apache](https://img.shields.io/badge/%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80-Virtualmin_%C2%B7_Apache-555555)
+
+| | |
+|---|---|
+| **Шта ради** | `git push` у `main` → сајт на `edgeai.tsp.edu.rs` за ~1 минут |
+| **Скрипте** | `deploy.sh` (build + rsync + rollback), `poll.sh` (cron), `webhook-server.js` (+ `ecosystem.config.js`) |
+| **Тајне** | `deploy/.env` само на серверу (види [`.env.example`](.env.example)) — никад у git |
+| **Брза навигација** | [A) Git poll](#a-git-poll-без-apache-proxy-ја) · [Поставка на серверу](#поставка-на-серверу-једном) · [Ротација тајне](#ротација-тајне-и-прелаз-са-старе-верзије) |
+<!-- преглед:крај -->
+
 Два начина, оба без SSH и без GitHub Actions:
 
 - **A) Git poll (препоручено, ништа не зависи од Apache-ја)** — cron сваких пар
@@ -36,7 +47,7 @@ GitHub push ──► https://edgeai.tsp.edu.rs/webhook
                        │ Apache reverse proxy (Virtualmin)
                        ▼
              127.0.0.1:9008  webhook-server.js  (PM2: edgeai-webhook)
-                       │ провери потпис, гранa = main, дира ли web/
+                       │ провери потпис, грана = main, дира ли web/
                        ▼
                    deploy.sh
         git reset --hard → npm ci → npm run build

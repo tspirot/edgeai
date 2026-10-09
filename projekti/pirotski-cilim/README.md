@@ -1,9 +1,27 @@
 # Шара у духу пиротског ћилима
 
+<!-- значке:почетак -->
+![статус: предлог](https://img.shields.io/badge/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B3-2f6fed) ![платформа: NVIDIA Jetson Orin Nano](https://img.shields.io/badge/%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0-NVIDIA_Jetson_Orin_Nano-76b900) ![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776ab) ![лиценца: MIT](https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D1%86%D0%B0-MIT-2ea44f) [![Страница на сајту](https://img.shields.io/badge/сајт-edgeai.tsp.edu.rs-0c6146)](https://edgeai.tsp.edu.rs/projekti/pirotski-cilim)
+<!-- значке:крај -->
+
 Уређај поред школског разбоја који ради две ствари **на самом уређају**, без
 облака: чита шару са ћилима и објашњава је, па на основу скице ученика компонује
 нову шару по правилима заната — и избаци је као **картон за ткање**, мрежу коју
 ткаља стварно чита. Пројекат програма [Edge AI Пирот](https://edgeai.tsp.edu.rs).
+
+<!-- преглед:почетак -->
+## Преглед
+
+| | |
+|---|---|
+| **Програм** | Edge AI Пирот · пројекат 10 |
+| **Статус** | предлог |
+| **Платформа** | NVIDIA Jetson Orin Nano |
+| **Хардвер** | Jetson Orin Nano (8 GB), Logitech C922, NVMe SSD, екран на додир |
+| **Технологије** | ViT класификатор, Stable Diffusion + ControlNet, TensorRT, сопствени скуп шара |
+| **На сајту** | [страница пројекта](https://edgeai.tsp.edu.rs/projekti/pirotski-cilim) · [упутство](https://edgeai.tsp.edu.rs/uputstva/pirotski-cilim-postavka) |
+| **Тестови** | `pytest` у овом фолдеру |
+<!-- преглед:крај -->
 
 ## Пре свега: како се ово сме звати
 

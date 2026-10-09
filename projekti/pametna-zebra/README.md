@@ -1,11 +1,29 @@
 # Паметна зебра
 
+<!-- значке:почетак -->
+![статус: предлог](https://img.shields.io/badge/%D1%81%D1%82%D0%B0%D1%82%D1%83%D1%81-%D0%BF%D1%80%D0%B5%D0%B4%D0%BB%D0%BE%D0%B3-2f6fed) ![платформа: Raspberry Pi 5](https://img.shields.io/badge/%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0-Raspberry_Pi_5-c51a4a) ![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776ab) ![лиценца: MIT](https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D1%86%D0%B0-MIT-2ea44f) [![Страница на сајту](https://img.shields.io/badge/сајт-edgeai.tsp.edu.rs-0c6146)](https://edgeai.tsp.edu.rs/projekti/pametna-zebra)
+<!-- значке:крај -->
+
 Камера изнад пешачког прелаза **локално** броји пешаке и возила и пали
 светлосно упозорење када се пешак и возило приближавају истовремено.
 Пројекат програма [Edge AI Пирот](https://edgeai.tsp.edu.rs).
 
 **Приватност уграђена у дизајн:** не снима се слика ни видео. Памте се само
 бројеви — колико пешака, колико возила, у ком временском интервалу (`brojac.csv`).
+
+<!-- преглед:почетак -->
+## Преглед
+
+| | |
+|---|---|
+| **Програм** | Edge AI Пирот · пројекат 02 |
+| **Статус** | предлог |
+| **Платформа** | Raspberry Pi 5 |
+| **Хардвер** | Raspberry Pi 5, AI HAT+ Hailo-8L, Camera Module 3 |
+| **Технологије** | YOLOv8n, ByteTrack, LED упозорење |
+| **На сајту** | [страница пројекта](https://edgeai.tsp.edu.rs/projekti/pametna-zebra) · [упутство](https://edgeai.tsp.edu.rs/uputstva/ai-hat-hailo) |
+| **Тестови** | `pytest` у овом фолдеру |
+<!-- преглед:крај -->
 
 ## Хардвер
 
@@ -78,6 +96,12 @@ Hailo backend (`detect/hailo_backend.py`) има место за попуну н
 pip install -e ".[dev]"
 pytest
 ```
+
+<!-- приватност:почетак -->
+## Приватност и подаци
+
+Камера гледа пешаке на прелазу; слика се не чува. Општа правила за податке ученика: [`docs/privatnost.md`](../../docs/privatnost.md). Овај пројекат још нема свој `docs/etika.md`.
+<!-- приватност:крај -->
 
 ## Лиценца
 
