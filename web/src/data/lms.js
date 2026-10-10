@@ -778,7 +778,7 @@ export const primeri = [
     kratko: 'Праћење лица: треперење, зевање и нагиб главе као знаци умора.',
     folder: 'vozibezbedno',
     fajl: 'vozibezbedno.py',
-    hardver: ['Camera Module 3', 'MediaPipe'],
+    hardver: ['Camera Module 3', 'MediaPipe', 'Сет 37 у 1 (зујалица, релеј)'],
     nivo: 'средње',
     lekcije: ['lice-i-umor'],
     pokretanje: 'cd ~/primeri/vozibezbedno\npython vozibezbedno.py',

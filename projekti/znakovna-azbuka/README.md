@@ -89,6 +89,150 @@ znak run                       # препознавање уживо
 pip install -e ".[dev]" && pytest
 ```
 
+## Додатак: Хардверска надградња са сетом „37 у 1” 🖐️
+
+За интерактивну учионицу и рад са децом, систем препознавања знаковне азбуке се надграђује модулима из школског сета „37 у 1”:
+
+1. **Тактилни тастер (KY-004)** — **Окидач за снимање узорака (Dataset Capture):**
+   - Ученик држи руку у положају слова, а другом руком (или ножном педалом) притиска тастер за унос узорка у базу. Нема потребе за нагињањем ка тастатури и развлачењем тела из кадра.
+2. **RGB LED модул (KY-016)** — **Визуелни фидбек у реалном времену:**
+   - 🟡 **Жуто:** Рука уочена, временско гласање у току.
+   - 🟢 **Зелено:** Слово успешно препознато и потврђено.
+   - 🔴 **Црвено:** Непрепознат положај шаке.
+3. **Пасивна зујалица (KY-006)** — **Акустични фидбек:**
+   - Кратак пријатан тон када се слово успешно потврди, чиме се добија мултисензорно искуство учења знаковног језика.
+4. **Ротациони енкодер (KY-040)** — **Бирач слова:**
+   - Окретањем точкића на инсталацији бира се циљно слово за учење (од А до Ш) без потребе за куцањем команди у терминалу.
+
+---
+
+### Илустрација: Шема повезивања на Raspberry Pi 5 (40-pin GPIO)
+
+```
+        Raspberry Pi 5 GPIO Pinout
+               ┌──────────────┐
+  3.3V  (Pin 1)│ ●  ● │(Pin 2)  5V Power
+               │ ●  ● │(Pin 6)  GND ─────────────► [GND] Заједничка маса
+GPIO 17 (Pin 11)│ ●  ● │(Pin 12) GPIO 18 ────────► [CLK] Енкодер бирач (KY-040)
+GPIO 27 (Pin 13)│ ●  ● │(Pin 16) GPIO 23 ────────► [DT]  Енкодер бирач (KY-040)
+GPIO 22 (Pin 15)│ ●  ● │(Pin 18) GPIO 24 ────────► [SW]  Енкодер тастер (KY-040)
+               │ ●  ● │(Pin 22) GPIO 25 ────────► [S]   Пасивна зујалица (KY-006)
+GPIO 26 (Pin 37)│ ●  ● │(Pin 36) GPIO 16 ────────► [S]   Тастер за узорке (KY-004)
+               └──────────────┘
+
+  Детаљна веза сигнала:
+  ├── Тастер за снимање узорка (KY-004):
+  │     ├── S (Сигнал) ────────► GPIO 16 (Pin 36)
+  │     ├── VCC ───────────────► 3.3V (Pin 1)
+  │     └── GND ───────────────► GND (Pin 6 или 14)
+  │
+  ├── RGB LED визуелни фидбек (KY-016):
+  │     ├── R (Црвена) ────────► GPIO 17 (Pin 11)
+  │     ├── G (Зелена) ────────► GPIO 27 (Pin 13)
+  │     ├── B (Плава)  ────────► GPIO 22 (Pin 15)
+  │     └── - (GND)    ────────► GND
+  │
+  ├── Пасивна зујалица за тонове (KY-006):
+  │     ├── S (Сигнал PWM) ────► GPIO 25 (Pin 22)
+  │     └── - (GND)    ────────► GND
+  │
+  └── Ротациони енкодер (KY-040):
+        ├── CLK ───────────────► GPIO 18 (Pin 12)
+        ├── DT  ───────────────► GPIO 23 (Pin 16)
+        ├── SW (Потврда) ──────► GPIO 24 (Pin 18)
+        ├── VCC ───────────────► 3.3V
+        └── GND ───────────────► GND
+```
+
+---
+
+### Пример кода за проширење (без мењања постојећег кода)
+
+Ученици могу креирати класу у `src/znak/hardware_upgrade.py`:
+
+```python
+"""Хардверски фидбек из сета 37 у 1 за Знаковну азбуку."""
+from __future__ import annotations
+import logging
+import time
+
+log = logging.getLogger(__name__)
+
+class SignLanguageFeedback:
+    """Управља тастером за снимање, RGB статусом и звучним фидбеком."""
+
+    def __init__(
+        self,
+        pin_btn: int = 16,
+        pin_r: int = 17,
+        pin_g: int = 27,
+        pin_b: int = 22,
+        pin_buzzer: int = 25,
+        enabled: bool = True,
+    ) -> None:
+        self.enabled = enabled
+        self._btn = None
+        self._led = None
+        self._buzzer = None
+
+        if not enabled:
+            return
+
+        try:
+            from gpiozero import Button, RGBLED, TonalBuzzer
+
+            self._btn = Button(pin_btn, pull_up=True)
+            self._led = RGBLED(red=pin_r, green=pin_g, blue=pin_b)
+            self._buzzer = TonalBuzzer(pin_buzzer)
+
+            log.info("Хардвер за знаковну азбуку иницијализован.")
+            self.set_waiting()
+        except Exception as exc:
+            log.warning("GPIO недоступан (%s) — софтверски режим.", exc)
+            self.enabled = False
+
+    def is_record_pressed(self) -> bool:
+        """Враћа True ако ученик притиска физички тастер за унос узорка."""
+        return bool(self._btn and self._btn.is_pressed)
+
+    def set_waiting(self) -> None:
+        if self._led: self._led.color = (0.2, 0.2, 0)  # Блага жута
+
+    def set_recognized(self, note: str = "C5") -> None:
+        """Потврда: зелено светло + кратак мелодијски тон."""
+        if not self.enabled: return
+        if self._led: self._led.color = (0, 1, 0)
+        if self._buzzer:
+            try:
+                self._buzzer.play(note)
+                time.sleep(0.12)
+                self._buzzer.stop()
+            except Exception:
+                pass
+
+    def set_unknown(self) -> None:
+        if self._led: self._led.color = (1, 0, 0)  # Црвено
+
+    def close(self) -> None:
+        for dev in (self._btn, self._led, self._buzzer):
+            if dev: dev.close()
+```
+
+### Брзи тест на плочи
+
+```bash
+python -c "
+from gpiozero import Button, RGBLED; import time
+btn = Button(16); led = RGBLED(17, 27, 22)
+print('Држи руку у кадру. Притисни тастер (KY-004) на GPIO 16 за снимање...')
+led.color = (1, 1, 0)
+btn.wait_for_press(timeout=5)
+print('Тастер притиснут! Узорак снимљен.')
+led.color = (0, 1, 0); time.sleep(1)
+led.close(); btn.close()
+"
+```
+
 <!-- приватност:почетак -->
 ## Приватност и подаци
 
