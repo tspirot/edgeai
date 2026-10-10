@@ -219,7 +219,22 @@ export const projekti = [
           'LDR фотоотпорник (KY-018) — сензор амбијенталног светла: рефлектор преко релеја се активира само када падне мрак.',
         ],
       },
-      { type: 'h3', text: 'Шема повезивања (40-pin GPIO на Raspberry Pi 5)' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Илустрација хардверског склопа (Сет 37 у 1)',
+        caption: 'Повезивање актуатора и сензора за паметни пешачки прелаз на GPIO магистралу плоче Raspberry Pi 5.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'GPIO 27', ikona: '☀️', naziv: 'LDR фотоотпорник (KY-018)', detalj: 'амбијентално светло / сумрак' },
+            { port: 'GPIO 24 (5V)', ikona: '💡', naziv: '5V Релеј (KY-019)', detalj: 'ноћни LED рефлектор прелаза' },
+            { port: 'GPIO 17/18/22', ikona: '🚦', naziv: 'RGB LED семафор (KY-016)', detalj: 'зелено / жуто / црвено упозорење' },
+            { port: 'GPIO 23', ikona: '🔊', naziv: 'Активна зујалица (KY-012)', detalj: 'звучни аларм критичног прилаза' },
+          ],
+        },
+      },
+      { type: 'h3', text: 'Детаљни распоред 40-pin GPIO заглавља на Raspberry Pi 5' },
       {
         type: 'code',
         lang: 'text',
@@ -484,7 +499,22 @@ led.close(); b.close()
           'RGB LED (KY-016) — теренска дијагностика статуса при монтажи на дрво са аутоматским гашењем након 60 s.',
         ],
       },
-      { type: 'h3', text: 'Шема повезивања (40-pin GPIO на Raspberry Pi 5)' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Илустрација теренског склопа (Сет 37 у 1)',
+        caption: 'Повезивање IR сензора окидача за аутономију батерије, сензора ударца и температурне сонде на Pi 5.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'GPIO 17', ikona: '🎯', naziv: 'IR сензор покрета (KY-032)', detalj: 'wake-up окидач за штедњу батерије' },
+            { port: 'GPIO 27', ikona: '📳', naziv: 'Сензор ударца (KY-002/031)', detalj: 'тампер заштита од обарања' },
+            { port: 'GPIO 4 (1-Wire)', ikona: '🌡️', naziv: 'DS18B20 температурна сонда', detalj: 'мерење температуре тла / снега' },
+            { port: 'GPIO 22/23/24', ikona: '💡', naziv: 'RGB LED дијагностика (KY-016)', detalj: 'монтажни статус (auto-off 60s)' },
+          ],
+        },
+      },
+      { type: 'h3', text: 'Детаљни распоред 40-pin GPIO заглавља на Raspberry Pi 5' },
       {
         type: 'code',
         lang: 'text',
@@ -746,7 +776,23 @@ led.close(); ir.close()
           'Ротациони енкодер (KY-040) на GPIO 18, 23, 24 — хардверско подешавање прага осетљивости и тастер за рекалибрацију у ходу.',
         ],
       },
-      { type: 'h3', text: 'Шема повезивања (40-pin GPIO на Raspberry Pi 5)' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Илустрација индустријског склопа (Сет 37 у 1)',
+        caption: 'Повезивање оптичког окидача са прорезом, пнеуматског релеја, Andon LED стуба и енкодера на Pi 5.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'GPIO 17', ikona: '🎯', naziv: 'Оптички прекидач (KY-010)', detalj: 'окидач камере тачно у центру' },
+            { port: 'GPIO 27 (5V)', ikona: '⚡', naziv: '5V Релеј (KY-019)', detalj: 'пнеуматско избацивање шкарта' },
+            { port: 'GPIO 25/26', ikona: '🚨', naziv: 'Andon LED сигнализација', detalj: 'зелена (OK) / црвена (Шкарт)' },
+            { port: 'GPIO 22', ikona: '🔊', naziv: 'Активна зујалица (KY-012)', detalj: 'звучно упозорење шкарта' },
+            { port: 'GPIO 18/23/24', ikona: '🎛️', naziv: 'Ротациони енкодер (KY-040)', detalj: 'подешавање прага осетљивости' },
+          ],
+        },
+      },
+      { type: 'h3', text: 'Детаљни распоред 40-pin GPIO заглавља на Raspberry Pi 5' },
       {
         type: 'code',
         lang: 'text',
@@ -1002,7 +1048,22 @@ led_bad.off(); relay.close(); buzz.close(); led_ok.close(); led_bad.close()
           'Ротациони енкодер (KY-040) на GPIO 18, 23, 24 — физички бирач слова азбуке за тренинг директно са кутије уређаја.',
         ],
       },
-      { type: 'h3', text: 'Шема повезивања (40-pin GPIO на Raspberry Pi 5)' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Илустрација интерактивног фидбека (Сет 37 у 1)',
+        caption: 'Тактилни окидач за узимање узорака без тастатуре, RGB LED индикација статуса и пасивна зујалица за тонове.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'GPIO 16', ikona: '🔘', naziv: 'Тактилни тастер (KY-004)', detalj: 'окидач за узимање узорка шаке' },
+            { port: 'GPIO 17/27/22', ikona: '💡', naziv: 'RGB LED фидбек (KY-016)', detalj: 'жуто (чека) / зелено (слово) / црвено' },
+            { port: 'GPIO 25 (PWM)', ikona: '🎵', naziv: 'Пасивна зујалица (KY-006)', detalj: 'мелодијски тон по слову' },
+            { port: 'GPIO 18/23/24', ikona: '🎛️', naziv: 'Ротациони енкодер (KY-040)', detalj: 'бирач слова на уређају' },
+          ],
+        },
+      },
+      { type: 'h3', text: 'Детаљни распоред 40-pin GPIO заглавља на Raspberry Pi 5' },
       {
         type: 'code',
         lang: 'text',
@@ -1664,7 +1725,22 @@ btn.close(); led.close()
           'Сензор нагиба (KY-020) на наслону столице — детектује када је ученик устао и спречава лажне аларме за празан сто.',
         ],
       },
-      { type: 'h3', text: 'Шема повезивања (40-pin GPIO на Raspberry Pi 5)' },
+      {
+        type: 'shema',
+        kind: 'hardver',
+        naslov: 'Илустрација амбијенталне конзоле (Сет 37 у 1)',
+        caption: 'Амбијентални RGB LED фидбек на столу, тиха зујалица, тастер за личну калибрацију и сензор присуства на столици.',
+        data: {
+          ploca: 'Raspberry Pi 5',
+          veze: [
+            { port: 'GPIO 17/27/22', ikona: '💡', naziv: 'RGB LED амбијент (KY-016)', detalj: 'плаво (усправно) / жуто / црвено' },
+            { port: 'GPIO 24 (PWM)', ikona: '🔉', naziv: 'Пасивна зујалица (KY-006)', detalj: 'благи нискотонски подсетник' },
+            { port: 'GPIO 23', ikona: '🔘', naziv: 'Калибрациони тастер (KY-004)', detalj: 'лично узимање референтних углова' },
+            { port: 'GPIO 25', ikona: '🪑', naziv: 'Сензор нагиба (KY-020)', detalj: 'детекција седења/устајања са столице' },
+          ],
+        },
+      },
+      { type: 'h3', text: 'Детаљни распоред 40-pin GPIO заглавља на Raspberry Pi 5' },
       {
         type: 'code',
         lang: 'text',
