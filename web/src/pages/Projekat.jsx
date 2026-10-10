@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Content from '../components/Content'
+import Figure from '../components/Figure'
 import ProjectTelemetry from '../components/ProjectTelemetry'
 import DataPipeline from '../components/DataPipeline'
 import CaptionSimulator from '../components/CaptionSimulator'
@@ -54,6 +55,17 @@ export default function Projekat() {
       <section className="section">
         <div className="wrap layout-two">
           <div>
+            {p.slika && (
+              <div style={{ marginBottom: 32 }}>
+                <Figure
+                  src={p.slika}
+                  alt={p.naziv}
+                  caption={`Прототип „${p.naziv}“ — приказ рада`}
+                  sirina="puna"
+                  odnos="16 / 9"
+                />
+              </div>
+            )}
             <Content blocks={p.sadrzaj} boja={p.boja} />
           </div>
           <aside className="aside">

@@ -4,6 +4,7 @@
 export const projekti = [
   {
     slug: 'titlovi-uzivo',
+    slika: '/slike/titlovi-uzivo/hero.jpg',
     broj: '01',
     naziv: 'Титлови уживо, без облака',
     ikona: '🎙️',
@@ -115,6 +116,7 @@ export const projekti = [
 
   {
     slug: 'pametna-zebra',
+    slika: '/slike/pametna-zebra/hero.jpg',
     broj: '02',
     naziv: 'Паметна зебра',
     ikona: '🚗',
@@ -400,6 +402,7 @@ led.close(); b.close()
 
   {
     slug: 'cuvar-stare-planine',
+    slika: '/slike/cuvar-stare-planine/hero.jpg',
     broj: '03',
     naziv: 'Чувар Старе планине',
     ikona: '🌲',
@@ -672,6 +675,7 @@ led.close(); ir.close()
 
   {
     slug: 'kontrola-kvaliteta',
+    slika: '/slike/kontrola-kvaliteta/hero.jpg',
     broj: '04',
     naziv: 'Контрола квалитета без примера грешке',
     ikona: '🔬',
@@ -958,6 +962,7 @@ led_bad.off(); relay.close(); buzz.close(); led_ok.close(); led_bad.close()
 
   {
     slug: 'znakovna-azbuka',
+    slika: '/slike/znakovna-azbuka/hero.jpg',
     broj: '05',
     naziv: 'Знаковна азбука',
     ikona: '🖐️',
@@ -1210,6 +1215,7 @@ btn.close(); led.close()
 
   {
     slug: 'skolski-asistent',
+    slika: '/slike/skolski-asistent/hero.jpg',
     broj: '06',
     naziv: 'Школски асистент',
     ikona: '🧑‍🏫',
@@ -1334,6 +1340,7 @@ btn.close(); led.close()
 
   {
     slug: 'djak-za-volanom',
+    slika: '/slike/djak-za-volanom/hero.jpg',
     broj: '07',
     naziv: 'Ђак за воланом',
     ikona: '🏎️',
@@ -1477,6 +1484,7 @@ btn.close(); led.close()
 
   {
     slug: 'hodnik-u-glavi',
+    slika: '/slike/hodnik-u-glavi/hero.jpg',
     broj: '08',
     naziv: 'Ходник у глави',
     ikona: '🗺️',
@@ -1619,6 +1627,7 @@ btn.close(); led.close()
 
   {
     slug: 'uspravno',
+    slika: '/slike/uspravno/hero.jpg',
     broj: '09',
     naziv: 'Усправно',
     ikona: '🧍',
@@ -1928,6 +1937,7 @@ led.close(); btn.close()
 
   {
     slug: 'pirotski-cilim',
+    slika: '/slike/pirotski-cilim/hero.jpg',
     broj: '10',
     naziv: 'Шара у духу пиротског ћилима',
     ikona: '🧶',
@@ -2096,6 +2106,7 @@ led.close(); btn.close()
 
   {
     slug: 'dvojnik',
+    slika: '/slike/dvojnik/hero.jpg',
     broj: '11',
     naziv: 'Двојник',
     ikona: '🗿',
@@ -2252,6 +2263,7 @@ led.close(); btn.close()
 
   {
     slug: 'ziva-rec',
+    slika: '/slike/ziva-rec/hero.jpg',
     broj: '12',
     naziv: 'Жива реч',
     ikona: '🗣️',
