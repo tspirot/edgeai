@@ -7,6 +7,11 @@ import { ghTree, ghBlob } from '../lib/github'
 function LekcijaKartica({ l }) {
   return (
     <Link to={`/lms/${l.slug}`} className="card">
+      {l.slika && (
+        <div className="card__media">
+          <img src={l.slika} alt={l.naziv} loading="lazy" />
+        </div>
+      )}
       <span className="card__arrow" aria-hidden="true">↗</span>
       <span className="card__idx">{oznaka(l)}</span>
       <span className="card__title">{l.naziv}</span>

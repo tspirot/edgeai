@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Content from '../components/Content'
+import Figure from '../components/Figure'
 import Kviz from '../components/Kviz'
 import ProjectCard from '../components/ProjectCard'
 import { projekti } from '../data/projekti'
@@ -26,7 +27,7 @@ export default function Lekcija() {
 
   return (
     <>
-      <Seo title={l.naziv} description={l.kratko} />
+      <Seo title={l.naziv} description={l.kratko} slika={l.slika} />
       <header className="pagehead">
         <div className="wrap">
           <div className="crumbs">
@@ -47,6 +48,17 @@ export default function Lekcija() {
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap layout-two">
           <div>
+            {l.slika && (
+              <div style={{ marginBottom: 32 }}>
+                <Figure
+                  src={l.slika}
+                  alt={l.naziv}
+                  caption={l.slikaOpis || `Илустрација лекције „${l.naziv}“`}
+                  sirina="puna"
+                  odnos="16 / 9"
+                />
+              </div>
+            )}
             {preporuka && (
               <aside className="callout callout--info">
                 <strong>Препоручено прво (можеш и да прескочиш)</strong>
