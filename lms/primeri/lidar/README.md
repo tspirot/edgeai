@@ -2,7 +2,10 @@
 
 Test aplikacija i 360° radarski HUD za **Slamtec RPLIDAR C1** DTOF laserski skener povezan preko USB porta na Raspberry Pi 5.
 
+![RPLIDAR C1 — 360° Laserski radar и skener](/slike/primeri/lidar.jpg)
+
 ---
+
 
 ## 🚀 Brzo pokretanje
 

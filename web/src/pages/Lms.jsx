@@ -102,6 +102,11 @@ export default function Lms() {
           <div className="grid grid--3">
             {filtriraniPrimeri.map((p) => (
               <Link key={p.slug} to={`/lms/primeri/${p.slug}`} className="card">
+                {p.slika && (
+                  <div className="card__media">
+                    <img src={p.slika} alt={p.naziv} loading="lazy" />
+                  </div>
+                )}
                 <span className="card__arrow" aria-hidden="true">↗</span>
                 <span className="card__title">{p.naziv}</span>
                 <p className="card__text">{p.kratko}</p>

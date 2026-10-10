@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Readme from '../components/Readme'
 import Kod from '../components/Kod'
+import Figure from '../components/Figure'
 import { getPrimer, lekcijeZaPrimer, primerRepo, oznaka } from '../data/lms'
 import { getPrimerReadme } from '../data/readme'
 import NotFound from './NotFound'
@@ -13,11 +14,11 @@ export default function Primer() {
   if (!p) return <NotFound />
 
   const lekcije = lekcijeZaPrimer(p)
-  const readme = getPrimerReadme(p.folder)
+  const readme = getPrimerReadme(p.folder) || getPrimerReadme(slug)
 
   return (
     <>
-      <Seo title={p.naziv} description={p.kratko} />
+      <Seo title={p.naziv} description={p.kratko} slika={p.slika} />
       <header className="pagehead">
         <div className="wrap">
           <div className="crumbs">
@@ -37,6 +38,18 @@ export default function Primer() {
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap layout-two">
           <div className="prose">
+            {p.slika && (
+              <div style={{ marginBottom: 32 }}>
+                <Figure
+                  src={p.slika}
+                  alt={p.naziv}
+                  caption={p.slikaOpis || `Приказ апликације „${p.naziv}“ уживо`}
+                  sirina="puna"
+                  odnos="16 / 9"
+                />
+              </div>
+            )}
+
             {lekcije.length > 0 ? (
               <aside className="callout callout--info">
                 <strong>Научи прво</strong>
