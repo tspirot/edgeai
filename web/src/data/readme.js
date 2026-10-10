@@ -30,7 +30,7 @@ const primeriFiles = import.meta.glob('../../../lms/primeri/*/README.md', {
 /* README-и ових фолдера су за GitHub (значке, релативне везе), а страница примера на
    сајту већ показује исто: покретање, тастере и лекцију. Зато се овде не увлаче. */
 const BEZ_README_NA_SAJTU = new Set([
-  'uvod', 'test', 'igrice', 'sortiranje', 'klon', 'hemija', 'mesec', 'pucketanje',
+  'uvod', 'test', 'igrice', 'klon', 'hemija', 'mesec', 'pucketanje',
 ])
 
 const readmeByFolder = {}

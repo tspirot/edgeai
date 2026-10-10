@@ -28,9 +28,48 @@ python pokretac_igrice.py
 - Игре читају камеру и покрећу MediaPipe у посебним нитима (класа `FastVision…`), да цртање не чека на модел.
 - У фолдеру су: `baloni/`, `crtanje/`, `korpica/`, `nahrani/`, `ogledalo/`. Шеста игра, `sortiranje`, налази се у засебном фолдеру `../sortiranje/`.
 
+## Додатак: Хардверски фидбек са сетом „37 у 1” 🎈✨
+
+Игре покретом се лако обогаћују мултисензорним физичким одзивом са плоче:
+
+1. **Пасивна зујалица (KY-006) на GPIO 25**:
+   - При сваком пуцању балона (`baloni.py`) свира кратак висок тон фреквенције 800 Hz који симулира пуцање мехурића („pop!”).
+2. **RGB LED (KY-016) на GPIO 22, 27, 23**:
+   - Бљесне у боји погођеног балона (плаво, зелено, жуто, црвено) на 100 ms приликом додира врхом кажипрста.
+3. **Тактилни тастер (KY-004) на GPIO 24**:
+   - Физички тастер на кутији којим предшколско дете ресетује игру без коришћења тастатуре.
+
+```
+                  Raspberry Pi 5 GPIO Pinout (Игре)
+                         ┌──────────────┐
+       3.3V Power (Pin 1)│ ●  ● │(Pin 2)  5V Power
+                         │ ●  ● │(Pin 6)  GND ────────────► [GND] Заједничка маса
+                         │ ●  ● │(Pin 14) GND ────────────► [GND] RGB LED (KY-016)
+  [G] Зелена     (Pin 13)│ ●  ● │(Pin 16) GPIO 23 ───────► [B] Плава LED  (KY-016)
+  [R] Црвена     (Pin 15)│ ●  ● │(Pin 18) GPIO 24 ───────► [S] Тастер ресет(KY-004)
+                         │ ●  ● │(Pin 22) GPIO 25 ───────► [S] Зујалица    (KY-006)
+                         └──────────────┘
+```
+
+### Пример проширења у игри `baloni.py`
+
+```python
+from gpiozero import RGBLED, TonalBuzzer
+
+led = RGBLED(red=22, green=27, blue=23)
+buzzer = TonalBuzzer(25)
+
+def on_balloon_pop(r: float, g: float, b: float):
+    led.color = (r, g, b)
+    buzzer.play("A5")
+    time.sleep(0.08)
+    buzzer.stop()
+    led.off()
+```
+
 ## Лекција и сајт
 
-Прати лекцију: [Лекција 2: Руке, лице и покрет](https://edgeai.tsp.edu.rs/lms/ruke-i-pokret) · [Лекција 4: Лице: очи, уста и умор](https://edgeai.tsp.edu.rs/lms/lice-i-umor)
+Прати лекцију: [Лекција 2: Руке, лице и покрет](https://edgeai.tsp.edu.rs/lms/ruke-i-pokret) · [Лекција 7: Edge AI среће физички свет](https://edgeai.tsp.edu.rs/lms/ai-i-fizicki-svet)
 Страница примера на сајту: [Чаробни мехурићи](https://edgeai.tsp.edu.rs/lms/primeri/baloni)
 
 Окружење и зависности: [`../README.md`](../README.md) · [`../requirements.txt`](../requirements.txt).

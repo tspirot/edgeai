@@ -493,13 +493,109 @@ const glavneLekcije = [
   },
 
   {
-    slug: 'od-primera-do-projekta',
+    slug: 'ai-i-fizicki-svet',
     redosled: 7,
+    naziv: 'Edge AI среће физички свет',
+    kratko: 'Како излаз AI модела претворити у физички покрет, светло и звук помоћу сензора и актуатора (Сет 37 у 1).',
+    nivo: 'средње',
+    vreme: '50 мин',
+    preduslov: 'lice-i-umor',
+    preporuka: 'arduino-senzori-37-u-1',
+    ishodi: [
+      'повежеш излаз модела са актуатором (релеј, зујалица, RGB LED) преко gpiozero',
+      'разумеш зашто је GPIO строго 3.3V и како безбедно користити 5V релеј',
+      'примениш хистерезу да спречиш треперење актуатора око прага одлучивања',
+      'направиш хардверски wake-up окидач за штедњу батерије',
+    ],
+    primeri: ['vozibezbedno', 'sortiranje', 'baloni'],
+    projekti: ['pametna-zebra', 'cuvar-stare-planine', 'kontrola-kvaliteta', 'znakovna-azbuka', 'uspravno'],
+    sadrzaj: [
+      {
+        type: 'p',
+        lead: true,
+        text:
+          'До сада су сви наши модели резултат цртали на екрану. Али прави Edge AI уређај живи у физичком простору: кочи аутомобил, спушта рампу, буди камеру када наиђе дивљач или сортира неисправан комад са фабричке траке.',
+      },
+      { type: 'h', text: 'Од кадра до сигнала' },
+      {
+        type: 'p',
+        text:
+          'Модел за рачунарски вид на крају увек даје број: вероватноћу класе (0.0 до 1.0), координате тачака (као код MediaPipe-а) или скор аномалије (PatchCore). Тај број поредимо са прагом и претварамо у дигитални сигнал (HIGH/LOW) за GPIO пин.',
+      },
+      {
+        type: 'shema',
+        kind: 'tok',
+        naslov: 'Ланац од пиксела до физичке реакције',
+        caption: 'Како софтверска одлука пролази кроз филтер хистерезе пре него што окине механички релеј или зујалицу.',
+        pipeline: [
+          { icon: '📷', title: 'Кадар', detail: 'хватање слике са камере' },
+          { icon: '🧠', title: 'AI Модел', detail: 'рачунање резултата (скор 0..1)' },
+          { icon: '⚖️', title: 'Хистереза', detail: 'стабилан праг без треперења' },
+          { icon: '🔌', title: 'GPIO излаз', detail: 'gpiozero шаље сигнал' },
+          { icon: '🚨', title: 'Актуатор', detail: 'релеј, семафор, зујалица' },
+        ],
+      },
+      { type: 'h', text: 'Библиотека gpiozero' },
+      {
+        type: 'p',
+        text:
+          'На Raspberry Pi OS-у библиотека gpiozero омогућава да хардвер контролишемо чистим Python објектима који не успоравају видео обраду:',
+      },
+      {
+        type: 'code',
+        lang: 'python',
+        code: `from gpiozero import RGBLED, Buzzer, OutputDevice
+import time
+
+# Повезивање актуатора из сета 37 у 1:
+led = RGBLED(red=22, green=27, blue=23)
+buzzer = Buzzer(17)
+relay = OutputDevice(24)
+
+def postavi_stanje(opasnost: bool):
+    if opasnost:
+        led.color = (1, 0, 0)   # Црвено
+        buzzer.on()             # Звучни аларм
+        relay.on()              # Укључивање релеја
+    else:
+        led.color = (0, 1, 0)   # Зелено (све у реду)
+        buzzer.off()
+        relay.off()`,
+      },
+      {
+        type: 'callout',
+        tone: 'warn',
+        title: 'Електрична безбедност на Raspberry Pi 5 плочи',
+        text:
+          'Сви GPIO пинови на плочи раде строго на 3.3V логици! Никада не повезујте 5V сигнал на GPIO. Модул релеја (KY-019) напаја се са 5V пина плоче за потребе електромагнета, али је његов контролни пин (IN) потпуно безбедан за 3.3V сигнал.',
+      },
+      { type: 'h', text: 'Хистереза: зашто један праг није довољан' },
+      {
+        type: 'p',
+        text:
+          'Ако поставиш да се релеј пали када вредност пређе 0.50, мале вибрације светла ће учинити да вредност шета између 0.49 и 0.51. Релеј би у том случају шкљоцао десетине пута у секунди. Решење је увођење горњег прага за укључивање (нпр. 0.55) и доњег прага за искључивање (0.45), или захтев да стање траје бар 1 секунду пре промене.',
+      },
+      { type: 'h', text: 'Вежба' },
+      {
+        type: 'steps',
+        items: [
+          'Повежи активну зујалицу (KY-012) на GPIO 17 и GND. Покрени тест из примера vozibezbedno.py.',
+          'Додај RGB LED (KY-016) и испробај прелаз боја: зелено када си будан, жуто на зевање, црвено на затворене очи.',
+          'Повежи тактилни тастер (KY-004) као тастер за ресет аларма. Како се у коду користи Button(25, pull_up=True)?',
+          'Погледај како пројекат „Паметна зебра” користи LDR сензор светлости да релеј активира само у сумрак.',
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: 'od-primera-do-projekta',
+    redosled: 8,
     naziv: 'Од примера до пројекта',
     kratko: 'Пример показује да нешто може. Пројекат одговара на питање, мери резултат и признаје границе.',
     nivo: 'средње',
     vreme: '45 мин',
-    preduslov: 'lidar-i-daljina',
+    preduslov: 'ai-i-fizicki-svet',
     ishodi: [
       'разликујеш демонстрацију од пројекта и знаш шта пројекат мора да има више',
       'поставиш питање које се може измерити, и изабереш шта ћеш мерити',
@@ -660,9 +756,9 @@ export const primeri = [
     kratko: 'Пуцкање балона додиром шаке у ваздуху. Прва игра за предшколце.',
     folder: 'igrice/baloni',
     fajl: 'baloni.py',
-    hardver: ['Camera Module 3', 'MediaPipe'],
+    hardver: ['Camera Module 3', 'MediaPipe', 'Сет 37 у 1 (зујалица, LED)'],
     nivo: 'основно',
-    lekcije: ['ruke-i-pokret'],
+    lekcije: ['ruke-i-pokret', 'ai-i-fizicki-svet'],
     kontrole: '[r] ресетуј · [m] звук · [q] назад у мени',
     pokretanje: 'cd ~/primeri/igrice\npython pokretac_igrice.py',
   },
@@ -702,12 +798,12 @@ export const primeri = [
   {
     slug: 'sortiranje',
     naziv: 'Спој исте сличице',
-    kratko: 'Спајање истих сличица у кућице.',
+    kratko: 'Спајање истих сличица у кућице са хардверском потврдом.',
     folder: 'sortiranje',
     fajl: 'sortiranje.py',
-    hardver: ['Camera Module 3', 'MediaPipe'],
+    hardver: ['Camera Module 3', 'MediaPipe', 'Сет 37 у 1 (релеј, LED)'],
     nivo: 'основно',
-    lekcije: ['ruke-i-pokret'],
+    lekcije: ['ruke-i-pokret', 'ai-i-fizicki-svet'],
     pokretanje: 'cd ~/primeri/igrice\npython pokretac_igrice.py',
   },
   {
@@ -799,9 +895,9 @@ export const primeri = [
     kratko: 'Праћење лица: треперење, зевање и нагиб главе као знаци умора.',
     folder: 'vozibezbedno',
     fajl: 'vozibezbedno.py',
-    hardver: ['Camera Module 3', 'MediaPipe', 'Сет 37 у 1 (зујалица, релеј)'],
+    hardver: ['Camera Module 3', 'MediaPipe', 'Сет 37 у 1 (зујалица, релеј, тастер)'],
     nivo: 'средње',
-    lekcije: ['lice-i-umor'],
+    lekcije: ['lice-i-umor', 'ai-i-fizicki-svet'],
     pokretanje: 'cd ~/primeri/vozibezbedno\npython vozibezbedno.py',
   },
 ]

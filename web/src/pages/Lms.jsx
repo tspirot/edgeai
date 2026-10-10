@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { primeri, getLekcija, lekcijeGrupe, oznaka } from '../data/lms'
@@ -21,9 +22,16 @@ function LekcijaKartica({ l }) {
 }
 
 export default function Lms() {
+  const [filter, setFilter] = useState('sve')
   const uvod = lekcijeGrupe('uvod')
   const redom = lekcijeGrupe('glavna')
   const bezLekcije = primeri.filter((p) => p.lekcije.length === 0)
+
+  const filtriraniPrimeri = primeri.filter((p) => {
+    if (filter === 'set37') return p.hardver?.some((h) => h.includes('37 у 1'))
+    if (filter === 'kamera') return !p.hardver?.some((h) => h.includes('37 у 1'))
+    return true
+  })
 
   return (
     <>
@@ -66,14 +74,42 @@ export default function Lms() {
             (зависности: <a href={ghBlob('lms/primeri/requirements.txt')} target="_blank" rel="noreferrer">requirements.txt ↗</a>).
             {bezLekcije.length > 0 && ` ${bezLekcije.length} од њих још нема лекцију — ту су за радозналост.`}
           </p>
+
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', margin: '16px 0 24px' }}>
+            <button
+              type="button"
+              className={`btn btn--sm ${filter === 'sve' ? 'btn--primary' : 'btn--ghost'}`}
+              onClick={() => setFilter('sve')}
+            >
+              Сви примери ({primeri.length})
+            </button>
+            <button
+              type="button"
+              className={`btn btn--sm ${filter === 'set37' ? 'btn--primary' : 'btn--ghost'}`}
+              onClick={() => setFilter('set37')}
+            >
+              🔌 Сет 37 у 1 ({primeri.filter((p) => p.hardver?.some((h) => h.includes('37 у 1'))).length})
+            </button>
+            <button
+              type="button"
+              className={`btn btn--sm ${filter === 'kamera' ? 'btn--primary' : 'btn--ghost'}`}
+              onClick={() => setFilter('kamera')}
+            >
+              📷 Само камера ({primeri.filter((p) => !p.hardver?.some((h) => h.includes('37 у 1'))).length})
+            </button>
+          </div>
+
           <div className="grid grid--3">
-            {primeri.map((p) => (
+            {filtriraniPrimeri.map((p) => (
               <Link key={p.slug} to={`/lms/primeri/${p.slug}`} className="card">
                 <span className="card__arrow" aria-hidden="true">↗</span>
                 <span className="card__title">{p.naziv}</span>
                 <p className="card__text">{p.kratko}</p>
                 <span className="card__meta">
                   <span className="tag">{p.nivo}</span>
+                  {p.hardver?.some((h) => h.includes('37 у 1')) && (
+                    <span className="tag tag--hw">🔌 Сет 37 у 1</span>
+                  )}
                   {p.lekcije.length === 0 && <span className="tag">лекција стиже</span>}
                 </span>
               </Link>
