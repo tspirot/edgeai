@@ -19,6 +19,11 @@ export default function Uputstva() {
           <div className="grid grid--2">
             {uputstva.map((u) => (
               <Link key={u.slug} to={`/uputstva/${u.slug}`} className="card">
+                {u.slika && (
+                  <div className="card__media">
+                    <img src={u.slika} alt={u.naziv} loading="lazy" />
+                  </div>
+                )}
                 <span className="card__arrow" aria-hidden="true">↗</span>
                 <span className="card__title">{u.naziv}</span>
                 <p className="card__text">{u.kratko}</p>

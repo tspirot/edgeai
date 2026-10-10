@@ -5,6 +5,8 @@ export const uputstva = [
     slug: 'raspberry-pi-priprema',
     naziv: 'Припрема Raspberry Pi 5',
     kratko: 'Од празне microSD картице до система спремног за рад — ОС, хлађење, напајање, мрежа.',
+    slika: '/slike/uputstva/raspberry-pi-priprema.jpg',
+    slikaOpis: 'Припрема Raspberry Pi 5 радне станице: флешовање картице, активно хлађење и SSH конфигурација.',
     nivo: 'основно',
     vreme: '40 мин',
     sadrzaj: [
@@ -54,6 +56,8 @@ export const uputstva = [
     slug: 'ai-hat-hailo',
     naziv: 'AI HAT+ (Hailo-8L)',
     kratko: 'Монтажа акцелератора од 13 TOPS, инсталација софтвера и прва детекција објеката.',
+    slika: '/slike/uputstva/ai-hat-hailo.jpg',
+    slikaOpis: 'Монтажа AI HAT+ акцелератора са Hailo-8L чипом (13 TOPS) преко PCIe магистрале и инференца.',
     nivo: 'средње',
     vreme: '50 мин',
     sadrzaj: [
@@ -105,6 +109,8 @@ export const uputstva = [
     slug: 'ai-camera-imx500',
     naziv: 'Raspberry Pi AI Camera (IMX500)',
     kratko: 'Камера код које мрежа ради на самом сензору — поставка и учитавање модела.',
+    slika: '/slike/uputstva/ai-camera-imx500.jpg',
+    slikaOpis: 'Raspberry Pi AI Camera са Sony IMX500 сензором за инференцу на чипу уз потрошњу испод 2W.',
     nivo: 'средње',
     vreme: '45 мин',
     sadrzaj: [
@@ -147,6 +153,8 @@ export const uputstva = [
     slug: 'kuciste-laser-3d',
     naziv: 'Кућиште: ласер и 3D штампа',
     kratko: 'Израда кућишта за станице у школском Makers Lab-у — плексиглас на CO2 ласеру и носачи на 3D штампачу.',
+    slika: '/slike/uputstva/kuciste-laser-3d.jpg',
+    slikaOpis: 'Дигитална производња кућишта у Makers Lab-у: ласерско сечење плексигласа и 3D штампање носача.',
     nivo: 'основно',
     vreme: 'радионица',
     sadrzaj: [
@@ -198,6 +206,8 @@ export const uputstva = [
     slug: 'titlovi-uzivo-instalacija',
     naziv: 'Титлови уживо — инсталација',
     kratko: 'Постављање и покретање система за титловање на Raspberry Pi 5.',
+    slika: '/slike/uputstva/titlovi-uzivo-instalacija.jpg',
+    slikaOpis: 'Подешавање система за локално Whisper препознавање говора уживо са USB микрофоном.',
     nivo: 'средње',
     vreme: '35 мин',
     sadrzaj: [
@@ -238,6 +248,8 @@ export const uputstva = [
     slug: 'uspravno-postavka',
     naziv: 'Усправно: постављање и калибрација',
     kratko: 'Камера са стране, MediaPipe Pose на Pi 5, лична калибрација, прагови и подсетник, приватност.',
+    slika: '/slike/uputstva/uspravno-postavka.jpg',
+    slikaOpis: 'MediaPipe Pose праћење 33 тачке тела за детекцију погрбљености и ергономско подсећање.',
     nivo: 'средње',
     vreme: 'радионица',
     sadrzaj: [
@@ -310,6 +322,8 @@ export const uputstva = [
     slug: 'hodnik-u-glavi-slam',
     naziv: 'RPLIDAR SLAM: мапирање и навигација',
     kratko: 'Монтажа и оријентација RPLIDAR-а, калибрација „напред“, спор снимак мапе, читање мапе, планирање пута.',
+    slika: '/slike/uputstva/hodnik-u-glavi-slam.jpg',
+    slikaOpis: '2D ласерски SLAM са RPLIDAR сензором за аутономно мапирање ходника и вођење слепих особа.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
@@ -374,6 +388,8 @@ export const uputstva = [
     slug: 'djak-za-volanom-postavka',
     naziv: 'PiRacer + RPLIDAR: постављање аутомобила',
     kratko: 'Склапање шасије, PCA9685 серво и ESC, камера напред, RPLIDAR на USB, калибрација волана и гаса, први круг.',
+    slika: '/slike/uputstva/djak-za-volanom-postavka.jpg',
+    slikaOpis: 'Склапање аутономног возила PiRacer са RPLIDAR ласерском кочницом и праћењем умора возача.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
@@ -447,6 +463,8 @@ export const uputstva = [
     slug: 'skolski-asistent-postavka',
     naziv: 'Школски асистент на Jetson Orin Nano',
     kratko: 'JetPack и CUDA, преузимање модела (Whisper, Qwen2-VL int4, Piper), C922 камера, RAG индекс и мерење.',
+    slika: '/slike/uputstva/skolski-asistent-postavka.jpg',
+    slikaOpis: 'Поставка школског асистента на Jetson Orin Nano плочи са Qwen2-VL, Whisper и Piper гласом.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
@@ -528,6 +546,8 @@ export const uputstva = [
     slug: 'pirotski-cilim-postavka',
     naziv: 'Шара у духу пиротског ћилима на Jetson-у',
     kratko: 'Скуп података у радионици, правила клечања као кôд, SD 1.5 + ControlNet на Orin-у и картон за ткање који проверава ткаља.',
+    slika: '/slike/uputstva/pirotski-cilim-postavka.jpg',
+    slikaOpis: 'Класификација аутентичних пиротских шара са ћилима и аутоматско генерисање картона за ткање.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
@@ -628,6 +648,8 @@ export const uputstva = [
     slug: 'dvojnik-postavka',
     naziv: 'Двојник: окретни сто, скенирање и штампа',
     kratko: 'Склапање окретног стола, мерење геометрије камере, снимање круга кадрова, резбарење воксела на Orin-у и STL за штампач.',
+    slika: '/slike/uputstva/dvojnik-postavka.jpg',
+    slikaOpis: 'Окретни сто за 3D вокселско скенирање предмета и припрема STL модела за 3D штампу.',
     nivo: 'напредно',
     vreme: 'радионица',
     sadrzaj: [
@@ -719,6 +741,8 @@ export const uputstva = [
     slug: 'ziva-rec-postavka',
     naziv: 'Жива реч: снимање и препис пиротског говора',
     kratko: 'JetPack и Whisper, мерење торлачних црта, сесија снимања код говорника, исправка и корпус са сагласношћу.',
+    slika: '/slike/uputstva/ziva-rec-postavka.jpg',
+    slikaOpis: 'Теренска станица за снимање, мерење торлачности и очување дијалекатског говора пиротског краја.',
     nivo: 'напредно',
     vreme: 'радионица + терен',
     sadrzaj: [
@@ -806,6 +830,8 @@ export const uputstva = [
     slug: 'demo-day',
     naziv: 'Припрема за Demo Day',
     kratko: 'Шта треба да ради, како се показује и шта се мери — контролна листа пред јавну презентацију.',
+    slika: '/slike/uputstva/demo-day.jpg',
+    slikaOpis: 'Припрема изложбеног штанда, контролна листа, постер и уживо презентација за Demo Day.',
     nivo: 'основно',
     vreme: 'радионица',
     sadrzaj: [
@@ -858,6 +884,8 @@ export const uputstva = [
     slug: 'arduino-senzori-37-u-1',
     naziv: 'Сет сензора 37 у 1 на Raspberry Pi 5',
     kratko: 'Комплетан водич: правила безбедности (3.3V логика), преглед свих модула из кутије и везивање за Edge AI.',
+    slika: '/slike/uputstva/arduino-senzori-37-u-1.jpg',
+    slikaOpis: 'Комплетан преглед и безбедно везивање сензора и актуатора из Сета 37 у 1 на Raspberry Pi 5 GPIO.',
     nivo: 'основно',
     vreme: '45 мин',
     sadrzaj: [

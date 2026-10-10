@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import Content from '../components/Content'
+import Figure from '../components/Figure'
 import Readme from '../components/Readme'
 import { getUputstvo, uputstva } from '../data/uputstva'
 import { projekti } from '../data/projekti'
@@ -19,7 +20,7 @@ export default function Uputstvo() {
 
   return (
     <>
-      <Seo title={u.naziv} description={u.kratko} />
+      <Seo title={u.naziv} description={u.kratko} slika={u.slika} />
       <header className="pagehead">
         <div className="wrap">
           <div className="crumbs">
@@ -39,6 +40,17 @@ export default function Uputstvo() {
       <section className="section" style={{ borderTop: 'none' }}>
         <div className="wrap layout-two">
           <div>
+            {u.slika && (
+              <div style={{ marginBottom: 32 }}>
+                <Figure
+                  src={u.slika}
+                  alt={u.naziv}
+                  caption={u.slikaOpis || `Илустрација упутства „${u.naziv}“`}
+                  sirina="puna"
+                  odnos="16 / 9"
+                />
+              </div>
+            )}
             <Content blocks={u.sadrzaj} />
             {vezaniProjekti.map((p) => (
               <div key={p.slug} className="readme-blok">
