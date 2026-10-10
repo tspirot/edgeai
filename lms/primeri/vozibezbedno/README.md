@@ -32,13 +32,47 @@ python vozibezbedno.py
 4. **Тактилни тастер (KY-004)** на **GPIO 25**:
    - Тастер за потврду будности („Reset/Acknowledge”) на волану којим возач искључује аларм.
 
+### Илустрација: Шема повезивања на Raspberry Pi 5 (40-pin GPIO)
+
 ```
-  Шема везивања на Pi 5:
-  ├── Активна зујалица (KY-012) ──► GPIO 17 (Pin 11) + GND (Pin 9)
-  ├── RGB LED (KY-016)          ──► R: GPIO 22, G: GPIO 27, B: GPIO 23, GND: Pin 14
-  ├── 5V Релеј (KY-019)         ──► IN: GPIO 24, VCC: 5V (Pin 2), GND: Pin 20
-  └── Тастер на волану (KY-004) ──► S: GPIO 25, VCC: 3.3V (Pin 1), GND: Pin 6
+        Raspberry Pi 5 GPIO Pinout
+               ┌──────────────┐
+  3.3V  (Pin 1)│ ●  ● │(Pin 2)  5V Power ────────► [VCC] 5V Релеј (KY-019)
+               │ ●  ● │(Pin 4)  5V Power
+   GND  (Pin 6)│ ●  ● │(Pin 5)
+               │ ●  ● │(Pin 9)  GND ─────────────► [GND] Заједничка маса свих модула
+GPIO 17 (Pin 11)│ ●  ● │(Pin 12)
+GPIO 27 (Pin 13)│ ●  ● │(Pin 14) GND
+GPIO 22 (Pin 15)│ ●  ● │(Pin 16) GPIO 23 ────────► [B]   RGB LED Плава (KY-016)
+ 3.3V  (Pin 17)│ ●  ● │(Pin 18) GPIO 24 ────────► [IN]  5V Релеј      (KY-019)
+               │ ●  ● │(Pin 20) GND
+GPIO 25 (Pin 22)│ ●  ● │(Pin 21)
+               └──────────────┘
+
+  Детаљна веза сигнала:
+  ├── Активна зујалица за аларм (KY-012):
+  │     ├── S (Сигнал) ────────► GPIO 17 (Pin 11)
+  │     └── - (GND)    ────────► GND (Pin 9)
+  │
+  ├── RGB LED статус возача (KY-016):
+  │     ├── R (Црвена) ────────► GPIO 22 (Pin 15)
+  │     ├── G (Зелена) ────────► GPIO 27 (Pin 13)
+  │     ├── B (Плава)  ────────► GPIO 23 (Pin 16)
+  │     └── - (GND)    ────────► GND (Pin 14 или 20)
+  │
+  ├── 5V Релеј (хаптички аларм / сва 4 жмигавца) (KY-019):
+  │     ├── IN ────────────────► GPIO 24 (Pin 18)
+  │     ├── VCC ───────────────► 5V Power (Pin 2)
+  │     └── GND ───────────────► GND
+  │
+  └── Тастер за потврду будности на волану (KY-004):
+        ├── S (Сигнал) ────────► GPIO 25 (Pin 22)
+        ├── VCC ───────────────► 3.3V (Pin 1)
+        └── GND ───────────────► GND (Pin 6)
 ```
+
+> **Важна напомена о напајању:**
+> Релеј се напаја са 5V пина (Pin 2) ради поузданог окидања соленоида, док се сви сигнални пинови (IN, S, RGB) воде директно на 3.3V GPIO логику плоче без ризика од пренапона.
 
 ### Брзо проширење у скрипти `vozibezbedno.py` (пример за ученике)
 
@@ -63,6 +97,20 @@ else:
     buzzer.off()
     led.color = (0, 1, 0)
     relay.off()
+```
+
+### Брзи тест на плочи
+
+```bash
+python -c "
+from gpiozero import Buzzer, RGBLED, OutputDevice; import time
+buzzer = Buzzer(17); led = RGBLED(22, 27, 23); relay = OutputDevice(24)
+print('Тест: Будан (зелена LED)...'); led.color = (0, 1, 0); time.sleep(1)
+print('Тест: Зевање (жута LED)...'); led.color = (1, 0.7, 0); time.sleep(1)
+print('Тест: АЛАРМ ПОСПАНОСТ (зујалица + релеј + црвено)...')
+led.color = (1, 0, 0); buzzer.beep(0.1, 0.1, 2); relay.on(); time.sleep(0.5); relay.off(); buzzer.off(); led.off()
+buzzer.close(); led.close(); relay.close()
+"
 ```
 
 ## Лекција и сајт
